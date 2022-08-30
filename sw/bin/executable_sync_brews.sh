@@ -57,6 +57,7 @@ PACKAGES+=(
 	go
 	gopls
 	gotests
+  gops
 	delve
 	universal-ctags
 	thefuck
