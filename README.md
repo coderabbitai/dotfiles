@@ -1,4 +1,4 @@
-# FluxNinja Dev Setup
+# FluxNinja Dotfiles
 
 ![FluxNinja Vim](./sw/assets/vim.png)
 
@@ -16,14 +16,14 @@ home directory.
 ### Automatic Setup
 
 ```
-/bin/bash -c "$(curl -fsSL https://gist.githubusercontent.com/harjotgill/68ac8b6b3973af3772cf983a387f719a/raw/)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/fluxninja/dotfiles/master/sw/assets/executable_install.sh)"
 ```
 
 ### Manual Setup
 
 ```
 cd $HOME
-chezmoi init git@github.com:FluxNinja/dotfiles.git
+chezmoi init git@github.com:fluxninja/dotfiles.git
 # show diff of changes that will be made
 chezmoi diff
 # If you are happy with the changes, apply away!
@@ -59,11 +59,13 @@ for GitHub in order to use HTTP API. Also, it's useful to add this token to your
 
 ### GitHub org cloning script
 
-To clone FluxNinja, run: `gh_clone_all.sh FluxNinja $HOME/Work`. THis step is performed automatically on installation.
+To clone FluxNinja, run: `gh_clone_all.sh fluxninja $HOME/work`. This step is
+performed automatically on installation.
 
 ### Git pull all repos script
 
-To update all repos in a directory, run: `pull_all.sh $HOME/Work/FluxNinja`. This step is performed automatically on auto-updates.
+To update all repos in a directory, run: `pull_all.sh $HOME/work/fluxninja`.
+This step is performed automatically on auto-updates.
 
 ## Preparing your terminal
 
