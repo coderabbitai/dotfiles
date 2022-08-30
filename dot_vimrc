@@ -1,0 +1,1127 @@
+syntax on
+filetype plugin indent on
+
+"Use 24-bit (true-color) mode in Vim/Neovim
+if (has('nvim'))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+if (has('termguicolors'))
+  set termguicolors
+endif
+
+" allow to scroll in the preview and other actions
+set mouse=a
+
+set number
+
+set tabstop=2       " The width of a TAB is set to 4.
+" Still it is a \t. It is just that
+" Vim will interpret it to be having
+" a width of 4.
+
+set shiftwidth=2    " Indents will have a width of 4
+
+set softtabstop=2   " Sets the number of columns for a TAB
+
+set expandtab       " Expand TABs to spaces
+
+set ignorecase
+
+set smartcase
+
+" use system clipboard
+if has('nvim')
+  set clipboard+=unnamedplus
+else
+  set clipboard^=unnamed,unnamedplus
+endif
+    
+vmap <C-c> "+y
+
+let mapleader='\\'
+map <Leader> <Plug>(easymotion-prefix)
+
+if exists('$TMUX')
+  let g:last_tmux_uuid=system('tmux show-environment -g TMUX_UUID  2> /dev/null')
+  " autocmd to check of uuid changes and prompt user if they want
+  " to reload .vimrc when a change is detected
+  " autocmd FocusGained if g:last_tmux_uuid != $LAST_TMUX_UUID | call confirm("Reload .vimrc?") | if (v:confirm) | exe 'source ~/.vimrc' | endif | endif
+  autocmd FocusGained * let tmux_uuid=system('tmux show-environment -g TMUX_UUID  2> /dev/null') | if g:last_tmux_uuid != tmux_uuid  | let g:last_tmux_uuid=tmux_uuid | let cfm=confirm("Autoupdate detected, reload .vimrc?", "&Yes\n&No", 1) | if cfm == 1 | source $MYVIMRC | endif | endif
+endif
+
+" For Git plugin
+set diffopt+=vertical
+
+let g:fuzzymenu_vim_config = '~/.vimrc_local'
+
+" use vim-plug
+augroup vimplug
+  let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+  if empty(glob(data_dir . '/autoload/plug.vim'))
+    silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
+augroup end
+
+call plug#begin('~/.vim/plugged')
+
+" source user provided plugins from ~/.vimrc_plugins
+if filereadable(expand('~/.vimrc_plugins'))
+  source ~/.vimrc_plugins
+endif
+
+Plug 'tpope/vim-sensible'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-fugitive'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'github/copilot.vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-rhubarb'
+Plug 'mhinz/vim-startify'
+Plug 'harjotgill/fuzzy-menu.vim'
+Plug 'prabirshrestha/async.vim'
+Plug 'laher/gothx.vim', {'for': 'go'}
+Plug 'maralla/gomod.vim', {'for': 'gomod'}
+Plug 'antoinemadec/coc-fzf'
+Plug 'voldikss/vim-floaterm'
+Plug 'voldikss/fzf-floaterm'
+Plug 'voldikss/coc-floaterm'
+Plug 'tpope/vim-commentary'
+Plug 'samoshkin/vim-mergetool'
+Plug 'chrisbra/Recover.vim'
+Plug 'Yggdroot/indentLine'
+Plug 'simnalamburt/vim-mundo'
+Plug 'tyru/open-browser.vim'
+Plug 'tjdevries/coc-zsh'
+Plug 'aacunningham/vim-fuzzy-stash'
+Plug 'easymotion/vim-easymotion'
+Plug 'powerman/vim-plugin-AnsiEsc'
+Plug 'chrisbra/unicode.vim'
+Plug 'mracos/mermaid.vim'
+Plug 'google/vim-jsonnet'
+
+" colors
+Plug 'sainnhe/gruvbox-material'
+Plug 'sainnhe/everforest'
+Plug 'sainnhe/edge'
+Plug 'sainnhe/sonokai'
+Plug 'EdenEast/nightfox.nvim'
+Plug 'joshdick/onedark.vim'
+Plug 'cocopon/iceberg.vim'
+Plug 'mhartington/oceanic-next'
+Plug 'folke/tokyonight.nvim'
+Plug 'arcticicestudio/nord-vim'
+Plug 'jacoborus/tender.vim'
+Plug 'whatyouhide/vim-gotham'
+Plug 'Everblush/everblush.vim'
+
+" add nvim specific plugins below
+Plug 'equalsraf/neovim-gui-shim', has('nvim') && !has('gui_vimr') ? {} : { 'on': [] }
+Plug 'pwntester/octo.nvim', has('nvim') ? {} : { 'on': [] }
+Plug 'nvim-lua/plenary.nvim', has('nvim') ? {} : { 'on': [] }
+Plug 'nvim-telescope/telescope.nvim', has('nvim') ? {} : { 'on': [] }
+Plug 'nvim-telescope/telescope-fzf-native.nvim', has('nvim') ? { 'do': 'make' } : { 'on': [] }
+Plug 'kyazdani42/nvim-web-devicons', has('nvim') ? {} : { 'on': [] }
+Plug 'nvim-telescope/telescope-symbols.nvim', has('nvim') ? {} : { 'on': [] }
+Plug 'rcarriga/nvim-notify', has('nvim') ? {} : { 'on': [] }
+Plug 'nvim-treesitter/nvim-treesitter', has('nvim') ? {'do': ':TSUpdate'} : { 'on': [] }
+Plug 'SirVer/ultisnips', has('nvim') ? {} : { 'on': [] }
+Plug 'honza/vim-snippets', has('nvim') ? {} : { 'on': [] }
+
+Plug 'ryanoasis/vim-devicons'
+" Initialize plugin system
+call plug#end()
+
+" Run PlugInstall if there are missing plugins
+if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  PlugInstall --sync
+endif
+
+" disable coc status in airline as it is shown with nvim-notify
+if has("nvim")
+  let g:airline#extensions#coc#show_coc_status = 0
+endif
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_tab_count = 1
+let g:airline#extensions#tabline#tab_nr_type = 1
+let g:airline_powerline_fonts = 1
+
+let g:gothx_command_prefix = 'Go'
+
+let g:indentLine_fileTypeExclude = ['startify', 'floaterm', 'coc-explorer', 'coctree', 'json']
+
+" copilot only works with node@16
+let g:copilot_node_command = "$HOMEBREW_CELLAR/node@16/16.17.0/bin/node"
+
+" install coc extensions
+let g:coc_global_extensions = [
+      \ 'coc-tag', 
+      \ 'coc-highlight', 
+      \ 'coc-go', 
+      \ 'coc-explorer', 
+      \ 'coc-pairs', 
+      \ 'coc-yank', 
+      \ 'coc-spell-checker', 
+      \ 'coc-html',
+      \ 'coc-yaml',
+      \ 'coc-sql',
+      \ 'coc-pyright',
+      \ 'coc-json',
+      \ 'coc-clangd',
+      \ 'coc-tabnine',
+      \ 'coc-webview',
+      \ 'coc-markdown-preview-enhanced',
+      \ 'coc-reveal',
+      \ 'coc-swagger',
+      \ 'coc-toml',
+      \ 'coc-markmap', 
+      \ 'coc-diagnostic',
+      \ 'coc-prettier',
+      \ 'coc-marketplace',
+      \ 'coc-vimlsp',
+      \ 'coc-protobuf',
+      \ 'coc-postfix',
+      \ 'coc-tsserver',
+      \ 'coc-eslint',
+      \ 'coc-lua',
+      \ 'coc-snippets',
+      \ 'coc-grammarly',
+      \ ]
+
+augroup buffer_keymaps
+  autocmd FileType gitcommit inoremap<buffer><silent> @ @<C-x><C-o>
+  autocmd FileType gitcommit inoremap<buffer><silent> # #<C-x><C-o>
+augroup end
+
+" some utility functions
+" Like windo but restore the current window.
+function! WinDo(command)
+  let currwin=winnr()
+  let curaltwin=winnr('#')
+  execute 'windo ' . a:command
+  " restore previous/alt window
+  execute curaltwin . 'wincmd w'
+  " restore current window
+  execute currwin . 'wincmd w'
+endfunction
+com! -nargs=+ -complete=command Windo call WinDo(<q-args>)
+
+" Like bufdo but restore the current buffer.
+function! BufDo(command)
+  let currBuff=bufnr('%')
+  execute 'bufdo ' . a:command
+  execute 'buffer ' . currBuff
+endfunction
+com! -nargs=+ -complete=command Bufdo call BufDo(<q-args>)
+
+" Like tabdo but restore the current tab.
+function! TabDo(command)
+  let currTab=tabpagenr()
+  execute 'tabdo ' . a:command
+  execute 'tabn ' . currTab
+endfunction
+com! -nargs=+ -complete=command Tabdo call TabDo(<q-args>)
+
+command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
+function! s:RunShellCommand(cmdline)
+  echo a:cmdline
+  let expanded_cmdline = a:cmdline
+  for part in split(a:cmdline, ' ')
+     if part[0] =~ '\v[%#<]'
+        let expanded_part = fnameescape(expand(part))
+        let expanded_cmdline = substitute(expanded_cmdline, part, expanded_part, '')
+     endif
+  endfor
+  botright new
+  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
+  call setline(1, 'You entered:    ' . a:cmdline)
+  call setline(2, 'Expanded Form:  ' .expanded_cmdline)
+  call setline(3,substitute(getline(2),'.','=','g'))
+  execute '$read !'. expanded_cmdline
+  setlocal nomodifiable
+  1
+endfunction
+
+" Use ctrl-[hjkl] to select the active split window.
+nmap <silent> <c-k> :wincmd k<CR>
+nmap <silent> <c-j> :wincmd j<CR>
+nmap <silent> <c-h> :wincmd h<CR>
+nmap <silent> <c-l> :wincmd l<CR>
+
+"" Coc.vim config follows
+
+" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
+" unicode characters in the file autoload/float.vim
+set encoding=UTF-8
+
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1):
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+
+nmap <silent> ga <Plug>(UnicodeGA)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+augroup coc_actions
+  autocmd!
+  " add missing go imports on save
+  autocmd BufWritePre *.ts,*.js,*.go  silent call CocAction('runCommand', 'editor.action.organizeImport') | sleep 100m
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Symbol renaming.
+nmap <space>r :CocRename<cr>
+
+" init.vim has CocRename defined for nvim
+if !has('nvim')
+  " make a CocRename command that calls CocActionAsync('rename')
+  command CocRename call CocActionAsync('rename')
+endif
+
+" Formatting selected code.
+xmap <space>f  <Plug>(coc-format-selected)
+nmap <space>f  <Plug>(coc-format-selected)
+
+nnoremap <silent> <space>y  :<C-u>CocFzfList yank<cr>
+
+" Applying codeAction to the cursor
+xmap <space>a  <Plug>(coc-codeaction-cursor)
+nmap <space>a  <Plug>(coc-codeaction-cursor)
+
+" Codelens
+xmap <space>l  <Plug>(coc-codelens-action)
+nmap <space>l  <Plug>(coc-codelens-action)
+
+" Apply AutoFix to problem on the current line.
+nmap <space>qf  <Plug>(coc-fix-current)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+" Mappings for CoCList
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+
+function! OutlineToggle() 
+  if get(b:,'coc_outline_visible',0) == 0
+    call CocActionAsync('showOutline', 1)
+    let b:coc_outline_visible = 1
+  else
+    call CocAction('hideOutline')
+    let b:coc_outline_visible = 0
+  endif
+endfunction
+
+nnoremap <silent> <space>o :call OutlineToggle()<CR>
+
+nmap <space>e <Cmd>CocCommand explorer<CR>
+
+let g:auto_diagnostic_window = 1
+let g:auto_diagnostic_delay_ms = 300
+let g:auto_diagnostic_window_size = 3
+
+augroup coc_diag
+  " shutdown coc on exit
+  autocmd VimLeavePre * :call coc#rpc#kill() 
+  " auto close outline if it's the last window
+  autocmd BufEnter * call s:CheckDanglingWindows()
+  function! s:CheckDanglingWindows() abort
+    if ((&filetype ==# 'coctree' 
+          \ || &filetype ==# 'coc-explorer'
+          \ || &filetype ==# 'Mundo'
+          \ || &filetype ==# 'MundoDiff'
+          \ || &filetype ==# 'qf'
+          \) && winnr('$') == 1)
+      if tabpagenr('$') != 1
+        close
+      else
+        bdelete
+      endif
+    endif
+  endfunction
+
+  function! s:OpenDiagnostics() abort
+      if empty(&l:buftype)
+          if (&filetype !=# 'floaterm') && (&buftype !=# 'terminal')
+            execute 'CocDiagnostics ' . g:auto_diagnostic_window_size 
+            execute 'botright lwindow' 
+            execute 'wincmd p'
+          endif
+      endif
+  endfunction
+
+  function! s:ResetDiagTimer()
+    call s:OpenDiagnostics()
+    let g:diag_timer = 0
+  endfunction
+
+  function! s:AutoOpenDiagnosticsWindow() abort
+    " save current time in b:diag_last_update_time
+    if get(g:,'diag_timer',0) == 0
+      let g:diag_timer = timer_start(g:auto_diagnostic_delay_ms, { tid -> execute('call s:ResetDiagTimer()') })
+    endif
+  endfunction
+
+  autocmd User CocDiagnosticChange call s:AutoOpenDiagnosticsWindow()
+  autocmd BufWritePost * call s:AutoOpenDiagnosticsWindow()
+  autocmd VimLeavePre * if get(g:, 'diag_timer', 0) != 0 | call timer_stop(g:diag_timer) | let g:diag_timer = 0 | endif
+
+augroup end
+
+" FZF 
+" An action can be a reference to a function that processes selected lines
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
+let g:fzf_action = {
+      \ 'ctrl-q': function('s:build_quickfix_list'),
+      \ 'ctrl-t': 'tab split',
+      \ 'ctrl-x': 'split',
+      \ 'ctrl-v': 'vsplit' }
+
+" - Popup window (center of the current window)
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9, 'relative': v:true } }
+
+" Customize fzf colors to match your color scheme
+" - fzf#wrap translates this to a set of `--color` options
+let g:fzf_colors =
+      \ { 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Comment'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'border':  ['fg', 'Ignore'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment'] }
+
+" Enable per-command history
+" - History files will be stored in the specified directory
+" - When set, CTRL-N and CTRL-P will be bound to 'next-history' and
+"   'previous-history' instead of 'down' and 'up'.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+
+let g:fzf_preview_window = ['right:50%', 'ctrl-\']
+
+nmap <space>w <Cmd>Windows<CR>
+
+" startify
+let g:startify_session_number = 5
+let g:startify_session_sort = 1
+let g:startify_files_number = 5
+let g:startify_change_to_dir = 0
+let g:startify_session_delete_buffers = 0
+let g:startify_change_to_vcs_root = 1
+
+" returns all modified files of the current git repo
+" `2>/dev/null` makes the command fail quietly, so that when we are not
+" in a git repo, the list will be empty
+function! s:gitModified()
+  let files = systemlist('git ls-files -m 2>/dev/null')
+  return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
+" same as above, but show untracked files, honouring .gitignore
+function! s:gitUntracked()
+  let files = systemlist('git ls-files -o --exclude-standard 2>/dev/null')
+  return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
+" open list of sessions in FZF window
+function! OpenSessions()
+  let session_path = g:startify#get_session_path()
+  try 
+    let prev_action = g:fzf_action
+    let g:fzf_action = {
+          \ 'enter': 'source' }
+    call fzf#vim#files(session_path)
+  finally
+    let g:fzf_action = prev_action
+  endtry
+endfunction
+
+let g:startify_lists = [
+      \ { 'type': 'commands',  'header': ['    Commands']       },
+      \ { 'type': 'sessions',  'header': ['   ﮦ Sessions']       },
+      \ { 'type': 'dir',       'header': ['   﨟MRU '. getcwd()] },
+      \ { 'type': 'files',     'header': ['   﨟MRU']            },
+      \ { 'type': 'bookmarks', 'header': ['    Bookmarks']      },
+      \ { 'type': function('s:gitModified'),  'header': ['    Git Modified']},
+      \ ]
+let g:startify_custom_header =
+      \ startify#pad(split(system('figlet -w 100 FluxNinja Vim'), "\n") + startify#fortune#boxed())
+
+let g:startify_commands = [
+      \ {'f': [' Find Files', ':Files']},
+      \ {'fe': ['פּ Explore Files', ':CocCommand explorer --position floating']},
+      \ {'s': ['ﮦ Sessions', 'call OpenSessions()']},
+      \ {'b': ['﬘ Buffers', ':Buffers']},
+      \ {'w': [' Tabs & Windows', ':Windows']},
+      \ {'m': [' Marks', ':Marks']},
+      \ {'ft': [' Terminals', ':Floaterms']},
+      \ {'p': ['縷Pattern', ':RG']},
+      \ {'t': [' Tags', ':Tags']},
+      \ {'c': [' Commits (git log)', ':Commits']},
+      \ {'gs': [' Git Status', ':GFiles?']},
+      \ {'gf': [' Git Files', ':GFiles']},
+      \ {'h': ['ﲉ Help Tags', ':Helptags']},
+      \ {'sa': [' Save Session', ':SSave']},
+      \ {'?': [' Cheat Sheet', ':OpenBrowser https://vim.rtorr.com']},
+      \ ]
+
+nmap <space>s <Cmd>Startify<CR>
+
+" auto session management
+function! GetUniqueSessionName()
+  " get session name if it already exists
+  let session = fnamemodify(v:this_session, ':t')
+  if session ==# '__LAST__'
+    let session = ''
+  endif
+  if !empty(session)
+    return session
+  endif
+
+  let git_root = trim(system('git rev-parse --show-toplevel 2>/dev/null'))
+  let path = fnamemodify(git_root, ':t')
+  if empty(path)
+    let path = fnamemodify(getcwd(), ':t')
+  endif
+  let path = empty(path) ? 'unknown' : path
+  let branch = trim(system('git branch --show-current 2>/dev/null'))
+  let branch = empty(branch) ? 'no-branch' : '-' . branch
+  " get timestamp
+  let timestamp = trim(system('date +-%Y.%m.%d.%H:%M:%S'))
+
+
+  return substitute(path . branch . timestamp . '.autosave', '/', '-', 'g')
+endfunction
+
+set sessionoptions=buffers,curdir,folds,help,slash,tabpages,winsize
+
+augroup auto_session
+  autocmd VimLeavePre *             execute 'SSave! ' . GetUniqueSessionName()
+augroup end
+
+" Remove all but recent 20 files by timestamp from a directory pointed to by return value of function g:startify#get_session_path()
+function! CleanupSessionFiles()
+  let path = g:startify#get_session_path()
+  silent call system('cd ' . path . '; ls -tp *.autosave | grep -v "/$" | tail -n +20 | tr "\n" "\0" | xargs -0 rm --')
+endfunction
+
+execute CleanupSessionFiles()
+
+" Load startify on each new tab. Disable this if it causes any issues with
+" other plugins.
+augroup startify
+  if has('nvim')
+    autocmd TabNewEntered * 
+          \ if empty(expand('%')) && empty(&l:buftype) |
+          \   Startify |
+          \ endif
+  else
+    autocmd bufwinenter *
+          \ if !exists('t:startify_new_tab')
+          \     && empty(expand('%'))
+          \     && empty(&l:buftype)
+          \     && &l:modifiable |
+          \   let t:startify_new_tab = 1 |
+          \   Startify |
+          \ endif
+  endif
+augroup end
+
+" auto close outline, diagnostics if it's open on session save
+let g:startify_session_before_save = [ 
+      \ 'silent! execute "lclose" | execute "cclose"',
+      \ 'silent! call CocAction("hideOutline")', 
+      \ 'silent! MundoHide"' 
+      \ ]
+
+" FZF Menu
+nmap <silent> <space><space> <Plug>(Fzm)
+vmap <silent> <space><space> <Plug>(FzmVisual)
+" map mouse shift+left click to Fzm
+nmap <silent> <S-LeftMouse> <Plug>(Fzm)
+vmap <silent> <S-LeftMouse> <Plug>(FzmVisual)
+
+call fuzzymenu#Reset()
+
+let g:fuzzymenu_auto_add = 0
+
+" fzf mappings
+call fuzzymenu#AddAll({
+      \ ' Main Menu': {'exec': 'Startify'},
+      \ ' Find Files': {'exec': 'Files'},
+      \ ' Git Files': {'exec': 'GFiles'},
+      \ 'ﮦ Sessions': {'exec': 'call OpenSessions()'},
+      \ ' Save Session': {'exec': 'SSave'},
+      \ ' Colors': {'exec': 'Colors'},
+      \ ' Lines': {'exec': 'BLines'},
+      \ ' Tags': {'exec': 'BTags'},
+      \ '﬘ Buffers': {'exec': 'Buffers'},
+      \ ' Tabs & Windows': {'exec': 'Windows'},
+      \ ' Marks': {'exec': 'Marks'},
+      \ '縷Pattern': {'exec': 'RG'},
+      \ ' Filetypes': {'exec': 'Filetypes'},
+      \ ' Commands': {'exec': 'Commands'},
+      \ ' Key Maps': {'exec': 'Maps'},
+      \ ' Snippets': {'exec': 'Snippets'},
+      \ ' Help Tags': {'exec': 'Helptags'},
+      \ ' Command History': {'exec': 'History:'},
+      \ ' Search History': {'exec': 'History/'},
+      \ ' Terminals': {'exec': 'Floaterms'},
+      \ ' Undotree': {'exec': 'MundoToggle'},
+      \ ' IndentLines': {'exec': 'IndentLinesToggle'},
+      \ ' ANSI Escape': {'exec': 'AnsiEsc'},
+      \ ' Update Plugins': {'exec': 'PlugUpdate'},
+      \ ' Update Coc Extensions': {'exec': 'CocUpdate'},
+      \ ' Unicode Symbols': {'exec': 'call unicode#Fuzzy()'},
+    \ },
+    \ {'after': 'call fuzzymenu#InsertModeIfNvim()', 'tags': ['tools']})
+
+" Coc menu
+call fuzzymenu#AddAll({
+      \ ' Diagnostics': {'exec': 'CocFzfList diagnostics --current-buf'},
+      \ ' Coc Actions': {'exec': 'call CocActionAsync("codeAction")'},
+      \ ' Coc Commands': {'exec': 'CocCommand'},
+      \ 'ﯦ CodeLens Actions': {'exec': 'call CocActionAsync("codeLensAction")'},
+      \ ' Format': {'exec': 'CocCommand editor.action.formatDocument'},
+      \ 'פּ File Explorer': {'exec': 'CocCommand explorer'},
+      \ ' Outline Sidebar': {'exec': 'call OutlineToggle()'},
+      \ ' Goto Definition': {'exec': 'call CocActionAsync("jumpDefinition")'},
+      \ ' Goto Implementation': {'exec': 'call CocActionAsync("jumpImplementation")'},
+      \ ' Goto References': {'exec': 'call CocActionAsync("jumpReferences")'},
+      \ ' Incoming Calls': {'exec': 'CocCommand document.showIncomingCalls'},
+      \ ' Outgoing Calls': {'exec': 'CocCommand document.showOutgoingCalls'},
+      \ ' Documentation': {'exec': 'call ShowDocumentation()'},
+      \ ' Coc Lists': {'exec': 'CocFzfList'},
+      \ '擄Coc Extensions': {'exec': 'CocFzfList extensions'},
+      \ '擄Coc Services': {'exec': 'CocFzfList services'},
+      \ ' Coc Config': {'exec': 'CocConfig'},
+      \ 'ﮧ Coc Completion Sources': {'exec': 'CocFzfList sources'},
+      \ ' Coc LSP Logs': {'exec': 'CocCommand workspace.showOutput'},
+      \ ' Coc Logs': {'exec': 'CocInfo'},
+      \ 'ﴱ Outline Navigator': {'exec': 'CocFzfList outline'},
+      \ '凜Rename': {'exec': 'CocRename'},
+      \ ' Organize Imports': {'exec': 'CocCommand editor.action.organizeImport'},
+      \ ' Yank History (Clipboard)': {'exec': 'CocFzfList yank'},
+      \ 'ﲳ Render Swagger/OpenAPI spec': {'exec': 'CocCommand swagger.render'},
+      \ 'ﯙ GitHub Browser': {'exec': 'GBrowse'},
+    \ },
+    \ {'tags': ['coc'],
+    \ 'for': {'exists': 'g:coc_enabled'}})
+
+call fuzzymenu#AddAll({
+      \ ' Markdown Preview': {'exec': 'CocCommand markdown-preview-enhanced.openPreview'}, 
+      \ ' Markdown Map': {'exec': 'CocCommand markmap.watch'}, 
+      \ ' Markdown Generate Slides': {'exec': 'CocCommand reveal.it'}, 
+      \ },
+      \ {'for': {'ft': 'md', 'exists': 'g:coc_enabled'}, 'tags': ['markdown', 'coc']})
+
+call fuzzymenu#AddAll({
+        \ 'ﳑ AddTags Struct': {'exec': 'CocCommand go.tags.add.prompt'},
+        \ 'ﳑ AddTags Line': {'exec': 'CocCommand go.tags.add.line'},
+        \ 'ﳑ ClearTags Struct': {'exec': 'CocCommand go.tags.clear'},
+        \ 'ﳑ ClearTags Line': {'exec': 'CocCommand go.tags.clear.line'},
+        \ 'ﳑ RemoveTags Struct': {'exec': 'CocCommand go.tags.remove.prompt'},
+        \ 'ﳑ RemoveTags Line': {'exec': 'CocCommand go.tags.remove.line'},
+        \ 'ﳑ Generate Tests Exported': {'exec': 'CocCommand go.tests.generate.exported'},
+        \ 'ﳑ Generate Tests File': {'exec': 'CocCommand go.tests.generate.file'},
+        \ 'ﳑ Generate Tests Function': {'exec': 'CocCommand go.tests.generate.function'},
+        \ 'ﳑ Mod Tidy': {'exec': 'CocCommand go.gopls.tidy'},
+        \ 'ﳑ Generate Interface': {'exec': 'CocCommand go.impl.cursor'},
+        \ 'ﳑ Play (launch in browser)': {'exec': 'CocCommand go.playground'},
+        \ 'ﳑ Toggle Test/Code': {'exec': 'CocCommand go.test.toggle'},
+      \ },
+      \ {'for': {'ft': 'go', 'exists': 'g:coc_enabled'}, 'tags':['go', 'coc']})
+
+call fuzzymenu#Add(' Setup Github Copilot', {'normal': ':Copilot setup'}, {'tags': ['github']})
+call fuzzymenu#Add(' Github Copilot Solutions', {'exec': 'Copilot panel'}, {'tags': ['github']})
+call fuzzymenu#Add('ﮧ Setup Tabnine', {'exec': 'CocCommand tabnine.openHub'}, {'tags': ['tabnine']})
+
+call fuzzymenu#AddAll({
+  \ ' Diff (git diff)': {'exec': 'Gdiffsplit'},
+  \ ' Blame (git blame)': {'exec': 'Git blame'},
+  \ ' Read (git checkout)': {'exec': 'Gread'},
+  \ ' Write (git add)': {'exec': 'Gwrite'},
+  \ ' Delete (git rm)': {'exec': 'GDelete'},
+  \ ' Commit (git commit)': {'exec': 'Git commit'},
+  \ ' Pull (git pull)': {'exec': 'Git pull'},
+  \ ' Push (git push)': {'exec': 'Git push'},
+  \ ' Commits (git log)': {'exec': 'BCommits'},
+  \ ' Status (git status)': {'exec': 'GFiles?'},
+  \ ' Stash (git stash)': {'exec': 'GStashList'},
+  \ },
+  \ {'for': {'exists': 'g:loaded_fugitive'}, 'tags': ['git']})
+
+call fuzzymenu#Add(' Mergetool', {'exec': 'MergetoolToggle'}, {'tags': ['mergetool']})
+call fuzzymenu#AddAll({
+  \ ' Mergetool Layout Merge, Remote': {'exec': 'MergetoolToggleLayout mr'},
+  \ ' Mergetool Layout Base, Merge, Remote': {'exec': 'MergetoolToggleLayout mr,b'},
+  \ ' Mergetool Exchange Left': {'exec': 'MergetoolDiffExchangeLeft'},
+  \ ' Mergetool Exchange Right': {'exec': 'MergetoolDiffExchangeRight'},
+  \ ' Mergetool Exchange Down': {'exec': 'MergetoolDiffExchangeDown'},
+  \ ' Mergetool Exchange Up': {'exec': 'MergetoolDiffExchangeUp'},
+  \ ' Mergetool Prefer Local': {'exec': 'MergetoolPreferLocal'},
+  \ ' Mergetool Prefer Remote': {'exec': 'MergetoolPreferRemote'},
+  \ },
+  \ {'for': {'exists': 'g:merging'}, 'tags': ['mergetool']})
+
+" Octo
+if has('nvim')
+  call fuzzymenu#AddAll({
+    \ ' PR List': {'exec': 'Octo pr list'},
+    \ ' PR Search': {'exec': 'Octo pr search'},
+    \ ' Gist List': {'exec': 'Octo gist list'},
+    \ ' PR Commits': {'exec': 'Octo pr commits'},
+    \ ' PR Changes': {'exec': 'Octo pr changes'},
+    \ 'ﯙ Github Octo Actions': {'exec': 'Octo actions'},
+    \ 'ﯙ Github Search': {'exec': 'Octo search'},
+    \ 'ﯙ Issues List': {'exec': 'Octo issue list'},
+    \ 'ﯙ Issues Search': {'exec': 'Octo issue search'},
+    \ },
+    \ {'after': 'call feedkeys("i")', 'tags': ['octo', 'github']})
+
+  call fuzzymenu#AddAll({
+    \ ' PR Reopen': {'exec': 'Octo pr reopen'},
+    \ ' PR Close': {'exec': 'Octo pr close'},
+    \ ' PR Checkout': {'exec': 'Octo pr checkout'},
+    \ ' PR Commits': {'exec': 'Octo pr commits'},
+    \ ' PR Changes (diff hunks)': {'exec': 'Octo pr changes'},
+    \ ' PR Diff': {'exec': 'Octo pr diff'},
+    \ ' PR Merge': {'exec': 'Octo pr merge squash'},
+    \ ' PR Ready': {'exec': 'Octo pr ready'},
+    \ ' PR Reload': {'exec': 'Octo pr reload'},
+    \ ' PR Checks': {'exec': 'Octo pr checks'},
+    \ ' Open PR in Browser': {'exec': 'Octo pr browser'},
+    \ 'ﯙ Issue Reopen': {'exec': 'Octo issue reopen'},
+    \ 'ﯙ Issue Close': {'exec': 'Octo issue close'},
+    \ 'ﯙ Issue Reload': {'exec': 'Octo issue reload'},
+    \ 'ﯙ Issue Create': {'exec': 'Octo issue create'},
+    \ 'ﯙ Open Issue in Browser': {'exec': 'Octo issue browser'},
+    \ 'ﯙ Assignee Add': {'exec': 'Octo assignees add'},
+    \ 'ﯙ Assignee Remove': {'exec': 'Octo assignees remove'},
+    \ 'ﯙ Project Card Add': {'exec': 'Octo card add'},
+    \ 'ﯙ Project Card Remove': {'exec': 'Octo card remove'},
+    \ 'ﯙ Label Add': {'exec': 'Octo label add'},
+    \ 'ﯙ Label Remove': {'exec': 'Octo label remove'},
+    \ 'ﯙ Label Create': {'exec': 'Octo label create'},
+    \ ' Review Start': {'exec': 'Octo review start'},
+    \ ' Review Resume': {'exec': 'Octo review resume'},
+    \ ' Review Submit': {'exec': 'Octo review submit'},
+    \ ' Review Discard': {'exec': 'Octo review discard'},
+    \ ' Review Pending Comments': {'exec': 'Octo review comments'},
+    \ ' Comment Add': {'exec': 'Octo comment add'},
+    \ ' Comment Delete': {'exec': 'Octo comment delete'},
+    \ ' Review Suggestion Add': {'exec': 'OctoAddReviewSuggestion'},
+    \ ' Thread Resolve': {'exec': 'Octo thread resolve'},
+    \ ' Thread Unresolve': {'exec': 'Octo thread unresolve'},
+    \ },
+    \ {'tags': ['octo', 'github']})
+endif
+
+" vim cheat-sheet link
+call fuzzymenu#Add(' Vim Cheat-sheet (Browser)', {'exec': 'OpenBrowser https://vim.rtorr.com'}, {'tags': ['vim']})
+
+" basic options
+call fuzzymenu#Add(' Case-sensitive searches', {'exec': 'set noignorecase'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Case-insensitive searches', {'exec': 'set ignorecase'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Hide line numbers', {'exec': 'set nonumber'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Show line numbers', {'exec': 'set number'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Hide whitespace characters', {'exec': 'set nolist'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Show whitespace characters', {'exec': 'set list'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Undo', {'normal': 'u'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Redo', {'normal': "\<c-r>"}, {'tags': ['vim']})
+call fuzzymenu#Add(' Quit (exit) all', {'exec': 'qa'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Quit (exit) all without saving', {'exec': 'qa!'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Write (save) and quit (exit) all', {'exec': 'wqa'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Write (save) current buffer', {'exec': 'w'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Write (save) all', {'exec': 'wa'}, {'tags': ['vim']})
+
+" common editor features
+call fuzzymenu#Add(' New Tab', {'exec': 'tabnew'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Close Window', {'exec': 'close'}, {'tags': ['vim']})
+call fuzzymenu#Add(' New buffer', {'exec': 'new'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Delete buffer (close file)', {'exec': 'bd'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Delete buffer (close file) WITHOUT saving', {'exec': 'bd!'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Vertical split', {'exec': 'vs'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Horizontal split', {'exec': 'sp'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Select all', {'normal': 'ggVG'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Find word under cursor', {'normal': '*'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Next match', {'normal': 'n'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Previous match', {'normal': 'N'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Repeat (last normal mode operation)', {'normal': '.'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Repeat (last :command)', {'normal': '@:'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Open file under cursor', {'normal': 'gf'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Browse to link under cursor', {'normal': 'gx'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Jumps', {'exec': 'jumps'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Jump Next', {'normal': "\<c-i>"}, {'tags': ['vim']})
+call fuzzymenu#Add(' Jump Back', {'normal': "\<c-o>"}, {'tags': ['vim']})
+call fuzzymenu#Add(' Select Tag/Show Tags', {'exec': 'tselect'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Pop Tag/Previous Tag', {'exec': 'pop'}, {'tags': ['vim']})
+
+" normal mode for incomplete functions
+call fuzzymenu#Add(' Find', {'normal': '/'}, {'tags': ['vim']})
+
+call fuzzymenu#Add(' Next match', {'normal': 'n'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Previous match', {'normal': 'N'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Replace next match', {'normal': ':s//'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Replace in file', {'normal': ':%s//'}, {'tags': ['vim']})
+call fuzzymenu#Add(' Replace in open buffers', {'normal': ':bufdo :%s//'}, {'tags': ['vim']})
+
+call fuzzymenu#Add(' Put (paste)', {'normal': 'p'}, {'tags': ['vim']})
+
+" Telescope enabled options
+if has("nvim")
+  call fuzzymenu#Add(' Tag Stack', {'exec': 'Telescope tagstack'}, {'tags': ['vim']})
+  call fuzzymenu#Add(' Old Files', {'exec': 'Telescope oldfiles'}, {'tags': ['tools']})
+  call fuzzymenu#Add(' Vim Options', {'exec': 'Telescope vim_options'}, {'tags': ['tools']})
+  call fuzzymenu#Add(' Man Pages', {'exec': 'Telescope man_pages'}, {'tags': ['tools']})
+  call fuzzymenu#Add(' Symbols/Emojis', {'exec': 'Telescope symbols'}, {'tags': ['tools']})
+  call fuzzymenu#Add(' Notification Center', {'exec': 'Telescope notify'}, {'tags': ['tools']})
+  call fuzzymenu#Add(' AutoSave Toggle', {'exec': 'ASToggle'}, {'tags': ['tools']})
+else
+  call fuzzymenu#Add(' Tag Stack', {'exec': 'tags'}, {'tags': ['vim']})
+endif
+
+" normal mode operators (For text objects) 
+
+" Comment/Uncomment (gc)
+" override gcgc to do single line comment/uncomment to make it consistent with
+" other vim commands
+nmap gcgc <Plug>CommentaryLine
+
+let ops = {}
+let ops[' Comment/Uncomment'] = { 'exec': 'FzmOp gc' }
+
+for i in items(fuzzymenu#operators#Get())
+    let name = ' ' . i[1]
+    let op = i[0]
+    let ops[name] = { 'exec': 'FzmOp '.op }
+endfor
+call fuzzymenu#AddAll(ops,
+    \ {'after': 'call fuzzymenu#InsertModeIfNvim()', 'tags': ['normal','vim']})
+
+let ops = {}
+let ops[' Comment/Uncomment'] = { 'visual': 'gc' }
+for i in items(fuzzymenu#operators#Get())
+    let name = ' ' . i[1]
+    let op = i[0]
+    "" remove 'g' prefix from uppercase/lowercase/format/...
+    let op = substitute(op, '^g', '', '')
+    let ops[name] = { 'visual': op }
+endfor
+
+call fuzzymenu#AddAll(ops,
+    \ {'tags': ['visual','vim']})
+
+call fuzzymenu#Add(' Operators (text objects and motions)', {
+      \ 'exec': 'FzmOps'}, {
+      \ 'after': 'call fuzzymenu#InsertModeIfNvim()', 
+      \ 'tags': ['normal','vim']
+      \})
+
+call fuzzymenu#AddAll({
+      \' Apply setting (persist)': { 'exec': 'call fuzzymenu#vimconfig#ApplySetting(1)'}, 
+      \' Apply setting (temporary)': { 'exec': 'call fuzzymenu#vimconfig#ApplySetting(0)'}, 
+      \' Create a key mapping (persist)': { 'exec': 'call fuzzymenu#vimconfig#MapKey({})' },
+      \ },
+      \ { 'after': 'call fuzzymenu#InsertModeIfNvim()', 'tags': ['misc']})
+
+" Maintain undo history between sessions
+if has("nvim")
+  set undodir=~/.local/share/nvim/undodir
+else 
+  set undodir=~/.vim/undodir
+endif
+
+" mkdir undodir if it doesn't exist
+if !isdirectory(expand($undodir))
+  silent call system('mkdir ' . $undodir)
+endif
+
+set undofile
+set undolevels=1000
+set undoreload=10000
+
+nmap <space>u <Cmd>MundoToggle<CR>
+
+" Floaterms
+let g:ft_float_width = 0.9
+let g:ft_float_height = 0.9
+let g:ft_window_height = 0.25
+let g:ft_window_width = 0.25
+
+let g:fzf_floaterm_newentries = {
+  \ '+root' : {
+    \ 'title': 'Root Shell (floating)',
+    \ 'width': g:ft_float_width,
+    \ 'height': g:ft_float_height,
+    \ 'cmd': 'sudo sh' },
+  \ '+zsh' : {
+    \ 'title': 'Zsh Shell (floating)',
+    \ 'width': g:ft_float_width,
+    \ 'height': g:ft_float_height,
+    \ 'cmd': 'zsh' },
+  \ '+root-tab' : {
+    \ 'title': 'Root Shell (bottom window)',
+    \ 'height': g:ft_window_height,
+    \ 'wintype': 'split',
+    \ 'cmd': 'sudo sh' },
+  \ '+zsh-tab' : {
+    \ 'title': 'Zsh Shell (bottom window)',
+    \ 'height': g:ft_window_height,
+    \ 'wintype': 'split',
+    \ 'cmd': 'zsh' },
+  \ }
+
+let g:floaterm_autohide = 2
+
+nmap <space>t <Cmd>Floaterms<CR>
+
+let g:floaterm_title = ' Floaterm'
+autocmd FileType floaterm tnoremap <expr> <ESC> (&filetype == "floaterm") ? "<C-\><C-n>:FloatermHide<CR>" : "<ESC>"
+
+" openbrowser
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
+
+
+" Mergetool
+let g:mergetool_layout = 'mr'
+let g:mergetool_prefer_revision = 'local'
+
+function s:QuitMergetool()
+
+  " If we're in merge mode, exit
+  if get(g:, 'mergetool_in_merge_mode', 0)
+    call mergetool#stop()
+    return
+  endif
+
+endfunction
+
+autocmd VimLeavePre * call s:QuitMergetool()
+
+function s:MergeToolBufEnter()
+  if get(g:, 'mergetool_in_merge_mode', 0)
+    let g:merging = 1
+  endif
+endfunction
+
+function s:MergeToolBufLeave()
+  if exists('g:merging')
+    unlet g:merging
+  endif
+endfunction
+
+autocmd BufEnter * call s:MergeToolBufEnter()
+autocmd BufLeave * call s:MergeToolBufLeave()
+
+
+" colorschemes
+let colorscheme = 'gruvbox_dark'
+
+" some some defaults
+let g:gruvbox_material_better_performance = 1
+let g:everforest_better_performance = 1
+let g:edge_better_performance = 1
+let g:sonokai_better_performance = 1
+
+" source ~/.vimrc_local for local overrides
+if filereadable(expand('~/.vimrc_local'))
+  source ~/.vimrc_local
+endif
+
+function! s:SetHighlights()
+  " set codelens color
+  hi CocCodeLens guifg=Orange gui=Italic
+endfunction
+
+autocmd ColorScheme * call s:SetHighlights()
+
+" set colorscheme based on colorscheme variable
+if colorscheme == 'gruvbox_dark'
+  set background=dark
+  colorscheme gruvbox-material
+elseif colorscheme == 'gruvbox_light'
+  set background=light
+  colorscheme gruvbox-material
+elseif colorscheme == 'iceberg_dark'
+  set background=dark
+  colorscheme iceberg
+elseif colorscheme == 'iceberg_light'
+  set background=light
+  colorscheme iceberg
+elseif colorscheme == 'everforest_dark'
+  set background=dark
+  colorscheme everforest
+elseif colorscheme == 'everforest_light'
+  set background=light
+  colorscheme everforest
+elseif colorscheme == 'edge_dark'
+  set background=dark
+  colorscheme edge
+elseif colorscheme == 'edge_light'
+  set background=light
+  colorscheme edge
+elseif colorscheme == 'sonokai_dark'
+  set background=dark
+  colorscheme sonokai
+elseif colorscheme == 'sonokai_light'
+  set background=light
+  colorscheme sonokai
+elseif colorscheme != ''
+  try
+    execute 'colorscheme '.colorscheme
+  catch
+    echohl WarningMsg | echom 'Unable to find colorscheme: ' . colorscheme . ' defaulting to gruvbox-material' | echohl None
+    set background=dark
+    colorscheme gruvbox-material
+  endtry
+endif
+
+" check whether &guifont is empty
+if &guifont == ''
+  if has('macunix')
+    silent! set guifont=Hack_Regular_Nerd_Font_Complete_Mono:h15
+  else
+    if has("nvim")
+      silent! set guifont=Hack\ Nerd\ Font\ Mono:h15
+    else
+      silent! set guifont=Hack\ Nerd\ Font\ Mono\ 15
+    endif
+  endif
+endif

@@ -1,0 +1,119 @@
+#!/usr/bin/env bash
+
+quiet=false
+spinner=false
+colors=false
+watch_interval=0
+# take -q (quiet=true) and -c (colors=true) as flags
+while getopts sqcw: opt; do
+	case $opt in
+	s)
+		spinner=true
+		;;
+	q)
+		quiet=true
+		;;
+	c)
+		colors=true
+		;;
+	w)
+		watch_interval=$OPTARG
+		;;
+	\?)
+		echo "Invalid option: -$OPTARG" >&2
+		exit 1
+		;;
+	esac
+done
+
+# shift
+shift "$((OPTIND - 1))"
+
+# if arguments = 0 then display help
+if [ $# -eq 0 ]; then
+	echo "Runs a command in background, waits for completion and shows spinner while waiting."
+	echo "Usage: $0 [-s] [-c] [-w] [-q] <command> [<arguments>]"
+	echo "Warning: do not use for any command that needs user input"
+fi
+
+if [ "$quiet" = true ]; then
+	message=""
+else
+	message="Running: [$*]"
+fi
+
+cmd_str="$*"
+
+function run_command() {
+	if ! $spinner; then
+		tput civis
+		revolver --style 'dots2' start "$message"
+	fi
+
+	# take the command and it's parameters provided as arguments to this script and run it in background. save the output of the command to a temp file on disk created by mktemp
+	temppout=$(mktemp)
+
+	# run the command in background by redirecting stdout to tempout, stderr to temperr and capture it's exit code in $code
+
+	# check if $colors is true
+	if [ "$colors" = true ]; then
+		if [[ $OSTYPE == 'darwin'* ]]; then
+			script -q $temppout $cmd_str >/dev/null 2>&1 &
+		else
+			script -q -c "$cmd_str" $temppout >/dev/null 2>&1 &
+		fi
+	else
+		eval "$cmd_str" >"$temppout" 2>&1 &
+	fi
+
+	pid=$!
+
+	if $spinner; then
+		spin=("⣾" "⣽" "⣻" "⢿" "⡿" "⣟" "⣯" "⣷")
+
+		i=0
+		while kill -0 $pid 2>/dev/null; do
+			i=$(((i + 1) % 8))
+			printf "\r$message%s" "${spin[$i]}"
+			sleep 0.1
+		done
+	fi
+
+	# get exit code of the command
+	wait $pid
+	code=$?
+
+	# if $message is not empty
+	if [ "$message" != "" ]; then
+		# clear previous line
+		printf "\r\033[K"
+	else
+		printf "\r"
+	fi
+
+	if [ -f $temppout ]; then
+		cat $temppout
+		# clean up
+		rm $temppout
+	fi
+
+	if ! $spinner; then
+		revolver stop
+		tput cnorm
+	fi
+}
+
+# if watch_interval is 0 then run the tmux command once otherwise run it continuously every $watch_interval seconds
+if [ "$watch_interval" -eq 0 ]; then
+	run_command
+else
+	while true; do
+		printf "\033c" # clear screen
+		run_command
+		echo "Sleeping for $watch_interval seconds..."
+		sleep "$watch_interval"
+	done
+fi
+
+# exit with the exit code of the command
+exit $code

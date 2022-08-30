@@ -1,0 +1,63 @@
+#!/bin/bash
+
+function revolver_stop() {
+	revolver stop
+	tput cnorm
+}
+
+# This script takes one argument and uses it as git commit message
+if [ $# -ne 1 ]; then
+	# read commit message, exit if empty
+	echo "Enter commit message:"
+	read -r commit_message
+	if [ -z "$commit_message" ]; then
+		echo "No commit message given, exiting..."
+		exit 1
+	fi
+else
+	commit_message=$1
+fi
+
+tput civis
+revolver --style 'dots2' start 'Committing changes...'
+
+# show the list of modified git files that will be committed
+echo " == Modified files == "
+git status --short --untracked-files=no
+
+# Iteration counter
+i=0
+# Try committing periodically until it works. Time the commit command. Break if it fails instantly
+while true; do
+	# Increment iteration counter
+	i=$((i + 1))
+
+	revolver update "Committing... Try #$i"
+
+	START=$(date +%s)
+	git commit -a -m "$commit_message" && break
+	END=$(date +%s)
+	DIFF=$((END - START))
+	if [ $DIFF -lt 4 ]; then
+		echo "Commit failed instantly, aborting"
+		revolver_stop
+		exit 1
+	fi
+	# break after 3 attempts
+	if [ $i -eq 3 ]; then
+		echo "Commit failed after 3 attempts, aborting"
+		revolver_stop
+		exit 1
+	fi
+
+	echo "Commit failed, sleeping for $DIFF seconds"
+	sleep 1
+done
+
+revolver update "Pulling changes..."
+git pull --rebase -q origin "$(git rev-parse --abbrev-ref HEAD)"
+
+revolver update "Pushing changes..."
+git push -u -q origin "$(git rev-parse --abbrev-ref HEAD)"
+
+revolver_stop

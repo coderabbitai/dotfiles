@@ -1,0 +1,44 @@
+exa_options='--links --git --group --changed --time-style long-iso --icons'
+# replace ls with exa
+alias ls='exa $(printf $exa_options)'
+alias tree='exa --tree $(printf $exa_options)'
+
+# Homebrew stuffs
+alias update="brew update"
+alias upgrade="brew upgrade"
+alias cleanup="brew cleanup"
+alias install="brew install"
+alias doctor="echo '\nDoctor? Doctor who?\n' && brew doctor"
+alias uud="update; upgrade; cleanup; doctor"
+alias ood="uud"
+
+# Utility commands (mostly from https://news.ycombinator.com/item?id=9869231)
+alias o='open'
+alias q='exit'
+alias c='clear'
+# Search process by name and highlight
+function psgrep() { ps axu | grep -v grep | grep "$@" -i --color=auto; }
+alias du='dust'
+alias df='duf'
+alias curl='curlie'
+
+alias cat='bat -P'
+alias diff='batdiff'
+alias bathelp='bat --plain --language=help'
+help() {
+    "$@" --help 2>&1 | bathelp
+}
+
+alias top='btm -b'
+
+if [[ $OSTYPE == 'darwin'* ]]; then
+  alias nv='vimr'
+  #icloud drive
+  alias icloud='cd ~/Library/Mobile\ Documents/com\~apple\~CloudDocs/'
+else
+  alias nv='nvim-qt'
+fi
+
+alias k='kubectl'
+
+alias root='cd $(git rev-parse --show-toplevel || echo ".")'

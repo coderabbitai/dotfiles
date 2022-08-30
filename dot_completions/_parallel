@@ -1,0 +1,6 @@
+ #compdef parallel
+
+(( $+functions[_comp_parallel] )) ||
+ eval "$(parallel --shell-completion auto)" &&
+ _comp_parallel
+

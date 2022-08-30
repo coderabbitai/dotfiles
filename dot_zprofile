@@ -1,0 +1,17 @@
+# check if $HOME/homebrew exists, if it does then export environment
+if [ -d "$HOME/homebrew" ]; then
+	eval "$($HOME/homebrew/bin/brew shellenv)"
+else
+  if [[ $OSTYPE == 'darwin'* ]]; then
+    test -d /opt/homebrew && eval "$(/opt/homebrew/bin/brew shellenv)"
+    test -f /usr/local/bin/brew && eval "$(/usr/local/bin/brew shellenv)"
+  else
+    test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  fi
+fi
+
+# add python symlinks
+export PATH=$HOME/sw/bin:$HOME/go/bin:$HOME/.cargo/bin:$(brew --prefix)/opt/python/libexec/bin:$HOME/.local/bin:$PATH
+
+# export a variable marking zprofile as sourced
+export ZPROFILE_SOURCED=1

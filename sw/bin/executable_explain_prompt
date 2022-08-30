@@ -1,0 +1,2 @@
+#!/usr/bin/env zsh
+source ~/.local/share/zinit/plugins/jakshin---yazpt/yazpt.zsh-theme && yazpt_explain_git

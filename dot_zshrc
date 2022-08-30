@@ -1,0 +1,637 @@
+# source ~/.zprofile if ZPROFILE_SOURCED is not set
+if [[ -z "$ZPROFILE_SOURCED" ]]; then
+  source ~/.zprofile
+fi
+
+export LS_COLORS="$(vivid generate gruvbox-dark)"
+
+export BAT_THEME="gruvbox-dark"
+
+# FZF theme -- See https://github.com/fnune/base16-fzf
+source $HOME/sw/assets/base16-gruvbox-dark-medium.config
+
+export LESSOPEN="|$(brew --prefix)/bin/lesspipe.sh %s"
+export LESSCOLORIZER="bat --color=always"
+export LESS="-R"
+
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+export EDITOR=nvim
+export SET_TERMINAL_COLORS=true
+
+function set_terminal {
+	if [[ -z "${TERMINAL:-}" ]]; then
+
+		# |
+		# | Check for the terminal name (depening on os)
+		# | ===========================================
+		OS="$(uname)"
+		if [[ "$OS" = "Darwin" ]]; then
+			export TERMINAL=$TERM_PROGRAM
+			# test whether ~/.iterm2_profile_check doesn't exist
+			if [[ ! -e "${HOME}/.iterm2_profile_check" ]]; then
+				# ask the user whether they want to use FluxNinja's bundled iTerm2 profile
+				echo "Do you want to use FluxNinja's bundled iTerm2 colors/font profile and matching wallpaper?"
+				# the choices are yes, no or later (default). echo the choices.
+				echo "yes, no or later (default)?"
+				# get the reponse from stdin
+				read -r response
+				if [[ $response == "yes" ]]; then
+					# install iterm2 profile
+					cp ~/sw/assets/iterm2_gruvbox.json ~/Library/Application\ Support/iTerm2/DynamicProfiles/
+					# execute the script
+					pip3 install iterm2 && python3 ~/sw/assets/iterm2_default.py && touch "${HOME}/.iterm2_profile_check" || (echo; echo; echo "Failed to install iTerm2 profile. You might need to enable Python API within iTerm2 preferences (under Magic tab). Press Enter to continue." && read)
+					# set the wallpaper to ~/sw/assets/apple_gruvbox.heic
+					osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$HOME/sw/assets/apple_gruvbox.heic\""
+				elif [[ $response == "no" ]]; then
+					echo "no" > "${HOME}/.iterm2_profile_check"
+				fi
+			fi
+      return
+    fi
+
+    # Other OS'es
+		if [[ "${OS#CYGWIN}" != "${OS}" ]]; then
+			export TERMINAL="mintty"
+		elif [[ "$TERM" = "xterm-kitty" ]]; then
+			export TERMINAL="kitty"
+		else
+			# |
+			# | Depending on how the script was invoked, we need
+			# | to loop until pid is no longer a subshell
+			# | ===========================================
+			pid="$$"
+			export TERMINAL="$(ps -h -o comm -p $pid)"
+			while [[ "${TERMINAL:(-2)}" == "sh" ]]; do
+				pid="$(ps -h -o ppid -p $pid)"
+				export TERMINAL="$(ps -h -o comm -p $pid)"
+			done
+		fi
+	fi
+}
+
+
+if [[ -z "$START_TMUX" ]]; then
+  export START_TMUX=true
+fi
+
+# check whether tmux command exists
+if [[ -x "$(command -v tmux)" ]]; then
+  if $START_TMUX; then
+    export START_TMUX=false
+    set_terminal
+    DETACHED_SESSIONS=$(tmux ls 2&>/dev/null | grep -v attached)
+    # check whether tmux has sessions that are in detached state
+    if [[ -n "$DETACHED_SESSIONS" ]]; then
+      # get the list of detached sessions
+      DETACHED_SESSIONS=$(tmux ls | grep -v attached)
+      # Add "New Session" to the list of detached sessions
+      DETACHED_SESSIONS="New Session\n$DETACHED_SESSIONS"
+      #local PREVIEW="TOKEN={} && echo 'token: $TOKEN'"
+      # use fzf to select a session
+      SESSION_NAME=$(echo "$DETACHED_SESSIONS" | \
+        fzf --header="== Attach to a detached session ==" \
+        --ansi --color="dark" \
+        --preview="$HOME/sw/assets/.session_preview {}")
+      # if the user selected a session, attach to it
+      # otherwise, create a new session
+      if [[ $SESSION_NAME == "New Session" ]]; then
+        tmux -u new-session
+      else
+        # extract session name
+        SESSION_NAME=$(echo "$SESSION_NAME" |  cut -d':' -f1)
+        tmux -u attach -t $SESSION_NAME
+      fi
+    else
+      tmux -u new-session
+    fi
+    exit
+  fi
+fi
+
+# Check for Homebrew to be present, install if it's missing
+if ! command -v brew &> /dev/null; then
+  echo "Installing homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  # source ~/.zprofile to update PATH
+  source ~/.zprofile
+  ~/sw/bin/autoupdate.zsh --force
+fi
+
+figlet -w 80 FluxNinja Zsh && echo "" 2&>/dev/null
+
+source ~/sw/assets/utils.zsh
+
+# See https://unix.stackexchange.com/q/150649/126543
+function expand-command-aliases() {
+	cmd="$1"
+	functions[expandaliasestmp]="${cmd}"
+	print -rn -- "${functions[expandaliasestmp]#$'\t'}"
+	unset 'functions[expandaliasestmp]'
+}
+
+_brew_completion_update=false
+
+func preexec() {
+  export LAST_COMMAND="$(expand-command-aliases "$1")"
+  # Do nothing at all if we are not in tmux, second test is needed in
+  # case of an ssh session being run from within tmux, which could result
+  # in $TMUX from the parent session being set without tmux being
+  # connected.
+  if [ -n "$TMUX" ] && tmux ls >/dev/null 2>/dev/null; then
+    eval "$(tmux show-environment -s | grep -v "^unset")"
+    local uuid="$(tmux show-environment -g TMUX_UUID 2>/dev/null)"
+    # check whether $LAST_TMUX_UUID is set
+    if [[ -z "$LAST_TMUX_UUID" ]]; then
+      export LAST_TMUX_UUID="$uuid"
+    else
+      # check whether $LAST_TMUX_UUID is the same as $uuid
+      if [ "$LAST_TMUX_UUID" != "$uuid" ]; then
+        export LAST_TMUX_UUID="$uuid"
+        echo -e "${BLUE_BRIGHT} == Autoupdate detected | Zsh reloading == ${RESET}"
+        source ~/.zshrc
+        enable-fzf-tab
+        echo
+        echo -e "${BLUE_BRIGHT} == Zsh reloaded == ${RESET}"
+        echo
+      fi
+    fi
+  fi
+
+  # if last command contained "brew install" or "brew upgrade" or "brew uninstall" or "brew reinstall" the set _brew_completion_update=1
+  if [[ "$LAST_COMMAND" =~ "brew install" ]] || [[ "$LAST_COMMAND" =~ "brew upgrade" ]] || [[ "$LAST_COMMAND" =~ "brew uninstall" ]] || [[ "$LAST_COMMAND" =~ "brew reinstall" ]]; then
+    
+    _brew_completion_update=true
+  fi
+}
+
+function precmd() {
+  # if _brew_completion_update is set to true, run "zinit update brew-completions"
+  if $_brew_completion_update; then
+    zinit update brew-completions
+    _brew_completion_update=false
+  fi
+}
+
+func zshexit() {
+#remove gh status
+rm /tmp/gh_$$ &>/dev/null
+# remove watch on home directory
+watchman watch-del $HOME >/dev/null 
+figlet -w 80 FluxNinja zsh
+cowsay -d "zsh exiting... see you later..."
+sleep 0.5
+}
+
+# configure zsh to show hidden files in auto-completion
+setopt globdots
+
+eval $(thefuck --alias)
+
+eval "$(zoxide init zsh --cmd cd)"
+
+source $(brew --prefix)/opt/asdf/libexec/asdf.sh 
+
+PS1="$(pwd) > "
+PROMPT_LAYOUT='<excuse><cheers><vcs><nl>[<cwd><? ><exit>] <char> '
+
+if [[ -z "$ITERM2_INTEGRATION_DETECTED" ]]; then
+  ITERM2_INTEGRATION_DETECTED=false
+fi
+
+if [[ $OSTYPE == 'darwin'* ]]; then
+  # check whether $TERMINAL is iTerm.app
+  if [[ $TERMINAL == "iTerm.app" ]]; then
+    export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=true
+    # iterm2 prompt mark doesn't work under tmux for some reason
+    test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" && \
+      ITERM2_INTEGRATION_DETECTED=true && PROMPT_LAYOUT="%{$(iterm2_prompt_mark)%} $PROMPT_LAYOUT%{$(iterm2_prompt_end)%}"
+    # read $HOME/.iterm2_profile_check file and check if it contains "no"
+    if [[ $(cat "${HOME}/.iterm2_profile_check") == "no" ]]; then
+      SET_TERMINAL_COLORS=true
+    else
+      SET_TERMINAL_COLORS=false
+    fi
+  fi
+fi
+
+periodic() { silent_background $HOME/sw/bin/gh_checks_status.sh > /tmp/gh_$$ }
+PERIOD=10
+
+function @yazpt_segment_nl() {
+# check whether $last_yazpt_vcs is not equal to $yazpt_state[vcs]
+if [[ "$last_yazpt_vcs" != "$yazpt_state[vcs]" ]]; then
+  spinner -q -s "$HOME/sw/bin/gh_checks_status.sh > /tmp/gh_$$"
+fi
+last_yazpt_vcs="$yazpt_state[vcs]"
+yazpt_state[nl]=""
+# read from /tmp/gh_"$$" if it exists
+if [[ -e "/tmp/gh_$$" ]]; then
+  local check="$(cat /tmp/gh_$$)"
+  # check whether check is empty
+  if [ -n "$check" ]; then
+    if [ -n "$yazpt_state[vcs]" ]; then
+      yazpt_state[nl]+=" | "
+    fi
+    yazpt_state[nl]+=" GitHub checks $(cat /tmp/gh_$$)"
+  fi
+fi
+
+local hour=$(date +%H)
+if (( 23 <= $hour || $hour <= 6 )); then
+  if [ -n "$yazpt_state[nl]" ] ||  [ -n "$yazpt_state[vcs]" ]; then
+    yazpt_state[nl]+=" | "
+  fi
+  yazpt_state[nl]+="%F{$YAZPT_CWD_COLOR}it's late, yo - get some sleep!%f"
+fi
+# check whether $yazpt_state[nl] or $yazpt_state[vcs] is not empty and add a new line if it is not empty
+if [ -n "$yazpt_state[nl]" ] || [ -n "$yazpt_state[vcs]" ]; then
+  yazpt_state[nl]+=$'\n'
+fi
+}
+
+function @yazpt_segment_excuse() {
+# check whether exit code of last command was not 0 or 127 or 130
+local code="$yazpt_state[exit_code]"
+local excuse_msg=''
+if [[ $code -ne 0 && $code -ne 127 && "$yazpt_state[exit_code]" -ne 130 ]] && $INSULTS_ENABLED; then
+  local excuse_msg='💥uh-ho💥 '
+  excuse_msg+="$(excuse)"
+  excuse_msg+=$'\n'
+fi
+yazpt_state[excuse]=$excuse_msg
+}
+
+APP_CHEERS_PATTERNS=(
+  "git push"
+  "git_ship"
+)
+
+function @yazpt_segment_cheers() {
+local do_cheers=false
+local cheers_msg=''
+# check whether exit code of last command was 0
+if $CHEERS_ENABLED && [ "$yazpt_state[exit_code]" -eq 0 ] ; then
+  # check whether $LAST_COMMAND contained any of the APP_CHEERS_PATTERNS
+  for pattern in "${APP_CHEERS_PATTERNS[@]}"; do
+    if [[ "$LAST_COMMAND" == *"$pattern"* ]]; then
+      do_cheers=true
+      break
+    fi
+  done
+fi
+if $do_cheers; then
+  cheers_msg=' 🍻🎉🍻 '
+  cheers_msg+="$(compliment)"
+  cheers_msg+=$'\n'
+  if [[ $OSTYPE == 'darwin'* ]]; then
+    # call fireworks if $ITERM2_INTEGRATION_DETECTED is true
+    if $ITERM2_INTEGRATION_DETECTED; then
+      $HOME/.iterm2/it2attention fireworks
+    fi
+  fi
+fi
+yazpt_state[cheers]=$cheers_msg
+}
+
+function configure_yazpt {
+  YAZPT_LAYOUT=$PROMPT_LAYOUT
+  YAZPT_CWD_COLOR=6 # cyan
+  YAZPT_EXECTIME_MIN_SECONDS=1
+}
+
+zinit ice wait'!0' atload'source "$yazpt_default_preset_file"; \
+  configure_yazpt;yazpt_precmd' nocd lucid
+zinit light jakshin/yazpt
+
+# install git-extras via zinit instead of brew
+zinit lucid wait'0a' for \
+as"program" pick"$ZPFX/bin/git-*" src"etc/git-extras-completion.zsh" make"PREFIX=$ZPFX" tj/git-extras
+
+
+# install direnv via zinit instead of brew
+zinit from"gh-r" as"program" mv"direnv* -> direnv" \
+    atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' \
+    pick"direnv" src="zhook.zsh" for \
+        direnv/direnv
+
+# zinit light zdharma-continuum/zui
+# zinit light zdharma-continuum/zbrowse # use '^B' to open zbrowse
+# zinit wait lucid for zdharma-continuum/zinit-console
+
+zinit snippet OMZ::lib/key-bindings.zsh
+
+zinit light MichaelAquilina/zsh-you-should-use
+
+# install brew's completions except for git
+zinit id-as='brew-completions' wait as='completion' lucid \
+  atclone='print Installing Brew completions...; \
+    rm -rf $ZPFX/brew_comps_others 2>/dev/null; \
+    mkdir -p $ZPFX/brew_comps_others; \
+    rm -rf $ZPFX/brew_comps_zsh 2>/dev/null; \
+    mkdir -p $ZPFX/brew_comps_zsh; \
+    command cp -f $(brew --prefix)/share/zsh/site-functions/^_* $ZPFX/brew_comps_others; \
+    command cp -f $(brew --prefix)/share/zsh/site-functions/_* $ZPFX/brew_comps_zsh; \
+    command rm $ZPFX/brew_comps_zsh/_git; \
+    zinit creinstall -q $ZPFX/brew_comps_zsh; \
+    zinit cclear; \
+    enable-fzf-tab' \
+  atload='fpath=( ${(u)fpath[@]:#$(brew --prefix)/share/zsh/site-functions/*} ); \
+      fpath+=( $ZPFX/brew_comps_others )' \
+  atpull='%atclone' nocompile run-atpull for \
+          zdharma-continuum/null
+
+zinit id-as='system-completions' wait as='completion' lucid \
+  atclone='print Installing system completions...; \
+    mkdir -p $ZPFX/zsh_comps; \
+    command cp -f $(brew --prefix)/share/zsh/functions/^_* $ZPFX/zsh_comps; \
+    zinit creinstall -q $(brew --prefix)/share/zsh/functions; \
+    zinit cclear; \
+    enable-fzf-tab' \
+  atload='fpath=( ${(u)fpath[@]:#$(brew --prefix)/share/zsh/functions/*} ); \
+    fpath+=( $ZPFX/zsh_comps )' \
+  atpull="%atclone" nocompile run-atpull for \
+       zdharma-continuum/null
+
+zinit id-as='fn-completions' wait as='completion' lucid \
+  atclone='print Installing FN completions...; \
+    zinit creinstall -q $HOME/.completions; \
+    zinit cclear; \
+    enable-fzf-tab' \
+  atload='fpath=( ${(u)fpath[@]:#$HOME/.completions/*} )' \
+  atpull="%atclone" nocompile run-atpull for \
+       zdharma-continuum/null
+
+
+zinit ice wait as'completion' lucid
+zinit snippet https://github.com/sainnhe/zsh-completions/blob/master/src/custom/_fzf
+
+#zinit ice wait'0' lucid
+#zinit light sainnhe/zsh-completions
+
+zinit ice wait blockf atpull'zinit creinstall -q .' lucid
+zinit light zsh-users/zsh-completions
+
+zvm_config() {
+  # always identify as xterm-256color to zsh-vi-mode plugin
+  ZVM_TERM=xterm-256color
+  ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BEAM
+  ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
+  ZVM_OPPEND_MODE_CURSOR=$ZVM_CURSOR_UNDERLINE
+}
+
+# See - https://github.com/jeffreytse/zsh-vi-mode#execute-extra-commands
+zvm_after_init() {
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+  zicompinit
+  zicdreplay
+
+  # fzf-tab needs to be loaded after compinit, but before fast-syntax-highlighting
+  zinit light Aloxaf/fzf-tab
+  # use tmux popups in case we are in tmux
+  if [ -n "$TMUX" ]; then
+    zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+  fi
+
+  ### NOTE: In order to generate previews, context is needed. The trick to find the context is to type the commmand to the point where completion is needed and press "C-x h". You will need to call "enable-fzf-tab" after this to reenable fzf-tab.
+
+  # preview git -- these don't work with homebrew completions so we make a copy of zsh's version at ~/.completions/_git
+  # zsh version - https://github.com/zsh-users/zsh/blob/master/Completion/Unix/Command/_git
+  zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview \
+    'git diff $word | delta'
+  zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-flags --preview-window=right:70%:wrap
+  zstyle ':fzf-tab:complete:git-(add|diff|restore):*' popup-pad 50 50
+
+  zstyle ':fzf-tab:complete:git-log:*' fzf-preview \
+    'git log --color=always $word'
+  zstyle ':fzf-tab:complete:git-log:*' fzf-flags --preview-window=right:70%:wrap
+  zstyle ':fzf-tab:complete:git-log:*' popup-pad 50 50
+
+  zstyle ':fzf-tab:complete:git-help:*' fzf-preview \
+    'git help $word | bat -plman --color=always'
+  zstyle ':fzf-tab:complete::*' fzf-flags --preview-window=right:70%:wrap
+  zstyle ':fzf-tab:complete::*' popup-pad 50 50
+
+  zstyle ':fzf-tab:complete:git-show:*' fzf-preview \
+    'case "$group" in
+    "commit tag") git show --color=always $word ;;
+    *) git show --color=always $word | delta ;;
+  esac'
+  zstyle ':fzf-tab:complete:git-show:*' fzf-flags --preview-window=right:70%:wrap
+  zstyle ':fzf-tab:complete:git-show:*' popup-pad 50 50
+
+  zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview \
+    'case "$group" in
+    "modified file") git diff $word | delta ;;
+    "recent commit object name") git show --color=always $word | delta ;;
+    *) git log --color=always $word ;;
+  esac'
+  zstyle ':fzf-tab:complete:git-checkout:*' fzf-flags --preview-window=right:70%:wrap
+  zstyle ':fzf-tab:complete:git-checkout:*' popup-pad 50 50
+
+  # ignore some patterns
+  zstyle ':completion::complete:*:*:files' ignored-patterns '.DS_Store' 'Icon?'
+  zstyle ':completion::complete:*:*:globbed-files' ignored-patterns '.DS_Store' 'Icon?'
+  zstyle ':completion::complete:rm:*:globbed-files' ignored-patterns
+
+  # disable sort when completing `git checkout`
+  zstyle ':completion:*:git-checkout:*' sort false
+  # set descriptions format to enable group support
+  zstyle ':completion:*:descriptions' format '[%d]'
+  # set list-colors to enable filename colorizing
+  zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+  # switch group using `,` and `.`
+  zstyle ':fzf-tab:*' switch-group 'F1' 'F2'
+  # give a preview of commandline arguments when completing `kill`
+  zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+  zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-preview \
+    '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
+  zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=down:3:wrap
+  zstyle ':fzf-tab:complete:(kill|ps):*' popup-pad 0 3
+
+  # preview environment variables
+  zstyle ':fzf-tab:complete:(-parameter-|-brace-parameter-|export|unset|expand):*' \
+    fzf-preview 'echo ${(P)word}'
+  zstyle ':fzf-tab:complete:(-parameter-|-brace-parameter-|export|unset|expand):*' popup-pad 0 1
+  zstyle ':fzf-tab:complete:(-parameter-|-brace-parameter-|export|unset|expand):*' fzf-flags --preview-window=down:1:wrap
+
+  # use exa for previewing commands that work at directory/path level
+  zstyle ':fzf-tab:complete:(cd|exa|ls|fd|find|cp|mv|rm):argument-rest' fzf-preview 'exa --git -a -1 --color=always --icons $realpath'
+  zstyle ':fzf-tab:complete:(cd|exa|ls|fd|find|cp|mv|rm):argument-rest' fzf-flags --preview-window=right:70%:wrap
+  zstyle ':fzf-tab:complete:(cd|exa|ls|fd|find|cp|mv|rm):argument-rest' popup-pad 50 50
+
+  # use lessfilter to preview content files, directories etc.
+  zstyle ':fzf-tab:complete:(cat|bat|vim|nvim|vimr|nvim-qt):argument-rest' fzf-preview 'LESSOPEN="|~/sw/assets/lessfilter %s" less ${(Q)realpath}'
+  zstyle ':fzf-tab:complete:(cat|bat|vim|nvim|vimr|nvim-qt):argument-rest' fzf-flags --preview-window=right:70%:wrap
+  zstyle ':fzf-tab:complete:(cat|bat|vim|nvim|vimr|nvim-qt):argument-rest' popup-pad 50 50
+
+  if [[ $OSTYPE == 'linux'* ]]; then
+    zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
+    zstyle ':fzf-tab:complete:systemctl-*:*' popup-pad 50 50
+  fi
+
+  zstyle ':fzf-tab:complete:tldr:argument-1' fzf-preview 'tldr --color always $word'
+  zstyle ':fzf-tab:complete:tldr:argument-1' fzf-flags --preview-window=right:70%:wrap
+  zstyle ':fzf-tab:complete:tldr:argument-1' popup-pad 50 50
+
+  zstyle ':fzf-tab:complete:man:' fzf-preview 'batman --color=always $word'
+  zstyle ':fzf-tab:complete:man:' fzf-flags --preview-window=right:70%:wrap
+  zstyle ':fzf-tab:complete:man:' popup-pad 50 50
+
+  zstyle ':fzf-tab:complete:-command-:*' fzf-preview \
+    '(out=$(tldr --color always "$word") 2>/dev/null && echo $out) || (out=$(batman --color=always "$word") 2>/dev/null && echo $out) || (out=$(source ~/.zprofile && which "$word") && echo $out) || echo "${(P)word}"'
+  zstyle ':fzf-tab:complete:-command-:*' fzf-flags --preview-window=right:70%:wrap
+  zstyle ':fzf-tab:complete:-command-:*' popup-pad 50 50
+
+
+  zstyle ':fzf-tab:complete:brew-(install|uninstall|search|info):*-argument-rest' fzf-preview 'brew info $word'
+  zstyle ':fzf-tab:complete:brew-(install|uninstall|search|info):*-argument-rest' fzf-flags --preview-window=right:70%:wrap
+  zstyle ':fzf-tab:complete:brew-(install|uninstall|search|info):*-argument-rest' popup-pad 50 50
+
+  # these should be the last zinit plugins
+  FAST_WORK_DIR=~/.config/fsh
+  zinit wait lucid light-mode for \
+      zdharma-continuum/fast-syntax-highlighting \
+    atload"_zsh_autosuggest_start" \
+      zsh-users/zsh-autosuggestions
+} # end zvm_after_init
+
+zinit ice depth=1
+zinit light jeffreytse/zsh-vi-mode
+
+
+# FluxNinja Aperture Tilt Env Vars
+export TILT_APERTURE_SSH_KEY_PUB=$HOME/.ssh/id_ed25519.pub
+export TILT_GRAFANA_REPO=$HOME/Work/fluxninja/grafana
+
+if [[ $OSTYPE == 'linux'* ]]; then
+  export QT_QPA_FONTDIR=~/.local/share/fonts
+fi
+
+# source .zshrc_local if it exists
+if [ -f ~/.zshrc_local ]; then
+  source ~/.zshrc_local
+fi
+
+if [ -z "$CHEERS_ENABLED" ]; then
+  CHEERS_ENABLED=true
+fi
+
+if [ -z "$INSULTS_ENABLED" ]; then
+  INSULTS_ENABLED=true
+fi
+
+if [ -z "$INSULTS_OFFENSIVE_ENABLED" ]; then
+  INSULTS_OFFENSIVE_ENABLED=false
+fi
+
+if $INSULTS_ENABLED; then
+  source $HOME/sw/assets/insults.zsh
+fi
+
+if [ -z "$CNF_TF_ENABLED" ]; then
+  CNF_TF_ENABLED=true
+fi
+
+if $CNF_TF_ENABLED; then
+  source $HOME/sw/assets/zsh_cnf.zsh
+fi
+
+if [ -z "$ASCII_WELCOME_ENABLED" ]; then
+  ASCII_WELCOME_ENABLED=true
+fi
+
+if [ -z "$ASCII_WELCOME_SNOOZE" ]; then
+  ASCII_WELCOME_SNOOZE=43200
+fi
+
+if [ -z "$AUTO_CLEAR_GO" ]; then
+  AUTO_CLEAR_GO=true
+fi
+
+if [ -z "$AUTO_CLEAR_GO_SECONDS" ]; then
+  AUTO_CLEAR_GO_SECONDS=7890000
+fi
+
+if $AUTO_CLEAR_GO; then
+  if [ -f "$HOME/.auto_clear_go" ]; then
+    if [ "$(($(date +%s) - $(cat $HOME/.auto_clear_go)))" -lt "$AUTO_CLEAR_GO_SECONDS" ]; then
+      AUTO_CLEAR_GO=false
+    else
+      echo $(date +%s) > $HOME/.auto_clear_go
+    fi
+  else
+    echo $(date +%s) > $HOME/.auto_clear_go
+  fi
+fi
+
+if $AUTO_CLEAR_GO; then
+  # ask the user if they want to clear go installation as it bloats over time
+  printf "Go installation grows over time and it's recommended to clear it periodically.\n"
+  printf "Do you want to clear the go installation? (y/n) "
+  read -r go_clear_answer
+  if [[ "$go_clear_answer" == "y" ]]; then
+    echo "Clearing go installation..."
+    sudo rm -rf $HOME/go
+    echo "Go installation cleared."
+    echo "Sync FluxNinja repos..."
+    $HOME/sw/bin/sync_fluxninja.sh
+  fi
+fi
+
+# check timestamp when welcome was last displayed and if it's less than ASCII_WELCOME_SNOOZE then disable ascii art. Also update the timestamp if ascii art is going to be displayed.
+if $ASCII_WELCOME_ENABLED; then
+  if [ -f "$HOME/.ascii_welcome_last_displayed" ]; then
+    if [ "$(($(date +%s) - $(cat $HOME/.ascii_welcome_last_displayed)))" -lt "$ASCII_WELCOME_SNOOZE" ]; then
+      ASCII_WELCOME_ENABLED=false
+    else
+      echo $(date +%s) > $HOME/.ascii_welcome_last_displayed
+    fi
+  else
+    echo $(date +%s) > $HOME/.ascii_welcome_last_displayed
+  fi
+fi
+
+# check whether ascii art is enabled
+if $ASCII_WELCOME_ENABLED; then
+  # print a random cowsay using fortune using only *.cow files located at $(brew --prefix)/share/cows
+  fortune | cowsay -f $(find $(brew --prefix)/share/cows/ -name "*.cow" | shuf -n 1)
+  (WTTR_PARAMS="1" ~/sw/bin/wttr.sh ;\
+    echo; echo -e "${CYAN_BRIGHT}  ==================================  GitHub Status ================================== ${RESET}"; echo;
+    gh status --org FluxNinja) 2&>/dev/null
+fi
+
+unset ASCII_WELCOME_ENABLED
+unset ASCII_WELCOME_SNOOZE
+unset CNF_TF_ENABLED
+
+# run $HOME/sw/bin/autoupdate.zsh by eval it's content
+eval "$(cat $HOME/sw/bin/autoupdate.zsh)"
+
+source $HOME/.aliases
+
+if [[ $TERM == *"tmux"* || $TERM == *"screen"* || -n $TMUX ]]; then
+  echo -e "${YELLOW_BRIGHT} Welcome to ${CYAN_BRIGHT}tmux${RESET}"
+  echo -e "${YELLOW_BRIGHT} Press ${CYAN_BRIGHT}<C-a C-Space>${YELLOW_BRIGHT} for fuzzy menu - look for additional commands under ${CYAN_BRIGHT}menu${YELLOW_BRIGHT} selection${RESET}"
+  echo -e "${YELLOW_BRIGHT} Press ${CYAN_BRIGHT}F12${YELLOW_BRIGHT} for tmux menu${RESET}"
+else 
+  sessions=$(tmux list-sessions 2&> /dev/null | cut -d ":" -f1)
+  # check whether $sessions is not empty
+  if [ -n "$sessions" ]; then
+    echo -e "\n${BOLD}${CYAN_BRIGHT}  == Active tmux Sessions ==${RESET}";
+    for i in $sessions ; do
+        echo -e "${BOLD}${YELLOW_BRIGHT}     [*] $i"
+    done;
+  fi
+  echo -e "${CYAN_BRIGHT}  == Run tms to create and select tmux sessions == ${RESET}"
+  echo -e "${RESET}"
+fi
+
+echo -e "${YELLOW_BRIGHT} Press ${CYAN_BRIGHT}<TAB>${YELLOW_BRIGHT} to invoke auto-complete menu for commands, arguments and options${RESET}"
+echo
+
+# override terminal profile colors using escape codes
+if $SET_TERMINAL_COLORS; then
+  $HOME/sw/assets/set_colors.zsh
+fi

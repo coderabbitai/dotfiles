@@ -1,0 +1,345 @@
+# To use these themes, first include this file in your own gitconfig file:
+#
+# [include]
+#     path = PATH/TO/delta/themes.gitconfig
+#
+# Then, in your own gitconfig file, activate the chosen theme, e.g.
+#
+# [delta]
+#    features = kingfisher
+#
+# Please add your own themes to this file, and open a PR.
+#
+# Instructions:
+#
+# 1. The name of the theme must be the name of some sort of wild organism:
+#    mammal, bird, plant, mollusk -- whatever. It can be in any language.
+#
+# 2. Use `delta --show-config` to list all the style settings that are active in
+#    your current delta environment, but only include settings in your theme
+#    that are essential to its appearance.
+#
+# 3. Include either `dark = true` or `light = true` according to whether it is
+#    designed for a light or dark terminal background. (This marks a feature as
+#    a "theme", causing it to be picked up by `delta --show-themes`).
+#
+# 4. Feel free to include a comment line indicating who is the author of the
+#    theme. E.g. a link to your github user page.
+
+[delta "fn-gruvbox"]
+    plus-style = syntax "#004000"
+    minus-style = syntax "#400000"
+    syntax-theme = gruvbox-dark
+    line-numbers-minus-style = "#cc241d"
+    line-numbers-zero-style = "#ebdbb2"
+    line-numbers-plus-style = "#98971a"
+    line-numbers-left-format = "{nm:>4}┊"
+    line-numbers-right-format = "{np:>4}│"
+    line-numbers-left-style = "#076678"
+    line-numbers-right-style = "#076678"
+    commit-decoration-style = bold "#d79921" box ul
+    file-style = bold "#d79921" ul
+    file-decoration-style = none
+    hunk-header-decoration-style = "#d79921" box
+
+[delta "collared-trogon"]
+    # author: https://github.com/clnoll
+    commit-decoration-style = bold box ul
+    dark = true
+    file-decoration-style = none
+    file-style = omit
+    hunk-header-decoration-style = "#022b45" box ul
+    hunk-header-file-style = "#999999"
+    hunk-header-line-number-style = bold "#003300"
+    hunk-header-style = file line-number syntax
+    line-numbers = true
+    line-numbers-left-style = "#022b45"
+    line-numbers-minus-style = "#80002a"
+    line-numbers-plus-style = "#003300"
+    line-numbers-right-style = "#022b45"
+    line-numbers-zero-style = "#999999"
+    minus-emph-style = normal "#80002a"
+    minus-style = normal "#330011"
+    plus-emph-style = syntax "#003300"
+    plus-style = syntax "#001a00"
+    syntax-theme = Nord
+
+[delta "coracias-caudatus"]
+    # author: https://github.com/clnoll
+    commit-decoration-style = ol "#7536ff"
+    commit-style = "#200078"
+    file-decoration-style = none
+    file-style = omit
+    hunk-header-decoration-style = "#cfd6ff" ul
+    hunk-header-file-style = "#858dff"
+    hunk-header-line-number-style = "#7536ff"
+    hunk-header-style = file line-number syntax
+    light = true
+    line-numbers = true
+    line-numbers-left-format = "{nm:>4} ."
+    line-numbers-left-style = "#e3ab02"
+    line-numbers-minus-style = "#ff38b6"
+    line-numbers-plus-style = "#00e0c2"
+    line-numbers-right-format = "{np:>4}  "
+    line-numbers-right-style = white
+    line-numbers-zero-style = "#cccccc"
+    minus-emph-style = bold "#ff3838" "#ffe3f7"
+    minus-style = "#ff0080"
+    plus-emph-style = "#008a81" bold "#00ffbf"
+    plus-style = syntax "#cffff3"
+    syntax-theme = Github
+
+[delta "hoopoe"]
+    # author: https://github.com/dandavison
+    light = true
+    pink = "#ffe0e0"
+    dark-pink = "#ffc0c0"
+    green = "#d0ffd0"
+    dark-green = "#a0efa0"
+    dark-green-2 = "#067a00"
+    minus-style = normal hoopoe.pink
+    minus-emph-style = normal hoopoe.dark-pink
+    minus-non-emph-style = minus-style
+    plus-style = syntax hoopoe.green
+    plus-emph-style = syntax hoopoe.dark-green
+    plus-non-emph-style = plus-style
+    minus-empty-line-marker-style = minus-style
+    plus-empty-line-marker-style = plus-style
+    commit-decoration-style = blue ol
+    commit-style = raw
+    file-style = omit
+    hunk-header-decoration-style = blue box
+    hunk-header-file-style = red
+    hunk-header-line-number-style = hoopoe.dark-green-2
+    hunk-header-style = file line-number syntax
+    syntax-theme = GitHub
+    zero-style = syntax
+
+[delta "tangara-chilensis"]
+    # author: https://github.com/clnoll
+    commit-decoration-style = bold box ul "#34fd50"
+    dark = true
+    file-decoration-style = none
+    file-style = omit
+    hunk-header-decoration-style = "#00b494" box ul
+    hunk-header-file-style = "#999999"
+    hunk-header-line-number-style = bold "#03a4ff"
+    hunk-header-style = file line-number syntax
+    line-numbers = true
+    line-numbers-left-style = black
+    line-numbers-minus-style = "#B10036"
+    line-numbers-plus-style = "#03a4ff"
+    line-numbers-right-style = black
+    line-numbers-zero-style = "#999999"
+    minus-emph-style = normal "#de004e"
+    minus-style = normal "#990017"
+    plus-emph-style = syntax "#03a4ff"
+    plus-style = syntax "#450eff"
+    side-by-side = true
+    syntax-theme = Vibrant Sunburst
+
+[delta "villsau"]
+    # author: https://github.com/torarnv
+    dark = true
+    file-style = omit
+    hunk-header-decoration-style = omit
+    hunk-header-file-style = magenta
+    hunk-header-line-number-style = dim magenta
+    hunk-header-style = file line-number syntax
+    line-numbers = false
+    minus-emph-style = bold red 52
+    minus-empty-line-marker-style = normal "#3f0001"
+    minus-non-emph-style = dim red
+    minus-style = bold red
+    plus-emph-style = bold green 22
+    plus-empty-line-marker-style = normal "#002800"
+    plus-non-emph-style = dim green
+    plus-style = bold green
+    syntax-theme = OneHalfDark
+    whitespace-error-style = reverse red
+    zero-style = dim syntax
+
+[delta "woolly-mammoth"]
+    # author: https://github.com/Kr1ss-XD
+    commit-decoration-style = 232 130 box
+    commit-style = 232 bold italic 130
+    dark = true
+    file-added-label = [+]
+    file-copied-label = [C]
+    file-decoration-style = "#606018" overline
+    file-modified-label = [M]
+    file-removed-label = [-]
+    file-renamed-label = [R]
+    file-style = 232 bold 184
+    hunk-header-decoration-style = none
+    hunk-header-style = syntax bold italic 237
+    line-numbers = true
+    line-numbers-left-format = "{nm:>1}┊"
+    line-numbers-left-style = red
+    line-numbers-minus-style = red italic black
+    line-numbers-plus-style = green italic black
+    line-numbers-right-format = "{np:>1}┊"
+    line-numbers-right-style = green
+    line-numbers-zero-style = "#545474" italic
+    minus-emph-style = syntax bold "#780000"
+    minus-style = syntax "#400000"
+    plus-emph-style = syntax bold "#007800"
+    plus-style = syntax "#004000"
+    syntax-theme = Vibrant Sunburst
+    whitespace-error-style = "#280050" reverse
+    zero-style = syntax
+    blame-format = "{author:<18} ({commit:>7}) ┊{timestamp:^16}┊ "
+    blame-palette = "#101010 #200020 #002800 #000028 #202000 #280000 #002020 #002800 #202020"
+
+[delta "calochortus-lyallii"]
+    # author: https://github.com/manojkarthick
+    commit-decoration-style = none
+    dark = true
+    file-added-label = [+]
+    file-copied-label = [C]
+    file-decoration-style = none
+    file-modified-label = [M]
+    file-removed-label = [-]
+    file-renamed-label = [R]
+    file-style = 232 bold 184
+    hunk-header-decoration-style = none
+    hunk-header-file-style = "#999999"
+    hunk-header-line-number-style = bold "#03a4ff"
+    hunk-header-style = file line-number syntax
+    line-numbers = true
+    line-numbers-left-style = black
+    line-numbers-minus-style = "#B10036"
+    line-numbers-plus-style = "#03a4ff"
+    line-numbers-right-style = black
+    line-numbers-zero-style = "#999999"
+    minus-emph-style = syntax bold "#780000"
+    minus-style = syntax "#400000"
+    plus-emph-style = syntax bold "#007800"
+    plus-style = syntax "#004000"
+    whitespace-error-style = "#280050" reverse
+    zero-style = syntax
+    syntax-theme = Nord
+
+[delta "mantis-shrimp"]
+    #author: https://github.com/2kabhishek
+    dark = true
+    side-by-side = true
+    navigate = true
+    keep-plus-minus-markers = true
+    hyperlinks = true
+    file-added-label = [+]
+    file-copied-label = [==]
+    file-modified-label = [*]
+    file-removed-label = [-]
+    file-renamed-label = [->]
+    file-style = omit
+    zero-style = syntax
+    syntax-theme = Monokai Extended
+    commit-decoration-style ="#11ce16" box
+    commit-style = "#ffd21a" bold italic
+    hunk-header-decoration-style = "#1688f0" box ul
+    hunk-header-file-style = "#c63bee" ul bold
+    hunk-header-line-number-style = "#ffd21a" box bold
+    hunk-header-style = file line-number syntax bold italic
+    line-numbers = true
+    line-numbers-left-format = "{nm:>1}|"
+    line-numbers-left-style = "#1688f0"
+    line-numbers-minus-style = "#ff0051" bold
+    line-numbers-plus-style = "#03e57f" bold
+    line-numbers-right-format = "{np:>1}|"
+    line-numbers-right-style = "#1688f0"
+    line-numbers-zero-style = "#aaaaaa" italic
+    minus-emph-style = syntax bold "#b80000"
+    minus-style = syntax "#5d001e"
+    plus-emph-style = syntax bold "#007800"
+    plus-style = syntax "#004433"
+    whitespace-error-style = "#280050"
+
+[delta "mantis-shrimp-lite"]
+    #author: https://github.com/2kabhishek
+    dark = true
+    side-by-side = true
+    navigate = true
+    keep-plus-minus-markers = true
+    file-added-label = [+]
+    file-copied-label = [==]
+    file-modified-label = [*]
+    file-removed-label = [-]
+    file-renamed-label = [->]
+    file-style = omit
+    zero-style = syntax
+    syntax-theme = Monokai Extended
+    commit-decoration-style = green box
+    commit-style = yellow bold italic
+    hunk-header-decoration-style = blue box ul
+    hunk-header-file-style = purple ul bold
+    hunk-header-line-number-style = yellow box bold
+    hunk-header-style = file line-number syntax bold italic
+    line-numbers = true
+    line-numbers-left-format = "{nm:>1}|"
+    line-numbers-left-style = blue
+    line-numbers-minus-style = red bold
+    line-numbers-plus-style = green bold
+    line-numbers-right-format = "{np:>1}|"
+    line-numbers-right-style = blue
+    line-numbers-zero-style = white italic
+    minus-emph-style = syntax bold red
+    plus-emph-style = syntax bold green
+    whitespace-error-style = purple bold
+
+[delta "zebra-dark"]
+    minus-style = syntax "#330f0f"
+    minus-emph-style = syntax "#4f1917"
+    plus-style = syntax "#0e2f19"
+    plus-emph-style = syntax "#174525"
+    map-styles = \
+       bold purple => syntax "#330f29", \
+       bold blue => syntax "#271344", \
+       bold cyan => syntax "#0d3531", \
+       bold yellow => syntax "#222f14"
+    zero-style = syntax
+    whitespace-error-style = "#aaaaaa"
+
+[delta "zebra-light"]
+    minus-style = syntax "#fbdada"
+    minus-emph-style = syntax "#f6b6b6"
+    plus-style = syntax "#d6ffd6"
+    plus-emph-style = syntax "#adffad"
+    map-styles = \
+       bold purple => syntax "#feecf7", \
+       bold blue => syntax "#e5dff6", \
+       bold cyan => syntax "#d8fdf6", \
+       bold yellow => syntax "#f4ffe0"
+    zero-style = syntax
+    whitespace-error-style = "#aaaaaa"
+
+[delta "chameleon"]
+    #author: https://github.com/AirOnSkin
+    dark = true
+    line-numbers = true
+    side-by-side = true
+    keep-plus-minus-markers = true
+    syntax-theme = Nord
+    file-style = "#434C5E" bold
+    file-decoration-style = "#434C5E" ul
+    file-added-label = [+]
+    file-copied-label = [==]
+    file-modified-label = [*]
+    file-removed-label = [-]
+    file-renamed-label = [->]
+    hunk-header-style = omit
+    line-numbers-left-format = " {nm:>1} │"
+    line-numbers-left-style = red
+    line-numbers-right-format = " {np:>1} │"
+    line-numbers-right-style = green
+    line-numbers-minus-style = red italic black
+    line-numbers-plus-style = green italic black
+    line-numbers-zero-style = "#434C5E" italic
+    minus-style = bold red
+    minus-emph-style = bold red
+    plus-style = bold green
+    plus-emph-style = bold green
+    zero-style = syntax
+    blame-code-style = syntax
+    blame-format = "{author:<18} ({commit:>7}) {timestamp:^12} "
+    blame-palette = "#2E3440" "#3B4252" "#434C5E" "#4C566A"

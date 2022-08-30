@@ -1,0 +1,42 @@
+# This is Git's per-user configuration file.
+[core]
+  editor = nvim
+  pager = delta
+[help]
+  autoCorrect = prompt
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+[push]
+  default = current
+[merge]
+  tool = nvim_mergetool
+  conflictstyle = diff3
+[mergetool "nvim_mergetool"]
+  cmd = nvim -f -c "MergetoolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
+  trustExitCode = true  
+[pull]
+  ff = only
+  rebase = false
+[interactive]
+  diffFilter = delta --color-only --features=interactive
+[diff]
+  colorMoved = default
+[include]
+  path = ~/.gitconfig_themes
+[delta]
+  features = fn-gruvbox
+  navigate = true  # use n and N to move between diff sections
+  side-by-side = true
+  line-numbers = true
+[delta "interactive"]
+  keep-plus-minus-markers = false
+# Use ~/.gitconfig_local to provide username etc.
+[include]
+  path = ~/.gitconfig_local
+[diff "sopsdiffer"]
+  textconv = sops --decrypt
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/

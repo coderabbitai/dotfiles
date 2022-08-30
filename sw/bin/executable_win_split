@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+flags=""
+title_name=""
+ask_quit=false
+# flags are: -h for horizontal split, -b for create pane on left side, -t for Title as string argument
+while getopts ahbt: opt; do
+	case $opt in
+	a)
+		ask_quit=true
+		;;
+	h)
+		# append to flags
+		flags="$flags -h"
+		;;
+	b)
+		flags="$flags -b"
+		;;
+	t)
+		# title is the argument provided to the -t flag
+		title_name=$OPTARG
+		;;
+	\?)
+		echo "Invalid option: -$OPTARG" >&2
+		exit 1
+		;;
+	esac
+done
+
+shift "$((OPTIND - 1))"
+
+cmd="export ZINIT_TURBO=false;source ~/sw/assets/utils.zsh;\
+command -v zsh-notify-before-command >/dev/null 2>&1 && zsh-notify-before-command '$*';\
+$*;\
+command -v zsh-notify-after-command >/dev/null 2>&1 && zsh-notify-after-command"
+
+title="printf '\033]2;$title_name\033\\';"
+
+if $ask_quit; then
+	cmd="$cmd; echo; echo Press Enter to exit ; read"
+fi
+tmux splitw $flags -c "#{pane_current_path}" "$title$cmd" &

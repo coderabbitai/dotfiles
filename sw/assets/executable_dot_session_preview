@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+
+# assign argument of function to variable TOKEN
+TOKEN="$1"
+# if TOKEN is contains "New Session", return
+if [[ "$TOKEN" == "New Session" ]]; then
+  echo "Start a new tmux session"
+  exit
+fi
+# extract session name from token
+SESSION_NAME="$(echo "$TOKEN" | cut -d' ' -f1)"
+# if SESSION_NAME is empty, return
+if [[ -z "$SESSION_NAME" ]]; then
+  echo "Invalid session name"
+  exit
+fi
+# return tmux capture-pane results
+tmux capture-pane -ep -t "$SESSION_NAME"

@@ -1,0 +1,169 @@
+{
+  "coc.preferences.extensionUpdateCheck": "daily",
+  "coc.preferences.formatOnSaveFiletypes": ["*"],
+  "coc.preferences.enableMessageDialog": true,
+  "coc.preferences.enableLinkedEditing": true,
+  "coc.preferences.silentAutoupdate": true,
+  "semanticTokens.filetypes": ["*"],
+  "codeLens.enable": true,
+  "codeLens.position": "top",
+  "codeLens.separator": "ﯦ CodeLens Actions:",
+  "codeLens.subseparator": "  ",
+  "colors.filetypes": ["*"],
+  "prettier.proseWrap": "always",
+  "explorer.icon.enableNerdfont": true,
+  "explorer.icon.source": "vim-devicons",
+  "explorer.floating.border.title": "Explorer: Press ? to show help",
+  "diagnostic.locationlistLevel": "warning",
+  "diagnostic.locationlistUpdate": false,
+  "diagnostic.autoRefresh": true,
+  "suggest.removeDuplicateItems": true,
+  "suggest.completionItemKindLabels": {
+    "keyword": "\uf1de",
+    "variable": "\ue79b",
+    "value": "\uf89f",
+    "operator": "\u03a8",
+    "constructor": "\uf0ad",
+    "function": "\u0192",
+    "reference": "\ufa46",
+    "constant": "\uf8fe",
+    "method": "\uf09a",
+    "struct": "\ufb44",
+    "class": "\uf0e8",
+    "interface": "\uf417",
+    "text": "\ue612",
+    "enum": "\uf435",
+    "enumMember": "\uf02b",
+    "module": "\uf40d",
+    "color": "\ue22b",
+    "property": "\ue624",
+    "field": "\uf9be",
+    "unit": "\uf475",
+    "event": "\ufacd",
+    "file": "\uf723",
+    "folder": "\uf114",
+    "snippet": "\ue60b",
+    "typeParameter": "\uf728",
+    "default": "\uf29c"
+  },
+  "snippets.priority": 89,
+  "tabnine.priority": 99,
+  "coc.source.zsh.priority": 99,
+  "go.checkForUpdates": "install",
+  "go.goplsOptions": {
+    "local": "fluxninja.com",
+    "experimentalWorkspaceModule": true,
+    "gofumpt": true,
+    "staticcheck": true,
+    "semanticTokens": true,
+    "analyses": {
+      "fieldalignment": true,
+      "nilness": true,
+      "unusedparams": true,
+      "unusedwrite": true,
+      "shadow": true,
+      "useany": true
+    },
+    "codelenses": {
+      "gc_details": true,
+      "generate": true,
+      "regenerate_cgo": true,
+      "tidy": true,
+      "upgrade_dependency": true,
+      "vendor": true
+    }
+  },
+  "languageserver": {
+    "graphql": {
+      "command": "graphql-lsp",
+      "args": ["server", "-m", "stream"],
+      "filetypes": ["typescript", "typescriptreact", "graphql"]
+    },
+    "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": ["terraform", "tf"],
+      "initializationOptions": {}
+    },
+    "lua": {
+      "command": "lua-lsp",
+      "filetypes": ["lua"]
+    },
+    "bash": {
+      "command": "bash-language-server",
+      "args": ["start"],
+      "filetypes": ["sh", "bash"]
+    }
+  },
+  "diagnostic-languageserver.mergeConfig": true,
+  "diagnostic-languageserver.debug": true,
+  "diagnostic-languageserver.linters": {
+    "golangci-lint2": {
+      "command": "golangci-lint",
+      "rootPatterns": ["go.mod"],
+      "debounce": 100,
+      "args": ["--out-format", "json", "--deadline", "5s", "run", "%dirname"],
+      "sourceName": "golangci-lint",
+      "parseJson": {
+        "sourceName": "Pos.Filename",
+        "sourceNameFilter": true,
+        "errorsRoot": "Issues",
+        "line": "Pos.Line",
+        "column": "Pos.Column",
+        "message": "${Text} [${FromLinter}]"
+      }
+    },
+    "zsh": {
+      "command": "zsh",
+      "args": ["-n", "%file"],
+      "isStdout": false,
+      "isStderr": true,
+      "sourceName": "zsh",
+      "formatLines": 1,
+      "formatPattern": [
+        "^[^:]+:(\\d+):\\s+(.*)$",
+        {
+          "line": 1,
+          "message": 2
+        }
+      ]
+    }
+  },
+  "diagnostic-languageserver.filetypes": {
+    "text": ["write-good", "languagetool"],
+    "markdown": ["write-good", "languagetool", "markdownlint"],
+    "go": "golangci-lint2",
+    "zsh": "zsh"
+  },
+  "diagnostic-languageserver.formatFiletypes": {
+    "sh": "shfmt",
+    "bash": "shfmt",
+    "terraform": "tffmt"
+  },
+  "grammarly.filetypes": [
+    "asciidoc",
+    "tex",
+    "plaintex",
+    "context",
+    "markdown",
+    "text",
+    "rst"
+  ],
+  "cSpell.showStatus": false,
+  "cSpell.allowCompoundWords": true,
+  "cSpell.userWords": [
+    "Msgf",
+    "Unmarshaller",
+    "etcd",
+    "etcdclient",
+    "etcdwatcher",
+    "etcdwriter",
+    "policylangv"
+  ],
+  "cSpell.dictionaries": ["wordsEn", "softwareTerms", "misc"],
+  "coc.source.tag.priority": 89,
+  "eslint.packageManager": "yarn",
+  "eslint.nodePath": ".yarn/sdks",
+  "workspace.workspaceFolderCheckCwd": false,
+  "tsserver.tsdk": ".yarn/sdks/typescript/lib"
+}

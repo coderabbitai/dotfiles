@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Neovim Text Editor
+Comment=Edit text files
+Exec=nvim-qt
+Terminal=false
+Type=Application
+Icon=terminal
+Categories=Utility;TextEditor;
+StartupNotify=true
+MimeType=text/plain;
