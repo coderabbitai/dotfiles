@@ -153,6 +153,7 @@ PACKAGES+=(
   hasura-cli
   yarn
   circleci
+  graphviz
 )
 
 if [[ $OSTYPE == 'darwin'* ]]; then
