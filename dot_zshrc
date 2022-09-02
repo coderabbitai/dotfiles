@@ -546,27 +546,27 @@ if [ -z "$ASCII_WELCOME_SNOOZE" ]; then
   ASCII_WELCOME_SNOOZE=43200
 fi
 
-if [ -z "$AUTO_CLEAR_GO" ]; then
-  AUTO_CLEAR_GO=true
+if [ -z "$AUTO_CLEAR_CACHES" ]; then
+  AUTO_CLEAR_CACHES=true
 fi
 
-if [ -z "$AUTO_CLEAR_GO_SECONDS" ]; then
-  AUTO_CLEAR_GO_SECONDS=7890000
+if [ -z "$AUTO_CLEAR_CACHES_SECONDS" ]; then
+  AUTO_CLEAR_CACHES_SECONDS=7890000
 fi
 
-if $AUTO_CLEAR_GO; then
-  if [ -f "$HOME/.auto_clear_go" ]; then
-    if [ "$(($(date +%s) - $(cat $HOME/.auto_clear_go)))" -lt "$AUTO_CLEAR_GO_SECONDS" ]; then
-      AUTO_CLEAR_GO=false
+if $AUTO_CLEAR_CACHES; then
+  if [ -f "$HOME/.auto_clear_caches" ]; then
+    if [ "$(($(date +%s) - $(cat $HOME/.auto_clear_caches)))" -lt "$AUTO_CLEAR_CACHES_SECONDS" ]; then
+      AUTO_CLEAR_CACHES=false
     else
-      echo $(date +%s) > $HOME/.auto_clear_go
+      echo $(date +%s) > $HOME/.auto_clear_caches
     fi
   else
-    echo $(date +%s) > $HOME/.auto_clear_go
+    echo $(date +%s) > $HOME/.auto_clear_caches
   fi
 fi
 
-if $AUTO_CLEAR_GO; then
+if $AUTO_CLEAR_CACHES; then
   # ask the user if they want to clear go installation as it bloats over time
   printf "Go installation grows over time and it's recommended to clear it periodically.\n"
   printf "Do you want to clear the go installation? (y/n) "
@@ -577,6 +577,13 @@ if $AUTO_CLEAR_GO; then
     echo "Go installation cleared."
     echo "Sync FluxNinja repos..."
     $HOME/sw/bin/sync_fluxninja.sh
+  fi
+  printf "Do you want to prune docker builder cache? (y/n) "
+  read -r docker_prune_answer
+  if [[ "$docker_prune_answer" == "y" ]]; then
+    echo "Pruning docker builder cache..."
+    docker builder prune -f -a
+    echo "Docker builder cache pruned."
   fi
 fi
 
