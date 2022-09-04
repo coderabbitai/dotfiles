@@ -25,6 +25,8 @@ brew tap ejoffe/homebrew-tap
 brew tap claui/whence
 # buf
 brew tap bufbuild/buf
+# tilt-dev
+brew tap tilt-dev/tap
 
 if [[ $OSTYPE == 'darwin'* ]]; then
 	brew tap homebrew/cask-fonts
@@ -71,6 +73,7 @@ PACKAGES+=(
 	prometheus
 	rust
 	tilt
+  tilt-dev/tap/ctlptl
 	bottom
 	helm
 	helmfile
@@ -144,6 +147,7 @@ PACKAGES+=(
   lazydocker
   k9s
   kustomize
+  kubebuilder
   bufbuild/buf/buf
   grpcurl
   mockery
