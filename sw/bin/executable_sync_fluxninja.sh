@@ -45,6 +45,7 @@ PRECOMMIT_DIRS=(
 	~/Work/fluxninja/cloud
 	~/Work/fluxninja/aperture
 	~/Work/fluxninja/aperture-tech-docs
+	~/Work/fluxninja/aperture-go
 )
 
 for dir in "${PRECOMMIT_DIRS[@]}"; do
