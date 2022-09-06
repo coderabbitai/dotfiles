@@ -17,6 +17,13 @@ if brew ls --versions gcc@5 > /dev/null; then
   brew uninstall gcc@5
 fi
 
+# uninstall pre-commit if it exists
+if brew ls --versions pre-commit > /dev/null; then
+  # uninstall pre-commit
+  brew uninstall pre-commit
+fi
+
+
 # tap withgraphite
 brew tap withgraphite/tap
 # add spr repo
@@ -68,7 +75,6 @@ PACKAGES+=(
 	node@16
   node
 	python
-	pre-commit
 	etcd
 	prometheus
 	rust
@@ -399,6 +405,8 @@ revolver update 'Installing python packages...'
 #python stuff
 pip3 install --quiet --upgrade pip
 pip3 install --quiet --upgrade setuptools
+# fluxninja
+pip3 install --quiet --upgrade pre-commit
 # required for nvim mundo
 pip3 install --quiet pynvim
 pip3 install --quiet libtmux
