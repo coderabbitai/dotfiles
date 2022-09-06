@@ -160,7 +160,7 @@ let g:gothx_command_prefix = 'Go'
 let g:indentLine_fileTypeExclude = ['startify', 'floaterm', 'coc-explorer', 'coctree', 'json']
 
 " copilot only works with node@16
-let g:copilot_node_command = "$HOMEBREW_CELLAR/node@16/16.17.0/bin/node"
+let g:copilot_node_command = "$HOMEBREW_CELLAR/node@16/16.17.0_1/bin/node"
 
 " install coc extensions
 let g:coc_global_extensions = [
