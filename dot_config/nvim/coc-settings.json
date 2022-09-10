@@ -140,15 +140,6 @@
     "bash": "shfmt",
     "terraform": "tffmt"
   },
-  "grammarly.filetypes": [
-    "asciidoc",
-    "tex",
-    "plaintex",
-    "context",
-    "markdown",
-    "text",
-    "rst"
-  ],
   "cSpell.showStatus": false,
   "cSpell.allowCompoundWords": true,
   "cSpell.userWords": [
