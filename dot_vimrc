@@ -430,21 +430,26 @@ nnoremap <silent> <space>o :call OutlineToggle()<CR>
 nmap <space>e <Cmd>CocCommand explorer<CR>
 
 let g:auto_diagnostic_window = 0
-let g:auto_diagnostic_delay_ms = 300
-let g:auto_diagnostic_window_size = 3
+let g:diagnostic_window_size = 3
 
 " open diagnostics
-xmap <silent> <space>d :call RefreshDiagnostics()<CR>
-nmap <silent> <space>d :call RefreshDiagnostics()<CR>
+xmap <silent> <space>d :call ToggleDiagnostics()<CR>
+nmap <silent> <space>d :call ToggleDiagnostics()<CR>
 
-function! RefreshDiagnostics() abort
+function! ToggleDiagnostics() abort
+  if get(getloclist(0, {'winid':0}), 'winid', 0)
+    " the location window is open
+    windo lcl\|ccl
+  else
+    " the location window is closed
     if empty(&l:buftype)
         if (&filetype !=# 'floaterm') && (&buftype !=# 'terminal')
-          execute 'CocDiagnostics ' . g:auto_diagnostic_window_size 
+          execute 'CocDiagnostics ' . g:diagnostic_window_size 
           execute 'botright lwindow' 
           execute 'wincmd p'
         endif
     endif
+  endif  
 endfunction
 
 augroup coc_diag
@@ -467,13 +472,15 @@ augroup coc_diag
     endif
   endfunction
 
-  function! s:AutoRefreshDiagnosticsWindow() abort
+  function! s:AutoToggleDiagnosticsWindow() abort
     if g:auto_diagnostic_window
-      call RefreshDiagnostics()
+      if get(getloclist(0, {'winid':0}), 'winid', 0) == 0
+        call ToggleDiagnostics()
+      endif
     endif
   endfunction
 
-  autocmd User CocDiagnosticChange call s:AutoRefreshDiagnosticsWindow()
+  autocmd User CocDiagnosticChange call s:AutoToggleDiagnosticsWindow()
 
 augroup end
 
