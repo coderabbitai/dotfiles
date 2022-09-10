@@ -715,7 +715,8 @@ call fuzzymenu#AddAll({
 
 " Coc menu
 call fuzzymenu#AddAll({
-      \ ' Diagnostics': {'exec': 'CocFzfList diagnostics --current-buf'},
+      \ ' Diagnostics (Workspace)': {'exec': 'CocFzfList diagnostics'},
+      \ ' Diagnostics (Buffer)': {'exec': 'call ToggleDiagnostics()'},
       \ ' Coc Actions': {'exec': 'call CocActionAsync("codeAction")'},
       \ ' Coc Commands': {'exec': 'CocCommand'},
       \ 'ﯦ CodeLens Actions': {'exec': 'call CocActionAsync("codeLensAction")'},
