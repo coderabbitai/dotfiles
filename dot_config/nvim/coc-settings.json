@@ -15,7 +15,7 @@
   "explorer.icon.source": "vim-devicons",
   "explorer.floating.border.title": "Explorer: Press ? to show help",
   "diagnostic.locationlistLevel": "warning",
-  "diagnostic.locationlistUpdate": false,
+  "diagnostic.locationlistUpdate": true,
   "diagnostic.autoRefresh": true,
   "suggest.removeDuplicateItems": true,
   "suggest.completionItemKindLabels": {
