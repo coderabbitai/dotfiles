@@ -429,7 +429,7 @@ nnoremap <silent> <space>o :call OutlineToggle()<CR>
 
 nmap <space>e <Cmd>CocCommand explorer<CR>
 
-let g:auto_diagnostic_window = 1
+let g:auto_diagnostic_window = 0
 let g:diagnostic_window_size = 3
 
 " open diagnostics
