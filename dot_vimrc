@@ -603,6 +603,10 @@ let g:startify_commands = [
 
 nmap <space>s <Cmd>Startify<CR>
 
+nmap <space>f <Cmd>Files<CR>
+nmap <space>p <Cmd>RG<CR>
+
+
 " auto session management
 function! GetUniqueSessionName()
   " get session name if it already exists
