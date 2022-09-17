@@ -3,4 +3,3 @@
 run:
   timeout: 10s
   allow-parallel-runners: true
-  go: "1.18"
