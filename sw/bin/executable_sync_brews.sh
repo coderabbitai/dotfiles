@@ -24,16 +24,12 @@ if brew ls --versions pre-commit > /dev/null; then
 fi
 
 
-# tap withgraphite
 brew tap withgraphite/tap
-# add spr repo
 brew tap ejoffe/homebrew-tap
-# install whence
 brew tap claui/whence
-# buf
 brew tap bufbuild/buf
-# tilt-dev
 brew tap tilt-dev/tap
+brew tap noahgorstein/tap
 
 if [[ $OSTYPE == 'darwin'* ]]; then
 	brew tap homebrew/cask-fonts
@@ -164,6 +160,7 @@ PACKAGES+=(
   yarn
   circleci
   graphviz
+  noahgorstein/tap/jqp
 )
 
 if [[ $OSTYPE == 'darwin'* ]]; then
