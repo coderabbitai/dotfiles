@@ -255,6 +255,12 @@ for package in ${PACKAGES[@]}; do
 done
 
 if [[ $OSTYPE == 'darwin'* ]]; then
+
+  # check whether /Library/Java/JavaVirtualMachines/openjdk.jdk exists
+  if [[ ! -d "/Library/Java/JavaVirtualMachines/openjdk.jdk" ]]; then
+    sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+  fi
+
   revolver update 'Installing iterm2 shell integration...'
   curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash
 	CASKS+=(
