@@ -161,6 +161,7 @@ PACKAGES+=(
   circleci
   graphviz
   noahgorstein/tap/jqp
+  openjdk
 )
 
 if [[ $OSTYPE == 'darwin'* ]]; then
@@ -301,57 +302,62 @@ if [[ $OSTYPE == 'darwin'* ]]; then
 	done
   revolver update 'Updating defaults...'
 	# on macos override default editor to vimr
-  duti -s com.qvacua.vimr public.json all
-  duti -s com.qvacua.vimr public.plain-text all
-  duti -s com.qvacua.vimr public.python-script all
-  duti -s com.qvacua.vimr public.shell-script all
-  duti -s com.qvacua.vimr public.source-code all
-  duti -s com.qvacua.vimr public.text all
-  duti -s com.qvacua.vimr public.unix-executable all
-  duti -s com.qvacua.vimr .go all
-  duti -s com.qvacua.vimr .mod all
-  duti -s com.qvacua.vimr .work all
-  duti -s com.qvacua.vimr .c all
-  duti -s com.qvacua.vimr .cc all
-  duti -s com.qvacua.vimr .cpp all
-  duti -s com.qvacua.vimr .cs all
-  duti -s com.qvacua.vimr .css all
-  duti -s com.qvacua.vimr .java all
-  duti -s com.qvacua.vimr .js all
-  duti -s com.qvacua.vimr .sass all
-  duti -s com.qvacua.vimr .scss all
-  duti -s com.qvacua.vimr .less all
-  duti -s com.qvacua.vimr .vue all
-  duti -s com.qvacua.vimr .cfg all
-  duti -s com.qvacua.vimr .json all
-  duti -s com.qvacua.vimr .jsx all
-  duti -s com.qvacua.vimr .log all
-  duti -s com.qvacua.vimr .lua all
-  duti -s com.qvacua.vimr .md all
-  duti -s com.qvacua.vimr .php all
-  duti -s com.qvacua.vimr .pl all
-  duti -s com.qvacua.vimr .py all
-  duti -s com.qvacua.vimr .rb all
-  duti -s com.qvacua.vimr .ts all
-  duti -s com.qvacua.vimr .tsx all
-  duti -s com.qvacua.vimr .txt all
-  duti -s com.qvacua.vimr .cfg all
-  duti -s com.qvacua.vimr .conf all
-  duti -s com.qvacua.vimr .yaml all
-  duti -s com.qvacua.vimr .yml all
-  duti -s com.qvacua.vimr .toml all
-  duti -s com.qvacua.vimr .xml all
-  duti -s com.qvacua.vimr .xsl all
-  duti -s com.qvacua.vimr .xsd all
-  duti -s com.qvacua.vimr .vim all
-  duti -s com.qvacua.vimr .vimrc all
-  duti -s com.qvacua.vimr .gitconfig all
-  duti -s com.qvacua.vimr .gitignore all
-  duti -s com.qvacua.vimr .config all
-  duti -s com.qvacua.vimr .sh all
-  duti -s com.qvacua.vimr .zsh all
-  duti -s com.qvacua.vimr .bash all
-
+  # array of TYPES
+  TYPES=(
+    public.json
+    public.plain-text
+    public.python-script
+    public.shell-script
+    public.source-code
+    public.text
+    public.xml
+    public.yaml
+    public.unix-executable
+    .go
+    .mod
+    .work
+    .c
+    .cc
+    .cpp
+    .java
+    .js
+    .sass
+    .scss
+    .less
+    .vue
+    .cfg
+    .json
+    .jsx
+    .log
+    .lua
+    .md
+    .php
+    .pl
+    .py
+    .rb
+    .ts
+    .tsx
+    .txt
+    .conf
+    .yaml
+    .yml
+    .toml
+    .xml
+    .xsl
+    .xsd
+    .vim
+    .vimrc
+    .gitconfig
+    .gitignore
+    .gitmodules
+    .config
+    .sh
+    .zsh
+    .bash
+  )
+  for type in ${TYPES[@]}; do
+    duti -s com.qvacua.vimr $type all
+  done
   # set default terminal to iterm2
   duti -s com.googlecode.iterm2 com.apple.terminal.shell-script shell
   duti -s com.googlecode.iterm2 term
