@@ -71,6 +71,7 @@ PACKAGES+=(
 	node@16
   node
 	python
+  autopep8
 	etcd
 	prometheus
 	rust
