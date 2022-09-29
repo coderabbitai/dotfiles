@@ -12,6 +12,7 @@ fi
 
 # add python symlinks
 export PATH=$HOME/sw/bin:$HOME/go/bin:$HOME/.cargo/bin:$(brew --prefix)/opt/python/libexec/bin:$HOME/.local/bin:$PATH
+export JDK_HOME=$HOMEBREW_PREFIX/opt/openjdk
 
 # export a variable marking zprofile as sourced
 export ZPROFILE_SOURCED=1

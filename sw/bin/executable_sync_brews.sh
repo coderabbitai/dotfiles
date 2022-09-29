@@ -163,6 +163,7 @@ PACKAGES+=(
   graphviz
   noahgorstein/tap/jqp
   openjdk
+  gradle
 )
 
 if [[ $OSTYPE == 'darwin'* ]]; then
