@@ -163,6 +163,7 @@ PACKAGES+=(
   graphviz
   noahgorstein/tap/jqp
   openjdk
+  openjdk@17
   gradle
 )
 
@@ -427,5 +428,8 @@ gh extension install dlvhdr/gh-dash
 
 revolver stop
 tput cnorm
+
+# use openjdk@17
+brew link --overwrite openjdk@17
 
 echo -e " == Brews Sync'ed == "
