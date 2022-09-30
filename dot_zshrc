@@ -150,6 +150,7 @@ func preexec() {
         export LAST_TMUX_UUID="$uuid"
         echo -e "${BLUE_BRIGHT} == Autoupdate detected | Zsh reloading == ${RESET}"
         source ~/.zshrc
+        [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
         enable-fzf-tab
         echo
         echo -e "${BLUE_BRIGHT} == Zsh reloaded == ${RESET}"
