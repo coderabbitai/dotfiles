@@ -93,6 +93,11 @@
       "command": "bash-language-server",
       "args": ["start"],
       "filetypes": ["sh", "bash"]
+    },
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": ["dockerfile"],
+      "args": ["--stdio"]
     }
   },
   "diagnostic-languageserver.mergeConfig": true,
