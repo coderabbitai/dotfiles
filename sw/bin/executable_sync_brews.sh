@@ -261,7 +261,7 @@ if [[ $OSTYPE == 'darwin'* ]]; then
 
   # check whether /Library/Java/JavaVirtualMachines/openjdk.jdk exists
   if [[ ! -d "/Library/Java/JavaVirtualMachines/openjdk.jdk" ]]; then
-    sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+    sudo ln -sfn /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
   fi
 
   revolver update 'Installing iterm2 shell integration...'
