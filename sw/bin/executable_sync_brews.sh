@@ -11,18 +11,10 @@ if [ -f ~/.brew_local ]; then
 	source ~/.brew_local
 fi
 
-# uninstall gcc@5 if it exists
-if brew ls --versions gcc@5 > /dev/null; then
-  # uninstall gcc@5
-  brew uninstall gcc@5
+# remove local .lessfilter if it exists
+if [ -f ~/.lessfilter ]; then
+  rm ~/.lessfilter
 fi
-
-# uninstall pre-commit if it exists
-if brew ls --versions pre-commit > /dev/null; then
-  # uninstall pre-commit
-  brew uninstall pre-commit
-fi
-
 
 brew tap withgraphite/tap
 brew tap ejoffe/homebrew-tap
