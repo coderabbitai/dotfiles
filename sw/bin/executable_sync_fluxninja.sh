@@ -37,6 +37,14 @@ if [ ! -d ~/Work/fluxninja/cloud/services/oss/aperture ]; then
 	ln -s ~/Work/fluxninja/aperture ~/Work/fluxninja/cloud/services/oss/aperture
 fi
 
+if [ ! -d ~/Work/fluxninja/cloud/services/oss/aperture-go ]; then
+	ln -s ~/Work/fluxninja/aperture-go ~/Work/fluxninja/cloud/services/oss/aperture-go
+fi
+
+if [ ! -d ~/Work/fluxninja/cloud/services/oss/aperture-java ]; then
+	ln -s ~/Work/fluxninja/aperture-java ~/Work/fluxninja/cloud/services/oss/aperture-java
+fi
+
 if [ ! -d ~/Work/fluxninja/aperture-tech-docs/local ]; then
 	ln -s ~/Work/fluxninja/aperture/docs/content ~/Work/fluxninja/aperture-tech-docs/local
 fi
@@ -46,6 +54,7 @@ PRECOMMIT_DIRS=(
 	~/Work/fluxninja/aperture
 	~/Work/fluxninja/aperture-tech-docs
 	~/Work/fluxninja/aperture-go
+	~/Work/fluxninja/aperture-java
 )
 
 for dir in "${PRECOMMIT_DIRS[@]}"; do
