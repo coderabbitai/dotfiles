@@ -462,8 +462,7 @@ zvm_after_init() {
   zstyle ':fzf-tab:complete:(cd|exa|ls|fd|find|cp|mv|rm):argument-rest' fzf-flags --preview-window=right:70%:wrap
   zstyle ':fzf-tab:complete:(cd|exa|ls|fd|find|cp|mv|rm):argument-rest' popup-pad 50 50
 
-  # use lessfilter to preview content files, directories etc.
-  zstyle ':fzf-tab:complete:(cat|bat|vim|nvim|vimr|nvim-qt):argument-rest' fzf-preview 'LESSOPEN="|~/sw/assets/lessfilter %s" less ${(Q)realpath}'
+  zstyle ':fzf-tab:complete:(cat|bat|vim|nvim|vimr|nvim-qt):argument-rest' fzf-preview 'LESSOPEN="|$(brew --prefix)/bin/lesspipe.sh %s" less ${(Q)realpath}'
   zstyle ':fzf-tab:complete:(cat|bat|vim|nvim|vimr|nvim-qt):argument-rest' fzf-flags --preview-window=right:70%:wrap
   zstyle ':fzf-tab:complete:(cat|bat|vim|nvim|vimr|nvim-qt):argument-rest' popup-pad 50 50
 
