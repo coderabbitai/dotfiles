@@ -21,28 +21,28 @@ fi
 gh_clone_all.sh fluxninja ~/Work
 pull_all.sh ~/Work/fluxninja
 
-# check whether ~/Work/fluxninja/cloud/services/oss/aperture is not a symlink
-if ! [ -L ~/Work/fluxninja/cloud/services/oss/aperture ]; then
+# check whether ~/Work/fluxninja/cloud/services/aperture is not a symlink
+if ! [ -L ~/Work/fluxninja/cloud/services/aperture ]; then
 	# check whether ~/Work/fluxninja/cloud is on master or main git branch
 	branch="$(git -C ~/Work/fluxninja/cloud rev-parse --abbrev-ref HEAD)"
 	if [ "$branch" == "master" ] || [ "$branch" == "main" ]; then
-		rm -rf ~/Work/fluxninja/cloud/services/oss/aperture
+		rm -rf ~/Work/fluxninja/cloud/services/aperture
 	fi
 else
-	unlink ~/Work/fluxninja/cloud/services/oss/aperture
+	unlink ~/Work/fluxninja/cloud/services/aperture
 fi
 
 # symlink aperture in cloud
-if [ ! -d ~/Work/fluxninja/cloud/services/oss/aperture ]; then
-	ln -s ~/Work/fluxninja/aperture ~/Work/fluxninja/cloud/services/oss/aperture
+if [ ! -d ~/Work/fluxninja/cloud/services/aperture ]; then
+	ln -s ~/Work/fluxninja/aperture ~/Work/fluxninja/cloud/services/aperture
 fi
 
-if [ ! -d ~/Work/fluxninja/cloud/services/oss/aperture-go ]; then
-	ln -s ~/Work/fluxninja/aperture-go ~/Work/fluxninja/cloud/services/oss/aperture-go
+if [ ! -d ~/Work/fluxninja/cloud/services/aperture-go ]; then
+	ln -s ~/Work/fluxninja/aperture-go ~/Work/fluxninja/cloud/services/aperture-go
 fi
 
-if [ ! -d ~/Work/fluxninja/cloud/services/oss/aperture-java ]; then
-	ln -s ~/Work/fluxninja/aperture-java ~/Work/fluxninja/cloud/services/oss/aperture-java
+if [ ! -d ~/Work/fluxninja/cloud/services/aperture-java ]; then
+	ln -s ~/Work/fluxninja/aperture-java ~/Work/fluxninja/cloud/services/aperture-java
 fi
 
 if [ ! -d ~/Work/fluxninja/aperture-tech-docs/local ]; then
