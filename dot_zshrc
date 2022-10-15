@@ -585,6 +585,9 @@ if $AUTO_CLEAR_CACHES; then
     echo "Pruning docker builder cache..."
     docker builder prune -f -a
     echo "Docker builder cache pruned."
+    echo "Pruning docker system..."
+    docker system prune -f -a
+    echo "Docker system pruned."
   fi
 fi
 
