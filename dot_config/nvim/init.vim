@@ -159,7 +159,6 @@ endfunction
 function! s:InitCoc() abort
   " load overrides
   runtime! autoload/coc/ui.vim
-  execute "lua vim.notify('Initialized coc.nvim for LSP support', 'info', { title = 'LSP Status' })"
 endfunction
 
 " notifications
