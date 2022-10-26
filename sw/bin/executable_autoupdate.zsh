@@ -107,7 +107,7 @@ if [ ${last_system} -gt ${system_seconds} ] || [ $force_update -eq 1 ]; then
 	update_error zinit $?
 
   revolver update "Updating nvim... (Press Spaces if this is taking too long)"
-	nvim +PlugUpgrade +PlugClean! +PlugUpdate +PlugInstall +CocUpdateSync +qall
+	nvim +PlugUpgrade +PlugClean! +PlugUpdate +PlugInstall +CocUpdateSync +TSUpdateSync +qall
 	update_error nvim $?
 
   revolver update "Updating npm packages..."
