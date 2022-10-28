@@ -234,7 +234,7 @@ if [[ -e "/tmp/gh_$$" ]]; then
     if [ -n "$yazpt_state[vcs]" ]; then
       yazpt_state[nl]+=" | "
     fi
-    yazpt_state[nl]+=" GitHub checks $(cat /tmp/gh_$$)"
+    yazpt_state[nl]+=" GitHub checks $check"
   fi
 fi
 
