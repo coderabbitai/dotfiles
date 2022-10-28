@@ -162,6 +162,8 @@ if [[ $OSTYPE == 'darwin'* ]]; then
     coreutils
 		findutils
     gnu-sed
+    grep
+    gawk
 		bash
 		wget
 		duti
