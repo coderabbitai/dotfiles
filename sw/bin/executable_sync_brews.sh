@@ -64,8 +64,6 @@ PACKAGES+=(
   node
 	python
   autopep8
-	etcd
-	prometheus
 	rust
 	tilt
   tilt-dev/tap/ctlptl
