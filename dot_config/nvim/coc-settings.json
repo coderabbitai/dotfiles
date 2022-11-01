@@ -52,7 +52,6 @@
   "go.checkForUpdates": "install",
   "go.goplsOptions": {
     "local": "fluxninja.com",
-    "experimentalWorkspaceModule": true,
     "gofumpt": true,
     "staticcheck": true,
     "semanticTokens": true,
