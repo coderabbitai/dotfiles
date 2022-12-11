@@ -183,7 +183,7 @@ else
 fi
 
 if [[ $OSTYPE == 'linux'* ]]; then
-  FORGIT_COPY_CMD='xclip -selection clipboard'
+  export FORGIT_COPY_CMD='xclip -selection clipboard'
 fi
 
 zinit snippet OMZ::lib/history.zsh
