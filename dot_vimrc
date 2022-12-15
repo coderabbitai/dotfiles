@@ -343,7 +343,7 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 augroup coc_actions
   autocmd!
   " add missing go imports on save
-  autocmd BufWritePre *.ts,*.js,*.go  silent call CocAction('runCommand', 'editor.action.organizeImport') | sleep 100m
+  autocmd BufWritePre *.ts,*.js,*.go silent! call CocAction('organizeImport')
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder.
