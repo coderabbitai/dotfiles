@@ -175,11 +175,11 @@ function term-notify() {
 
 # check if $ZINIT_TURBO is true
 if $ZINIT_TURBO; then
-  zinit ice wait'0' lucid atload'export PATH="$PATH:$FORGIT_INSTALL_DIR/bin"'
+  zinit ice wait'0' lucid atload'export PATH="$PATH:$(dirname $FORGIT)"'
   zinit light wfxr/forgit
 else
   zinit light wfxr/forgit
-  export PATH="$PATH:$FORGIT_INSTALL_DIR/bin"
+  export PATH="$PATH:$(dirname $FORGIT)"
 fi
 
 if [[ $OSTYPE == 'linux'* ]]; then
