@@ -36,7 +36,8 @@ local config = {
         minimum_width = 50,
         render = "default",
         stages = "fade_in_slide_out",
-        timeout = 1000
+        timeout = 1000,
+        top_down = false
       }
 vim.notify.setup(config)
 
