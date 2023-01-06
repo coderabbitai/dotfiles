@@ -60,7 +60,6 @@ PACKAGES+=(
 	thefuck
   tmux
   tmux-mem-cpu-load
-	node@16
   node
 	python
   autopep8
