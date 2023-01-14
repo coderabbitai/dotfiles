@@ -144,6 +144,11 @@ if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   PlugInstall --sync
 endif
 
+" copilot enable for markdown files
+let g:copilot_filetypes = {
+    \ 'markdown': v:true,
+    \ }
+
 " disable coc status in airline as it is shown with nvim-notify
 if has("nvim")
   let g:airline#extensions#coc#show_coc_status = 0
