@@ -233,20 +233,30 @@ fi
 
 revolver stop
 
-echo "Fetching packages..."
-parallel --no-notice --bar --eta "brew fetch --quiet --formula {1} > /dev/null" ::: ${PACKAGES[@]}
+# get list of currently installed packages and remove them from the list of packages to install
+installed_packages=($(brew list))
+for installed_package in $installed_packages; do
+  PACKAGES=("${(@)PACKAGES:#$installed_package}")
+done
 
 revolver --style 'dots2' start 'Installing...'
 
 # get number of elements in the array $PACKAGES
 num_packages=${#PACKAGES[@]}
-i=0
-# Loop through Packages and install them
-for package in ${PACKAGES[@]}; do
-  ((i++))
-  revolver update "Installing package $package ($i of $num_packages)..."
-	brew install --quiet --formula $package
-done
+
+# check if there are any packages to install
+if [[ num_packages -gt 0 ]]; then
+  echo "Fetching packages..."
+  parallel --no-notice --bar --eta "brew fetch --quiet --formula {1} > /dev/null" ::: ${PACKAGES[@]}
+
+  i=0
+  # Loop through Packages and install them
+  for package in ${PACKAGES[@]}; do
+    ((i++))
+    revolver update "Installing package $package ($i of $num_packages)..."
+    brew install --quiet --formula $package
+  done
+fi
 
 if [[ $OSTYPE == 'darwin'* ]]; then
 
@@ -287,19 +297,29 @@ if [[ $OSTYPE == 'darwin'* ]]; then
 	)
   revolver stop
 
-  echo "Fetching casks..."
-	parallel --no-notice --bar --eta "brew fetch --quiet --cask {1} > /dev/null" ::: ${CASKS[@]}
-  
+  # check the list of installed casks and remove them from the list of casks to install
+  installed_casks=($(brew list --cask))
+  for installed_cask in $installed_casks; do
+    CASKS=("${(@)CASKS:#$installed_cask}")
+  done
+
   revolver --style 'dots2' start 'Installing...'
 
-  num_casks=${#CASKS[@]}
-  i=0
-	# Loop through Casks and install them
-	for cask in ${CASKS[@]}; do
-    ((i++))
-    revolver update "Installing cask $cask ($i of $num_casks)..."
-		brew install --quiet --cask $cask
-	done
+  # check if there are any casks to install
+  if [[ ${#CASKS[@]} -gt 0 ]]; then
+    echo "Fetching casks..."
+    parallel --no-notice --bar --eta "brew fetch --quiet --cask {1} > /dev/null" ::: ${CASKS[@]}
+    
+    num_casks=${#CASKS[@]}
+    i=0
+    # Loop through Casks and install them
+    for cask in ${CASKS[@]}; do
+      ((i++))
+      revolver update "Installing cask $cask ($i of $num_casks)..."
+      brew install --quiet --cask $cask
+    done
+  fi
+
   revolver update 'Updating defaults...'
 	# on macos override default editor to vimr
   # array of TYPES
