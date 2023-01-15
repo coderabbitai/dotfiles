@@ -65,7 +65,7 @@ PACKAGES+=(
   autopep8
 	rust
 	tilt
-  tilt-dev/tap/ctlptl
+  ctlptl
 	bottom
 	helm
 	helmfile
@@ -80,7 +80,7 @@ PACKAGES+=(
 	jq
 	yq
 	gh
-  withgraphite/tap/graphite
+  graphite
 	kind
 	neovim
 	asdf
@@ -90,7 +90,7 @@ PACKAGES+=(
 	ctop
 	kubectx
 	fzf
-	svn
+	subversion
 	tealdeer
   navi
   watch
@@ -140,7 +140,7 @@ PACKAGES+=(
   k9s
   kustomize
   kubebuilder
-  bufbuild/buf/buf
+  buf
   grpcurl
   mockery
   urlview
@@ -150,7 +150,7 @@ PACKAGES+=(
   yarn
   circleci
   graphviz
-  noahgorstein/tap/jqp
+  jqp
   openjdk
   openjdk@17
   gradle
