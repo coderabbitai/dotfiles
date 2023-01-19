@@ -19,9 +19,16 @@ require'nvim-treesitter.configs'.setup {
 }
 
 require('telescope').load_extension('fzf')
+
+require('bufferline').setup {
+    options = {
+        mode = "tabs"
+    }
+}
+
+
 vim.notify = require("notify")
 require("telescope").load_extension("notify")
-
 local config = {
         background_colour = "Normal",
         fps = 30,

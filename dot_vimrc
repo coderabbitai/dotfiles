@@ -128,12 +128,13 @@ Plug 'pwntester/octo.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'nvim-lua/plenary.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'nvim-telescope/telescope.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', has('nvim') ? { 'do': 'make' } : { 'on': [] }
-Plug 'kyazdani42/nvim-web-devicons', has('nvim') ? {} : { 'on': [] }
 Plug 'nvim-telescope/telescope-symbols.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'rcarriga/nvim-notify', has('nvim') ? {} : { 'on': [] }
 Plug 'nvim-treesitter/nvim-treesitter', has('nvim') ? {'do': ':TSUpdate'} : { 'on': [] }
 Plug 'SirVer/ultisnips', has('nvim') ? {} : { 'on': [] }
 Plug 'honza/vim-snippets', has('nvim') ? {} : { 'on': [] }
+Plug 'nvim-tree/nvim-web-devicons', has('nvim') ? {} : { 'on': [] }
+Plug 'akinsho/bufferline.nvim', { 'tag': 'v3.*' }
 
 Plug 'ryanoasis/vim-devicons'
 " Initialize plugin system
@@ -154,11 +155,15 @@ if has("nvim")
   let g:airline#extensions#coc#show_coc_status = 0
 endif
 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#show_tab_count = 1
-let g:airline#extensions#tabline#tab_nr_type = 1
-let g:airline_powerline_fonts = 1
+if has("nvim")
+  " see config in init.nvim
+else 
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline#extensions#tabline#show_buffers = 0
+  let g:airline#extensions#tabline#show_tab_count = 1
+  let g:airline#extensions#tabline#tab_nr_type = 1
+  let g:airline_powerline_fonts = 1
+endif
 
 let g:gothx_command_prefix = 'Go'
 
