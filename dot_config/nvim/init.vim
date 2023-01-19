@@ -22,7 +22,8 @@ require('telescope').load_extension('fzf')
 
 require('bufferline').setup {
     options = {
-        mode = "tabs"
+        mode = "tabs",
+        diagnostics = "coc"
     }
 }
 
