@@ -154,6 +154,7 @@ PACKAGES+=(
   openjdk
   openjdk@17
   gradle
+  socat
 )
 
 if [[ $OSTYPE == 'darwin'* ]]; then
