@@ -5,14 +5,6 @@ function revolver_stop() {
 	tput cnorm
 }
 
-# This script takes one argument and uses it as git commit message
-if [ $# -ne 1 ]; then
-	type=$(gum choose "fix" "feat" "docs" "style" "refactor" "test" "chore" "revert")
-	commit_message=$(gum input --value "$type: " --placeholder "Commit message")
-else
-	commit_message=$1
-fi
-
 # show the list of modified git files that will be committed
 echo " == Modified files == "
 git status --short --untracked-files=no
@@ -20,13 +12,21 @@ git status --short --untracked-files=no
 # empty line
 echo ""
 
-# list only untracked files
+# list only the untracked files and exclude all tracked files from the list
 echo " == Untracked files == "
 git ls-files --others --exclude-standard
 
 if ! gum confirm "Commit and push these changes?"; then
 	echo "Aborting"
 	exit 1
+fi
+
+# This script takes one argument and uses it as git commit message
+if [ $# -ne 1 ]; then
+	type=$(gum choose "fix" "feat" "docs" "style" "refactor" "test" "chore" "revert")
+	commit_message=$(gum input --value "$type: " --placeholder "Commit message")
+else
+	commit_message=$1
 fi
 
 tput civis
