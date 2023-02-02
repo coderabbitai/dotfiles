@@ -18,14 +18,14 @@ cd $HOME || exit
 
 # ask the user whether they want to use system's homebrew or use a local install
 if gum confirm "Do you want to use the system's homebrew? (recommended)"; then
-	echo "Installing local homebrew..."
-	mkdir homebrew
-	curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
-else
 	# delete local homebrew if it exists
 	rm -rf ~/homebrew
 	echo "Installing system homebrew..."
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+	echo "Installing local homebrew..."
+	mkdir homebrew
+	curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
 fi
 
 brew_shellenv
