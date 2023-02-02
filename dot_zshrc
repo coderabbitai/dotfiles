@@ -30,20 +30,14 @@ function set_terminal {
 			export TERMINAL=$TERM_PROGRAM
 			# test whether ~/.iterm2_profile_check doesn't exist
 			if [[ ! -e "${HOME}/.iterm2_profile_check" ]]; then
-				# ask the user whether they want to use FluxNinja's bundled iTerm2 profile
-				echo "Do you want to use FluxNinja's bundled iTerm2 colors/font profile and matching wallpaper?"
-				# the choices are yes, no or later (default). echo the choices.
-				echo "yes, no or later (default)?"
-				# get the reponse from stdin
-				read -r response
-				if [[ $response == "yes" ]]; then
+        if gum confirm "Do you want to use FluxNinja's bundled iTerm2 colors/font profile and matching wallpaper?"; then
 					# install iterm2 profile
 					cp ~/sw/assets/iterm2_gruvbox.json ~/Library/Application\ Support/iTerm2/DynamicProfiles/
 					# execute the script
 					pip3 install iterm2 && python3 ~/sw/assets/iterm2_default.py && touch "${HOME}/.iterm2_profile_check" || (echo; echo; echo "Failed to install iTerm2 profile. You might need to enable Python API within iTerm2 preferences (under Magic tab). Press Enter to continue." && read)
 					# set the wallpaper to ~/sw/assets/apple_gruvbox.heic
 					osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$HOME/sw/assets/apple_gruvbox.heic\""
-				elif [[ $response == "no" ]]; then
+        else
 					echo "no" > "${HOME}/.iterm2_profile_check"
 				fi
 			fi
@@ -570,18 +564,14 @@ fi
 if $AUTO_CLEAR_CACHES; then
   # ask the user if they want to clear go installation as it bloats over time
   printf "Go installation grows over time and it's recommended to clear it periodically.\n"
-  printf "Do you want to clear the go installation? (y/n) "
-  read -r go_clear_answer
-  if [[ "$go_clear_answer" == "y" ]]; then
+  if gum confirm "Do you want to clear the go installation?"; then
     echo "Clearing go installation..."
     sudo rm -rf $HOME/go
     echo "Go installation cleared."
     echo "Sync FluxNinja repos..."
     $HOME/sw/bin/sync_fluxninja.sh
   fi
-  printf "Do you want to prune docker builder cache? (y/n) "
-  read -r docker_prune_answer
-  if [[ "$docker_prune_answer" == "y" ]]; then
+  if gum confirm "Do you want to prune docker builder cache?"; then
     echo "Pruning docker builder cache..."
     docker builder prune -f -a
     echo "Docker builder cache pruned."
