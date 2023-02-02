@@ -11,7 +11,16 @@ if command -v gcut >/dev/null 2>&1; then
 	CUT="gcut"
 fi
 
-gh_checks="$(gh pr checks 2>/dev/null | $CUT --fields=2)"
+# check whether it's a git repo and remote is github
+if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+	exit 0
+fi
+
+if ! git remote -v | grep -q "github.com"; then
+	exit 0
+fi
+
+gh_checks="$(timeout 2 gh pr checks 2>/dev/null | $CUT --fields=2)"
 gh_status_mark=""
 # extract the number of fail checks
 gh_fail_checks="$(echo "$gh_checks" | grep -c fail)"
