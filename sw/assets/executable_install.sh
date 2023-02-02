@@ -17,7 +17,7 @@ function brew_shellenv() {
 cd $HOME || exit
 
 # ask the user whether they want to use system's homebrew or use a local install
-if gum confirm "Do you want to use the system's homebrew? Note: System homebrew will be very fast to update, however do not choose system's homebrew if you are sharing this machine with other users. For most users, system homebrew is a better option."; then
+if gum confirm "Do you want to use the system's homebrew? (recommended)"; then
 	echo "Installing local homebrew..."
 	mkdir homebrew
 	curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
