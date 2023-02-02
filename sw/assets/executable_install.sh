@@ -17,11 +17,7 @@ function brew_shellenv() {
 cd $HOME || exit
 
 # ask the user whether they want to use system's homebrew or use a local install
-echo "Do you want to use the system's homebrew (y/n)? Note: System homebrew will be very fast to update, however do not choose system's homebrew if you are sharing this machine with other users. For most users, system homebrew is a better option."
-read system_homebrew
-
-# if the user wants to use the system's homebrew, then we'll install it
-if [ "$system_homebrew" == "n" ]; then
+if git confirm "Do you want to use the system's homebrew? Note: System homebrew will be very fast to update, however do not choose system's homebrew if you are sharing this machine with other users. For most users, system homebrew is a better option."; then
 	echo "Installing local homebrew..."
 	mkdir homebrew
 	curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
@@ -40,6 +36,8 @@ brew install gh
 brew install chezmoi
 # install zsh
 brew install zsh
+# install gum
+brew install gum
 # add $(which zsh) to the list of shells if it doesn't exist
 if ! grep -q $(which zsh) /etc/shells; then
 	echo "Adding $(which zsh) to /etc/shells"
@@ -47,7 +45,7 @@ if ! grep -q $(which zsh) /etc/shells; then
 fi
 chsh -s $(which zsh)
 
-echo "Authenticating with Github. Please make sure to choose ssh option for authentication."
+echo "Authenticating with GitHub. Please make sure to choose ssh option for authentication."
 
 # authenticate with github
 gh auth login -p ssh
@@ -60,12 +58,10 @@ fi
 
 echo "Setting up .gitconfig_local"
 # ask the user to input email address
-echo "Please enter your FluxNinja email address:"
-read email
+email=$(gum input --placeholder "Please enter your FluxNinja email address")
 
 # ask the user to input their name
-echo "Please enter your name:"
-read name
+name=$(gum input --placeholder "Please enter your name")
 
 # create .gitconfig_local
 # File contents:
