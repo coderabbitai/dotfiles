@@ -20,7 +20,7 @@ if ! git remote -v | grep -q "github.com"; then
 	exit 0
 fi
 
-gh_checks="$(timeout 2 gh pr checks 2>/dev/null | $CUT --fields=2)"
+gh_checks="$(gh pr checks 2>/dev/null | $CUT --fields=2)"
 gh_status_mark=""
 # extract the number of fail checks
 gh_fail_checks="$(echo "$gh_checks" | grep -c fail)"

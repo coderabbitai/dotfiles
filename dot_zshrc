@@ -210,13 +210,13 @@ if [[ $OSTYPE == 'darwin'* ]]; then
   fi
 fi
 
-periodic() { silent_background $HOME/sw/bin/gh_checks_status.sh > /tmp/gh_$$ }
+periodic() { silent_background timeout 2 $HOME/sw/bin/gh_checks_status.sh > /tmp/gh_$$ }
 PERIOD=10
 
 function @yazpt_segment_nl() {
 # check whether $last_yazpt_vcs is not equal to $yazpt_state[vcs]
 if [[ "$last_yazpt_vcs" != "$yazpt_state[vcs]" ]]; then
-  spinner -q -s "$HOME/sw/bin/gh_checks_status.sh > /tmp/gh_$$"
+  spinner -q -s "timeout 2 $HOME/sw/bin/gh_checks_status.sh > /tmp/gh_$$"
 fi
 last_yazpt_vcs="$yazpt_state[vcs]"
 yazpt_state[nl]=""
@@ -598,9 +598,9 @@ fi
 if $ASCII_WELCOME_ENABLED; then
   # print a random cowsay using fortune using only *.cow files located at $(brew --prefix)/share/cows
   fortune | cowsay -f $(find $(brew --prefix)/share/cows/ -name "*.cow" | shuf -n 1)
-  (WTTR_PARAMS="1" ~/sw/bin/wttr.sh ;\
+  (timeout 2 WTTR_PARAMS="1" ~/sw/bin/wttr.sh ;\
     echo; echo -e "${CYAN_BRIGHT}  ==================================  GitHub Status ================================== ${RESET}"; echo;
-    gh status --org FluxNinja) 2&>/dev/null
+    timeout 2 gh status --org FluxNinja) 2&>/dev/null
 fi
 
 unset ASCII_WELCOME_ENABLED
