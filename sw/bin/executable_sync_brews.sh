@@ -22,6 +22,7 @@ brew tap claui/whence
 brew tap bufbuild/buf
 brew tap tilt-dev/tap
 brew tap noahgorstein/tap
+brew tap fluxninja/aperture
 
 if [[ $OSTYPE == 'darwin'* ]]; then
 	brew tap homebrew/cask-fonts
@@ -156,6 +157,7 @@ PACKAGES+=(
   gradle
   socat
   gum
+  aperturectl
 )
 
 if [[ $OSTYPE == 'darwin'* ]]; then
