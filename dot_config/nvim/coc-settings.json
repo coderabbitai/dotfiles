@@ -1,15 +1,12 @@
 {
   "coc.preferences.extensionUpdateCheck": "daily",
-  "coc.preferences.formatOnSaveFiletypes": ["*"],
   "coc.preferences.enableMessageDialog": true,
   "coc.preferences.enableLinkedEditing": true,
   "coc.preferences.silentAutoupdate": true,
-  "semanticTokens.filetypes": ["*"],
   "codeLens.enable": true,
   "codeLens.position": "top",
   "codeLens.separator": "ﯦ CodeLens Actions:",
   "codeLens.subseparator": "  ",
-  "colors.filetypes": ["*"],
   "prettier.proseWrap": "always",
   "explorer.icon.enableNerdfont": true,
   "explorer.icon.source": "vim-devicons",
@@ -149,6 +146,7 @@
   "cSpell.userWords": [
     "Msgf",
     "Unmarshaller",
+    "aperturectl",
     "etcd",
     "etcdclient",
     "etcdwatcher",
