@@ -4,6 +4,8 @@
   "coc.preferences.enableLinkedEditing": true,
   "coc.preferences.silentAutoupdate": true,
   "coc.preferences.formatOnSave": true,
+  "semanticTokens.enable": true,
+  "colors.enable": true,
   "codeLens.enable": true,
   "codeLens.position": "top",
   "codeLens.separator": "ﯦ CodeLens Actions:",
