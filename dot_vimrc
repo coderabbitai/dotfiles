@@ -184,7 +184,6 @@ let g:coc_global_extensions = [
       \ 'coc-pyright',
       \ 'coc-json',
       \ 'coc-clangd',
-      \ 'coc-tabnine',
       \ 'coc-webview',
       \ 'coc-markdown-preview-enhanced',
       \ 'coc-reveal',
@@ -772,9 +771,8 @@ call fuzzymenu#AddAll({
       \ },
       \ {'for': {'ft': 'go', 'exists': 'g:coc_enabled'}, 'tags':['go', 'coc']})
 
-call fuzzymenu#Add(' Setup Github Copilot', {'normal': ':Copilot setup'}, {'tags': ['github']})
-call fuzzymenu#Add(' Github Copilot Solutions', {'exec': 'Copilot panel'}, {'tags': ['github']})
-call fuzzymenu#Add('ﮧ Setup Tabnine', {'exec': 'CocCommand tabnine.openHub'}, {'tags': ['tabnine']})
+call fuzzymenu#Add(' Setup GitHub Copilot', {'normal': ':Copilot setup'}, {'tags': ['github']})
+call fuzzymenu#Add(' GitHub Copilot Solutions', {'exec': 'Copilot panel'}, {'tags': ['github']})
 
 call fuzzymenu#AddAll({
   \ ' Diff (git diff)': {'exec': 'Gdiffsplit'},
@@ -812,8 +810,8 @@ if has('nvim')
     \ ' Gist List': {'exec': 'Octo gist list'},
     \ ' PR Commits': {'exec': 'Octo pr commits'},
     \ ' PR Changes': {'exec': 'Octo pr changes'},
-    \ 'ﯙ Github Octo Actions': {'exec': 'Octo actions'},
-    \ 'ﯙ Github Search': {'exec': 'Octo search'},
+    \ 'ﯙ GitHub Octo Actions': {'exec': 'Octo actions'},
+    \ 'ﯙ GitHub Search': {'exec': 'Octo search'},
     \ 'ﯙ Issues List': {'exec': 'Octo issue list'},
     \ 'ﯙ Issues Search': {'exec': 'Octo issue search'},
     \ },

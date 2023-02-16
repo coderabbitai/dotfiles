@@ -170,8 +170,6 @@ Use the command `nv` to launch vim GUI. It maps to `vimr` on MacOS and
 ### AI-based autocompletion
 
 - GitHub Copilot - Type `:Copilot setup` in Vim to setup.
-- Tabnine - Type `:CocCommand tabnine.openHub` in Vim to setup. Ask for Tabnine
-  account on FluxNinja Slack.
 
 ## Colors
 

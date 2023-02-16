@@ -47,7 +47,6 @@
     "default": "\uf29c"
   },
   "snippets.priority": 89,
-  "tabnine.priority": 99,
   "coc.source.zsh.priority": 99,
   "go.checkForUpdates": "install",
   "go.goplsOptions": {
