@@ -42,9 +42,17 @@ while true; do
 	revolver update "Committing... Try #$i"
 
 	START=$(date +%s)
-	git commit -a -m "$commit_message" && break
+	git commit -a -m "$commit_message"
+	exit_code=$?
 	END=$(date +%s)
 	DIFF=$((END - START))
+
+	if [ $exit_code -eq 0 ]; then
+		echo "Current iteration took $DIFF seconds"
+		break
+	fi
+
+	echo "Failed attempt took $DIFF seconds"
 	if [ $DIFF -lt 4 ]; then
 		echo "Commit failed instantly, aborting"
 		revolver_stop
@@ -57,8 +65,7 @@ while true; do
 		exit 1
 	fi
 
-	echo "Commit failed, sleeping for $DIFF seconds"
-	sleep 1
+	echo "Commit failed, retrying"
 done
 
 revolver update "Pulling changes..."
