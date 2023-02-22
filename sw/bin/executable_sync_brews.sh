@@ -418,6 +418,8 @@ go install honnef.co/go/tools/cmd/keyify@latest
 go install github.com/koron/iferr@latest
 go install github.com/davidrjenni/reftools/cmd/fillstruct@master
 go install github.com/orlangure/gocovsh@latest
+go install github.com/bufbuild/buf-language-server/cmd/bufls@latest
+go install github.com/grafana/jsonnet-language-server@latest
 
 # on linux use system's gcc as cgo compiler as gcc@5 has some linking issues
 if [[ $OSTYPE == 'linux'* ]]; then

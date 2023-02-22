@@ -96,6 +96,18 @@
       "command": "docker-langserver",
       "filetypes": ["dockerfile"],
       "args": ["--stdio"]
+    },
+    "buf": {
+      "command": "bufls",
+      "args": ["serve"],
+      "filetypes": ["proto"],
+      "rootPatterns": ["buf.yaml", "buf.work.yaml", "buf.work.json"]
+    },
+    "jsonnet": {
+      "command": "jsonnet-language-server",
+      "args": ["-t"],
+      "rootPatterns": [".git/", "jsonnetfile.json"],
+      "filetypes": ["jsonnet", "libsonnet"]
     }
   },
   "diagnostic-languageserver.mergeConfig": true,
