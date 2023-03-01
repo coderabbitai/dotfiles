@@ -475,7 +475,6 @@ TMUX_FZF_MENU=\
 " Git Reset Head\nwin_split 'forgit::reset::head'\n"\
 " Git Log\nwin_split 'forgit::log'\n"\
 " Git Diff\nwin_split 'forgit::diff'\n"\
-" Git Ignore Generator\nwin_split 'forgit::ignore'\n"\
 " Git Checkout File\nwin_split 'forgit::checkout::file'\n"\
 " Git Checkout Branch\nwin_split 'forgit::checkout::branch'\n"\
 " Git Checkout Commit\nwin_split 'forgit::checkout::commit'\n"\
@@ -484,7 +483,7 @@ TMUX_FZF_MENU=\
 " Git Checkout Tag\nwin_split 'forgit::checkout::tag'\n"\
 " Git Clean\nwin_split 'forgit::clean'\n"\
 " Git Stash Show\nwin_split 'forgit::stash::show'\n"\
-" Git Cherry Pick\nwin_split 'forgit::cherry::pick'\n"\
+" Git Cherry Pick\nwin_split 'forgit::cherry::pick::from::branch'\n"\
 " Git Rebase\nwin_split 'forgit::rebase'\n"\
 " Git Fixup\nwin_split 'forgit::fixup'\n"\
 " Git Repo Statistics & Summary (onefetch)\n\"win_split -a -h 'spinner -c onefetch --no-bots -A 10'\"\n"\
