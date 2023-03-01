@@ -16,7 +16,6 @@ if [ -f ~/.lessfilter ]; then
   rm ~/.lessfilter
 fi
 
-brew tap withgraphite/tap
 brew tap ejoffe/homebrew-tap
 brew tap claui/whence
 brew tap bufbuild/buf
@@ -81,7 +80,6 @@ PACKAGES+=(
 	jq
 	yq
 	gh
-  graphite
 	kind
 	neovim
 	asdf
