@@ -486,7 +486,7 @@ TMUX_FZF_MENU=\
 " Git Cherry Pick\nwin_split 'forgit::cherry::pick::from::branch'\n"\
 " Git Rebase\nwin_split 'forgit::rebase'\n"\
 " Git Fixup\nwin_split 'forgit::fixup'\n"\
-" Git Repo Statistics & Summary (onefetch)\n\"win_split -a -h 'spinner -c onefetch --no-bots -A 10'\"\n"\
+" Git Repo Statistics & Summary (onefetch)\n\"win_split -a -h 'spinner -c onefetch --no-bots --number-of-authors=10'\"\n"\
 "凌Git Ship: Add -> Commit(retry) -> Pull -> Push\n\"win_split -a -h 'git_ship'\"\n"\
 " Sync FluxNinja Repos\n\"win_split -a 'sync_fluxninja.sh'\"\n"\
 "ﯙ GitHub Status\n\"win_split -a 'gh status --org FluxNinja'\"\n"\
