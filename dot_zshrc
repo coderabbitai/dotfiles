@@ -180,6 +180,7 @@ sleep 0.5
 
 # configure zsh to show hidden files in auto-completion
 setopt globdots
+setopt interactivecomments
 
 eval $(thefuck --alias)
 

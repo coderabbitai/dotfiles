@@ -1,6 +1,9 @@
 syntax on
 filetype plugin indent on
 
+" add a new filetype to map zshXXXXXX files to zsh
+au BufNewFile,BufRead *.zsh* set filetype=zsh
+
 "Use 24-bit (true-color) mode in Vim/Neovim
 if (has('nvim'))
   "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
