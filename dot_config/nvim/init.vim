@@ -124,7 +124,7 @@ end
 
 require"octo".setup()
 
-if vim.env.OPENAI_API_KEY == nil then
+--[[if vim.env.OPENAI_API_KEY == nil then
   notify("ChatGPT", "OPENAI_API_KEY is not set, disabling", "warn")
 else
   welcome_message = [[Welcome to ChatGPT!
@@ -142,13 +142,14 @@ else
     In the sessions window:
     <Space> to select session.
     r to rename session.
-    d to delete session.
-    ]]
+    d to delete session.]]
+--[[
 
   require("chatgpt").setup({
     welcome_message = welcome_message,
   })
 end
+--]]
 
 
 EOF
