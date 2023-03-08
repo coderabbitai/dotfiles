@@ -126,6 +126,7 @@ Plug 'Everblush/everblush.vim'
 Plug 'equalsraf/neovim-gui-shim', has('nvim') && !has('gui_vimr') ? {} : { 'on': [] }
 Plug 'pwntester/octo.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'nvim-lua/plenary.nvim', has('nvim') ? {} : { 'on': [] }
+Plug 'MunifTanjim/nui.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'nvim-telescope/telescope.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', has('nvim') ? { 'do': 'make' } : { 'on': [] }
 Plug 'nvim-telescope/telescope-symbols.nvim', has('nvim') ? {} : { 'on': [] }
@@ -134,7 +135,8 @@ Plug 'nvim-treesitter/nvim-treesitter', has('nvim') ? {'do': ':TSUpdate'} : { 'o
 Plug 'SirVer/ultisnips', has('nvim') ? {} : { 'on': [] }
 Plug 'honza/vim-snippets', has('nvim') ? {} : { 'on': [] }
 Plug 'nvim-tree/nvim-web-devicons', has('nvim') ? {} : { 'on': [] }
-Plug 'akinsho/bufferline.nvim', { 'tag': 'v3.*' }
+Plug 'akinsho/bufferline.nvim', has('nvim') ? { 'tag': 'v3.*' } : { 'on': [] }
+Plug 'jackMort/ChatGPT.nvim', has('nvim') ? {} : { 'on': [] }
 
 Plug 'ryanoasis/vim-devicons'
 " Initialize plugin system
@@ -915,8 +917,19 @@ if has("nvim")
   call fuzzymenu#Add(' Symbols/Emojis', {'exec': 'Telescope symbols'}, {'tags': ['tools']})
   call fuzzymenu#Add(' Notification Center', {'exec': 'Telescope notify'}, {'tags': ['tools']})
   call fuzzymenu#Add(' AutoSave Toggle', {'exec': 'ASToggle'}, {'tags': ['tools']})
+" check whether OPENAI_API_KEY environment variable is set
+  if exists('$OPENAI_API_KEY')
+     call fuzzymenu#AddAll({
+      \ '󰚩 ChatGPT': {'exec': 'ChatGPT'},
+      \ '󰚩 ChatGPT Act As': {'exec': 'ChatGPTActAs'},
+      \ '󰚩 ChatGPT Complete Code': {'exec': 'ChatGPTCompleteCode'},
+      \ '󰚩 ChatGPT Edit With Instructions': {'exec': 'ChatGPTEditWithInstructions'},
+      \ }, 
+      \ {'tags': ['chatgpt','openai']})
+  endif
+
 else
-  call fuzzymenu#Add(' Tag Stack', {'exec': 'tags'}, {'tags': ['vim']})
+  call fuzzymenu#Add(' Tag Stack', {'exec': 'tags'}, {'tags': ['tools']})
 endif
 
 " normal mode operators (For text objects) 
