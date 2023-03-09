@@ -55,7 +55,8 @@ PACKAGES+=(
 	gopls
 	gotests
   gops
-	delve
+  delve
+  typescript
 	universal-ctags
 	thefuck
   tmux
