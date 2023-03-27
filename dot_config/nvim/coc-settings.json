@@ -100,8 +100,7 @@
     "buf": {
       "command": "bufls",
       "args": ["serve"],
-      "filetypes": ["proto"],
-      "rootPatterns": ["buf.yaml", "buf.work.yaml", "buf.work.json"]
+      "filetypes": ["proto"]
     },
     "jsonnet": {
       "command": "jsonnet-language-server",
