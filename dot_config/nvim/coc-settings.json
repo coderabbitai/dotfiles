@@ -193,11 +193,9 @@
   },
   "diagnostic-languageserver.filetypes": {
     "text": [
-      "write-good",
       "languagetool"
     ],
     "markdown": [
-      "write-good",
       "languagetool",
       "markdownlint"
     ],
