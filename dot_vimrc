@@ -207,7 +207,7 @@ let g:coc_global_extensions = [
       \ 'coc-lua',
       \ 'coc-snippets',
       \ 'coc-java',
-      \ 'coc-marksman',
+      \ '@yaegassy/coc-marksman',
       \ ]
 
 augroup buffer_keymaps
