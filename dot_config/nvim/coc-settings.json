@@ -191,11 +191,7 @@
     }
   },
   "diagnostic-languageserver.filetypes": {
-    "text": [
-      "languagetool"
-    ],
     "markdown": [
-      "languagetool",
       "markdownlint"
     ],
     "go": "golangci-lint2",
@@ -206,6 +202,7 @@
     "bash": "shfmt",
     "terraform": "tffmt"
   },
+  "ltex.diagnosticSeverity": "warning",
   "cSpell.showStatus": false,
   "cSpell.allowCompoundWords": true,
   "cSpell.userWords": [

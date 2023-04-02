@@ -206,6 +206,7 @@ let g:coc_global_extensions = [
       \ 'coc-eslint',
       \ 'coc-lua',
       \ 'coc-snippets',
+      \ 'coc-ltex',
       \ 'coc-java'
       \ ]
 
