@@ -101,7 +101,6 @@ PACKAGES+=(
 	vcsh
 	vint
 	shellcheck
-	write-good
 	markdownlint-cli
 	yamllint
 	languagetool
