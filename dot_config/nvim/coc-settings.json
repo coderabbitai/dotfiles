@@ -74,39 +74,75 @@
   "languageserver": {
     "graphql": {
       "command": "graphql-lsp",
-      "args": ["server", "-m", "stream"],
-      "filetypes": ["typescript", "typescriptreact", "graphql"]
+      "args": [
+        "server",
+        "-m",
+        "stream"
+      ],
+      "filetypes": [
+        "typescript",
+        "typescriptreact",
+        "graphql"
+      ]
     },
     "terraform": {
       "command": "terraform-ls",
-      "args": ["serve"],
-      "filetypes": ["terraform", "tf"],
+      "args": [
+        "serve"
+      ],
+      "filetypes": [
+        "terraform",
+        "tf"
+      ],
       "initializationOptions": {}
     },
     "lua": {
       "command": "lua-lsp",
-      "filetypes": ["lua"]
+      "filetypes": [
+        "lua"
+      ]
     },
     "bash": {
       "command": "bash-language-server",
-      "args": ["start"],
-      "filetypes": ["sh", "bash"]
+      "args": [
+        "start"
+      ],
+      "filetypes": [
+        "sh",
+        "bash"
+      ]
     },
     "dockerfile": {
       "command": "docker-langserver",
-      "filetypes": ["dockerfile"],
-      "args": ["--stdio"]
+      "filetypes": [
+        "dockerfile"
+      ],
+      "args": [
+        "--stdio"
+      ]
     },
     "buf": {
       "command": "bufls",
-      "args": ["serve"],
-      "filetypes": ["proto"]
+      "args": [
+        "serve"
+      ],
+      "filetypes": [
+        "proto"
+      ]
     },
     "jsonnet": {
       "command": "jsonnet-language-server",
-      "args": ["-t"],
-      "rootPatterns": [".git/", "jsonnetfile.json"],
-      "filetypes": ["jsonnet", "libsonnet"]
+      "args": [
+        "-t"
+      ],
+      "rootPatterns": [
+        ".git/",
+        "jsonnetfile.json"
+      ],
+      "filetypes": [
+        "jsonnet",
+        "libsonnet"
+      ]
     }
   },
   "diagnostic-languageserver.mergeConfig": true,
@@ -114,9 +150,18 @@
   "diagnostic-languageserver.linters": {
     "golangci-lint2": {
       "command": "golangci-lint",
-      "rootPatterns": ["go.mod"],
+      "rootPatterns": [
+        "go.mod"
+      ],
       "debounce": 100,
-      "args": ["--out-format", "json", "--deadline", "5s", "run", "%dirname"],
+      "args": [
+        "--out-format",
+        "json",
+        "--deadline",
+        "5s",
+        "run",
+        "%dirname"
+      ],
       "sourceName": "golangci-lint",
       "parseJson": {
         "sourceName": "Pos.Filename",
@@ -129,7 +174,10 @@
     },
     "zsh": {
       "command": "zsh",
-      "args": ["-n", "%file"],
+      "args": [
+        "-n",
+        "%file"
+      ],
       "isStdout": false,
       "isStderr": true,
       "sourceName": "zsh",
@@ -144,8 +192,15 @@
     }
   },
   "diagnostic-languageserver.filetypes": {
-    "text": ["write-good", "languagetool"],
-    "markdown": ["write-good", "languagetool", "markdownlint"],
+    "text": [
+      "write-good",
+      "languagetool"
+    ],
+    "markdown": [
+      "write-good",
+      "languagetool",
+      "markdownlint"
+    ],
     "go": "golangci-lint2",
     "zsh": "zsh"
   },
@@ -166,7 +221,11 @@
     "etcdwriter",
     "policylangv"
   ],
-  "cSpell.dictionaries": ["wordsEn", "softwareTerms", "misc"],
+  "cSpell.dictionaries": [
+    "wordsEn",
+    "softwareTerms",
+    "misc"
+  ],
   "coc.source.tag.priority": 89,
   "eslint.packageManager": "yarn",
   "eslint.nodePath": ".yarn/sdks",
