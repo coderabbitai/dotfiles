@@ -206,7 +206,13 @@
   "cSpell.showStatus": false,
   "cSpell.allowCompoundWords": true,
   "cSpell.userWords": [
+    "AIMD",
+    "Istio",
+    "Kubernetes",
     "Msgf",
+    "OLAP",
+    "OTEL",
+    "SLOs",
     "Unmarshaller",
     "aperturectl",
     "etcd",
