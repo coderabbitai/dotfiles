@@ -10,7 +10,6 @@
   "codeLens.position": "top",
   "codeLens.separator": "ﯦ CodeLens Actions:",
   "codeLens.subseparator": "  ",
-  "prettier.proseWrap": "always",
   "explorer.icon.enableNerdfont": true,
   "explorer.icon.source": "vim-devicons",
   "explorer.floating.border.title": "Explorer: Press ? to show help",

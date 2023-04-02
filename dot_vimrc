@@ -206,8 +206,7 @@ let g:coc_global_extensions = [
       \ 'coc-eslint',
       \ 'coc-lua',
       \ 'coc-snippets',
-      \ 'coc-java',
-      \ '@yaegassy/coc-marksman',
+      \ 'coc-java'
       \ ]
 
 augroup buffer_keymaps
