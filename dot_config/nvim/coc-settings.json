@@ -156,7 +156,16 @@
   "cSpell.showStatus": false,
   "cSpell.allowCompoundWords": true,
   "cSpell.userWords": [],
-  "cSpell.dictionaries": ["wordsEn", "softwareTerms", "misc"],
+  "cSpell.dictionaries": [
+    "wordsEn",
+    "en_US",
+    "softwareTerms",
+    "misc",
+    "go",
+    "typescript",
+    "bash",
+    "node"
+  ],
   "coc.source.tag.priority": 89,
   "eslint.packageManager": "yarn",
   "eslint.nodePath": ".yarn/sdks",
