@@ -79,7 +79,12 @@ require('telescope').load_extension('fzf')
 require('bufferline').setup {
     options = {
         mode = "tabs",
-        diagnostics = "coc"
+        diagnostics = "coc",
+        buffer_close_icon = "",
+        modified_icon = "",
+        close_icon = "",
+        left_trunc_marker = "",
+        right_trunc_marker = "",
     }
 }
 
@@ -179,34 +184,6 @@ function notify_output(command, opts)
 end
 
 require"octo".setup()
-
---[[if vim.env.OPENAI_API_KEY == nil then
-  notify("ChatGPT", "OPENAI_API_KEY is not set, disabling", "warn")
-else
-  welcome_message = [[Welcome to ChatGPT!
-    
-    Available keybindings are:
-    <C-c> to close chat window.
-    <C-u> scroll up chat window.
-    <C-d> scroll down chat window.
-    <C-y> to copy/yank last answer.
-    <C-o> Toggle settings window.
-    <C-n> Start new session.
-    <Tab> Cycle over windows.
-    <C-i> [Edit Window] use response as input.
-
-    In the sessions window:
-    <Space> to select session.
-    r to rename session.
-    d to delete session.]]
---[[
-
-  require("chatgpt").setup({
-    welcome_message = welcome_message,
-  })
-end
---]]
-
 
 EOF
 

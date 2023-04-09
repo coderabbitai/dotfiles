@@ -142,10 +142,6 @@ Plug 'honza/vim-snippets', has('nvim') ? {} : { 'on': [] }
 Plug 'nvim-tree/nvim-web-devicons', has('nvim') ? {} : { 'on': [] }
 Plug 'akinsho/bufferline.nvim', has('nvim') ? { 'tag': 'v3.*' } : { 'on': [] }
 
-" if exists('$OPENAI_API_KEY')
-"   Plug 'jackMort/ChatGPT.nvim', has('nvim') ? {} : { 'on': [] }
-" endif
-
 if !has('nvim')
   " Wilder
   Plug 'roxma/nvim-yarp'
@@ -972,17 +968,6 @@ if has("nvim")
   call fuzzymenu#Add(' Symbols/Emojis', {'exec': 'Telescope symbols'}, {'tags': ['tools']})
   call fuzzymenu#Add(' Notification Center', {'exec': 'Telescope notify'}, {'tags': ['tools']})
   call fuzzymenu#Add(' AutoSave Toggle', {'exec': 'ASToggle'}, {'tags': ['tools']})
-" check whether OPENAI_API_KEY environment variable is set
-  " if exists('$OPENAI_API_KEY')
-  "    call fuzzymenu#AddAll({
-  "     \ '󰚩 ChatGPT': {'exec': 'ChatGPT'},
-  "     \ '󰚩 ChatGPT Act As': {'exec': 'ChatGPTActAs'},
-  "     \ '󰚩 ChatGPT Complete Code': {'exec': 'ChatGPTCompleteCode'},
-  "     \ '󰚩 ChatGPT Edit With Instructions': {'exec': 'ChatGPTEditWithInstructions'},
-  "     \ }, 
-  "     \ {'tags': ['chatgpt','openai']})
-  " endif
-
 else
   call fuzzymenu#Add(' Tag Stack', {'exec': 'tags'}, {'tags': ['tools']})
 endif
