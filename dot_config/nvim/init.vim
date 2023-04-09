@@ -221,7 +221,6 @@ if vim.env.OPENAI_API_KEY ~= nil then
     temperature = 0,
   }
 
-  --[[
   local gpt_4_commands = {
     "completion",
     "code_edit",
@@ -231,14 +230,13 @@ if vim.env.OPENAI_API_KEY ~= nil then
     "chat",
   }
   
-  local override_config = {}
+  local override_config = vim.g["codegpt_commands_defaults"]
   for _, command in ipairs(gpt_4_commands) do
     -- and merge it with gpt-4-config
     override_config[command] = vim.tbl_extend("force", vim.g.codegpt_commands_defaults[command], gpt_4_config)
   end
 
   vim.g["codegpt_commands_defaults"] = override_config
-  --]]
 
   vim.g["codegpt_hooks"] = {
     request_started = function()
