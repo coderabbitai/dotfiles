@@ -741,6 +741,16 @@ function! NormalExecWithArgs(cmd, args)
   call ExecInputValues(a:cmd, a:args, 'NormalExecInputValues')
 endfunction
 
+" Function that prompts the user for input values and executes a command with those values.
+"
+" Parameters:
+"   - cmd: The command to execute with the input values.
+"   - args: A list of tuples representing the input arguments. Each tuple contains the name of the argument and a boolean indicating whether it is required.
+"   - exec_func: The function to execute the command with the input values.
+"
+" Returns: Nothing.
+"
+" Exceptions: If a required parameter is empty, an error message is printed and the function returns without executing the command.
 function! ExecInputValues(cmd, args, exec_func)
   let arg_values = []
   if has('nvim')
@@ -1049,6 +1059,7 @@ endif
       \ '🤖 ChatGPT Document': {'visual': ':call VisualExec("Chat doc")' },
       \ '🤖 ChatGPT Optimize': {'visual': ':call VisualExec("Chat opt")' },
       \ '🤖 ChatGPT Add Tests': {'visual': ':call VisualExec("Chat tests")' },
+      \ '🤖 ChatGPT Refactor': {'visual': ':call VisualExec("Chat refactor")' },
       \ '🤖 ChatGPT Summarize': {'visual': ':call VisualExec("Chat summarize")' },
       \ '🤖 ChatGPT Question': {'visual': ':call VisualExecWithArgs("Chat question", [["Question", 1]])' },
       \ '🤖 ChatGPT Edit With Instructions': {'visual': ':call VisualExecWithArgs("Chat code_edit", [["Instructions", 1]])' },

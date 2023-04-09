@@ -20,46 +20,9 @@ vim.api.nvim_create_autocmd({ "VimEnter", "VimLeave" }, {
 })
 
 require'nvim-web-devicons'.setup {
- -- your personnal icons can go here (to override)
- -- you can specify color or cterm_color instead of specifying both of them
- -- DevIcon will be appended to `name`
- override = {
-  zsh = {
-    icon = "",
-    color = "#428850",
-    cterm_color = "65",
-    name = "Zsh"
-  }
- };
- -- globally enable different highlight colors per icon (default to true)
- -- if set to false all icons will have the default icon's color
  color_icons = true;
- -- globally enable default icons (default to false)
- -- will get overriden by `get_icons` option
  default = true;
- -- globally enable "strict" selection of icons - icon will be looked up in
- -- different tables, first by filename, and if not found by extension; this
- -- prevents cases when file doesn't have any extension but still gets some icon
- -- because its name happened to match some extension (default to false)
  strict = true;
- -- same as `override` but specifically for overrides by filename
- -- takes effect when `strict` is true
- override_by_filename = {
-  [".gitignore"] = {
-    icon = "",
-    color = "#f1502f",
-    name = "Gitignore"
-  }
- };
- -- same as `override` but specifically for overrides by extension
- -- takes effect when `strict` is true
- override_by_extension = {
-  ["log"] = {
-    icon = "",
-    color = "#81e043",
-    name = "Log"
-  }
- };
 }
 
 require'nvim-treesitter.configs'.setup {
@@ -227,12 +190,26 @@ if vim.env.OPENAI_API_KEY ~= nil then
   }
   
   local override_config = vim.g["codegpt_commands_defaults"]
+
   for _, command in ipairs(gpt_4_commands) do
     -- and merge it with gpt-4-config
     override_config[command] = vim.tbl_extend("force", vim.g.codegpt_commands_defaults[command], gpt_4_config)
   end
 
   vim.g["codegpt_commands_defaults"] = override_config
+
+  vim.g["codegpt_commands"] = {
+    ["refactor"] = {
+      user_message_template = "I have the following {{language}} code: ```{{filetype}}\n{{text_selection}}```\nRefactor the above code to reduce it's complexity and improve maintainability and code reuse. Add new methods if needed to improve modularity. Only return the code snippet and comments. {{language_instructions}}",
+      callback_type = "replace_lines",
+      model = gpt_4_config.model,
+      max_tokens = gpt_4_config.max_tokens,
+      temperature = gpt_4_config.temperature,
+    }
+  }
+
+
+
 
   local chatgpt_diag_record = {}
   local timer = vim.loop.new_timer()
