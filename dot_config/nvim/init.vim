@@ -193,29 +193,96 @@ end
 
 require"octo".setup()
 
-if vim.env.OPENAI_API_KEY == nil then
-  notify("ChatGPT", "OPENAI_API_KEY is not set, disabling", "warn")
+function input_args_nvim(args, arg_values, callback, cmd)
+  if #args == 0 then
+    vim.call(callback, cmd, arg_values)
+    return
+  end
+  local arg_name, required = unpack(args[1])
+  vim.ui.input({prompt = arg_name .. ': '}, function(input_value)
+    if not required or input_value ~= '' then
+      table.insert(arg_values, input_value)
+      input_args_nvim({unpack(args, 2)}, arg_values, callback, cmd)
+    end
+  end)
+end
+
+local chatgpt_diag_record = {}
+local timer = vim.loop.new_timer()
+local timer_counter = 0
+
+if vim.env.OPENAI_API_KEY ~= nil then
+  local CodeGPTModule = require("codegpt")
+  require("codegpt.config")
+
+  local gpt_4_config = {
+    model = "gpt-4",
+    max_tokens = 8192,
+    temperature = 0,
+  }
+
+  --[[
+  local gpt_4_commands = {
+    "completion",
+    "code_edit",
+    "debug",
+    "tests",
+    "opt",
+    "chat",
+  }
+  
+  local override_config = {}
+  for _, command in ipairs(gpt_4_commands) do
+    -- and merge it with gpt-4-config
+    override_config[command] = vim.tbl_extend("force", vim.g.codegpt_commands_defaults[command], gpt_4_config)
+  end
+
+  vim.g["codegpt_commands_defaults"] = override_config
+  --]]
+
+  vim.g["codegpt_hooks"] = {
+    request_started = function()
+      local notify_opts = { title = "🤖 ChatGPT", timeout = 2000, on_close = reset_chatgpt_diag_record }
+      if chatgpt_diag_record ~= {} then
+        notify_opts["replace"] = chatgpt_diag_record.id
+      end
+      local msg = "Requesting"
+      chatgpt_diag_record = vim.notify(msg, "info", notify_opts)
+      if not timer:is_active() then
+        -- start a timer to update the notification every 100ms
+        timer:start(100, 100, vim.schedule_wrap(function()
+          if chatgpt_diag_record ~= {} then
+            notify_opts["replace"] = chatgpt_diag_record.id
+          end
+          local msg = "Requesting, please wait"
+          local status = CodeGPTModule.get_status()
+          if status ~= "" then
+            msg = msg .. " | " .. status
+          end
+          chatgpt_diag_record = vim.notify(msg, "info", notify_opts)
+          if timer_counter == 300 then
+            reset_chatgpt_diag_record()
+          end
+          timer_counter = timer_counter + 1
+        end))
+      end
+    end,
+    request_finished = vim.schedule_wrap(function()
+      local notify_opts = { title = "🤖 ChatGPT", timeout = 1000 }
+      vim.notify("Request finished", "info", notify_opts)
+      reset_chatgpt_diag_record()
+    end)
+  }
+
+  vim.g["codegpt_popup_type"] = "horizontal"
+
+  function reset_chatgpt_diag_record(window)
+    timer:stop()
+    timer_counter = 0
+    chatgpt_diag_record = {}
+  end
 else
-  welcome_message = [[Welcome to ChatGPT!
-
-    Available keybindings are:
-    <C-c> to close chat window.
-    <C-u> scroll up chat window.
-    <C-d> scroll down chat window.
-    <C-y> to copy/yank last answer.
-    <C-o> Toggle settings window.
-    <C-n> Start new session.
-    <Tab> Cycle over windows.
-    <C-i> [Edit Window] use response as input.
-
-    In the sessions window:
-    <Space> to select session.
-    r to rename session.
-    d to delete session.]]
-
-  require("chatgpt").setup({
-    welcome_message = welcome_message,
-  })
+   notify("🤖 ChatGPT", "OPENAI_API_KEY is not set", "warn")
 end
 
 EOF

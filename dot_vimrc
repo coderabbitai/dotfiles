@@ -144,9 +144,10 @@ Plug 'SirVer/ultisnips', has('nvim') ? {} : { 'on': [] }
 Plug 'honza/vim-snippets', has('nvim') ? {} : { 'on': [] }
 Plug 'nvim-tree/nvim-web-devicons', has('nvim') ? {} : { 'on': [] }
 Plug 'akinsho/bufferline.nvim', has('nvim') ? { 'tag': 'v3.*' } : { 'on': [] }
+Plug 'stevearc/dressing.nvim', has('nvim') ? {} : { 'on': [] }
 
 if exists('$OPENAI_API_KEY')
-  Plug 'jackMort/ChatGPT.nvim', has('nvim') ? {} : { 'on': [] }
+  Plug 'dpayne/CodeGPT.nvim', has('nvim') ? {} : { 'on': [] }
 endif
 
 if !has('nvim')
@@ -732,6 +733,66 @@ let g:startify_session_before_save = [
       \ 'silent! MundoHide"' 
       \ ]
 
+function! VisualExecWithArgs(cmd, args) range
+  call ExecInputValues(a:cmd, a:args, 'VisualExecInputValues')
+endfunction
+
+function! NormalExecWithArgs(cmd, args)
+  call ExecInputValues(a:cmd, a:args, 'NormalExecInputValues')
+endfunction
+
+function! ExecInputValues(cmd, args, exec_func)
+  let arg_values = []
+  if has('nvim')
+    call luaeval('input_args_nvim(_A.args, _A.arg_values, _A.callback, _A.cmd)', {'args': a:args, 'arg_values': arg_values, 'callback': a:exec_func, 'cmd': a:cmd})
+  else
+    " Loop through each argument, prompting the user for input and adding the value to arg_values.
+    for arg in a:args
+      let [arg_name, required] = arg
+      let value = input(arg_name . ": ")
+      if required && value == ''
+        echom 'Required parameter ' . arg_name . ' is empty.'
+        return
+      endif
+      call add(arg_values, value)
+    endfor
+    call a:exec_func(a:cmd, arg_values)
+  endif
+endfunction
+
+function! VisualExecInputValues(cmd, arg_values)
+  let final_cmd = a:cmd
+  for value in a:arg_values
+    let final_cmd .= " " . value
+  endfor
+  call VisualExec(final_cmd)
+endfunction
+
+function! NormalExecInputValues(cmd, arg_values)
+  let final_cmd = a:cmd
+  for value in a:arg_values
+    let final_cmd .= " " . value
+  endfor
+  execute final_cmd
+endfunction
+
+function! VisualExec(cmd) range
+  " Get the start and end positions of the visual selection
+  let l:sel_start = getpos("'<")
+  let l:sel_end = getpos("'>")
+
+  " Check whether the range is empty
+  if a:firstline != a:lastline || l:sel_start[2] != l:sel_end[2]  
+    execute a:cmd
+  else
+    if has('nvim')
+      call nvim_notify('Visual selection is empty.', 3, {})
+    else
+      echom 'Visual selection is empty.'
+    endif
+  endif
+endfunction
+
 " FZF Menu
 nmap <silent> <space><space> <Plug>(Fzm)
 vmap <silent> <space><space> <Plug>(FzmVisual)
@@ -979,20 +1040,20 @@ else
   call fuzzymenu#Add(' Tag Stack', {'exec': 'tags'}, {'tags': ['tools']})
 endif
   if exists('$OPENAI_API_KEY')
-    let ops = {}
+    call fuzzymenu#Add('🤖 ChatGPT Chat', {'exec': ':call NormalExecWithArgs("Chat", [["Instructions", 1]])'}, {'tags': ['chatgpt']})
     " ChatGPT visual selection
     call fuzzymenu#AddAll({
-      \ '🤖 ChatGPT Complete Code': {'visual': ':ChatGPTRun complete_code' },
-      \ '🤖 ChatGPT Explain Code': {'visual': ':ChatGPTRun explain_code' },
-      \ '🤖 ChatGPT Grammar Correction': {'visual': ':ChatGPTRun grammar_correction' },
-      \ '🤖 ChatGPT Docstring': {'visual': ':ChatGPTRun docstring' },
-      \ '🤖 ChatGPT Keywords': {'visual': ':ChatGPTRun keywords' },
-      \ '🤖 ChatGPT Optimize Code': {'visual': ':ChatGPTRun optimize_code' },
-      \ '🤖 ChatGPT Add Tests': {'visual': ':ChatGPTRun add_tests' },
-      \ '🤖 ChatGPT Summarize': {'visual': ':ChatGPTRun summarize' },
-      \ '🤖 ChatGPT Fix Bugs': {'visual': ':ChatGPTRun fix_bugs' },
+      \ '🤖 ChatGPT Completion': {'visual': ':call VisualExec("Chat completion")' },
+      \ '🤖 ChatGPT Explain': {'visual': ':call VisualExec("Chat explain")' },
+      \ '🤖 ChatGPT Debug': {'visual': ':call VisualExec("Chat debug")' },
+      \ '🤖 ChatGPT Document': {'visual': ':call VisualExec("Chat doc")' },
+      \ '🤖 ChatGPT Optimize': {'visual': ':call VisualExec("Chat opt")' },
+      \ '🤖 ChatGPT Add Tests': {'visual': ':call VisualExec("Chat tests")' },
+      \ '🤖 ChatGPT Summarize': {'visual': ':call VisualExec("Chat summarize")' },
+      \ '🤖 ChatGPT Question': {'visual': ':call VisualExecWithArgs("Chat question", [["Question", 1]])' },
+      \ '🤖 ChatGPT Edit With Instructions': {'visual': ':call VisualExecWithArgs("Chat code_edit", [["Instructions", 1]])' },
       \ },
-      \ {'tags': ['visual','chatgpt','openai']})
+      \ {'tags': ['visual','chatgpt']})
   endif
 
 " normal mode operators (For text objects) 
