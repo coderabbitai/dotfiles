@@ -154,9 +154,9 @@ if !has('nvim')
   " Wilder
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
-
-  Plug 'ryanoasis/vim-devicons'
 endif
+
+Plug 'ryanoasis/vim-devicons'
 
 " Initialize plugin system
 call plug#end()
