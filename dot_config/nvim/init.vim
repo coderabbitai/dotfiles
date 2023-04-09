@@ -207,10 +207,6 @@ function input_args_nvim(args, arg_values, callback, cmd)
   end)
 end
 
-local chatgpt_diag_record = {}
-local timer = vim.loop.new_timer()
-local timer_counter = 0
-
 if vim.env.OPENAI_API_KEY ~= nil then
   local CodeGPTModule = require("codegpt")
   require("codegpt.config")
@@ -238,6 +234,10 @@ if vim.env.OPENAI_API_KEY ~= nil then
 
   vim.g["codegpt_commands_defaults"] = override_config
 
+  local chatgpt_diag_record = {}
+  local timer = vim.loop.new_timer()
+  local timer_counter = 0
+
   vim.g["codegpt_hooks"] = {
     request_started = function()
       local notify_opts = { title = "🤖 ChatGPT", timeout = 2000, on_close = reset_chatgpt_diag_record }
@@ -252,13 +252,15 @@ if vim.env.OPENAI_API_KEY ~= nil then
           if chatgpt_diag_record ~= {} then
             notify_opts["replace"] = chatgpt_diag_record.id
           end
-          local msg = "Requesting, please wait"
+          local msg = "Please wait"
+          local time_elapsed = timer_counter * 0.1
+          msg = msg .. " | Time elapsed: " .. time_elapsed .. "s"
           local status = CodeGPTModule.get_status()
           if status ~= "" then
             msg = msg .. " | " .. status
           end
           chatgpt_diag_record = vim.notify(msg, "info", notify_opts)
-          if timer_counter == 600 then
+          if timer_counter == 1200 then
             reset_chatgpt_diag_record()
           end
           timer_counter = timer_counter + 1
@@ -272,13 +274,13 @@ if vim.env.OPENAI_API_KEY ~= nil then
     end)
   }
 
-  vim.g["codegpt_popup_type"] = "horizontal"
-
   function reset_chatgpt_diag_record(window)
     timer:stop()
     timer_counter = 0
     chatgpt_diag_record = {}
   end
+
+  vim.g["codegpt_popup_type"] = "horizontal"
 else
    notify("🤖 ChatGPT", "OPENAI_API_KEY is not set", "warn")
 end

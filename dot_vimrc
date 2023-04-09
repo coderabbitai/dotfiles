@@ -1039,7 +1039,7 @@ if has("nvim")
 else
   call fuzzymenu#Add(' Tag Stack', {'exec': 'tags'}, {'tags': ['tools']})
 endif
-  if exists('$OPENAI_API_KEY')
+  if exists('$OPENAI_API_KEY') && has("nvim")
     call fuzzymenu#Add('🤖 ChatGPT Chat', {'exec': ':call NormalExecWithArgs("Chat", [["Instructions", 1]])'}, {'tags': ['chatgpt']})
     " ChatGPT visual selection
     call fuzzymenu#AddAll({
