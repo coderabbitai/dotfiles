@@ -258,7 +258,7 @@ if vim.env.OPENAI_API_KEY ~= nil then
             msg = msg .. " | " .. status
           end
           chatgpt_diag_record = vim.notify(msg, "info", notify_opts)
-          if timer_counter == 300 then
+          if timer_counter == 600 then
             reset_chatgpt_diag_record()
           end
           timer_counter = timer_counter + 1
