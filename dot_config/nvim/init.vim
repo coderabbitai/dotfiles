@@ -6,6 +6,19 @@ source ~/.vimrc
 
 lua << EOF
 
+-- update remote plugins to make wilder work
+local UpdatePlugs = vim.api.nvim_create_augroup("UpdateRemotePlugs", {})
+vim.api.nvim_create_autocmd({ "VimEnter", "VimLeave" }, {
+  pattern = "*",
+  group = UpdatePlugs,
+  command = "runtime! plugin/rplugin.vim",
+})
+vim.api.nvim_create_autocmd({ "VimEnter", "VimLeave" }, {
+  pattern = "*",
+  group = UpdatePlugs,
+  command = "silent! UpdateRemotePlugins",
+})
+
 require'nvim-treesitter.configs'.setup {
   ensure_installed = { "go", "rust", "c", "python", "lua", "javascript", "bash", "cpp", "css", "dockerfile", "gomod", "gowork", "graphql", "hcl", "http", "html", "java", "json", "proto", "regex", "rego", "toml", "tsx", "typescript", "vim", "yaml", "make"},
   sync_install = false,

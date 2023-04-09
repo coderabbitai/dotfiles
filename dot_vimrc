@@ -142,6 +142,8 @@ Plug 'nvim-tree/nvim-web-devicons', has('nvim') ? {} : { 'on': [] }
 Plug 'akinsho/bufferline.nvim', has('nvim') ? { 'tag': 'v3.*' } : { 'on': [] }
 " Plug 'jackMort/ChatGPT.nvim', has('nvim') ? {} : { 'on': [] }
 
+Plug 'gelguy/wilder.nvim'
+
 Plug 'ryanoasis/vim-devicons'
 " Initialize plugin system
 call plug#end()
@@ -150,6 +152,45 @@ call plug#end()
 if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   PlugInstall --sync
 endif
+
+" Wilder
+" Default keys
+call wilder#setup({
+      \ 'modes': [':', '/', '?'],
+      \ 'next_key': '<Tab>',
+      \ 'previous_key': '<S-Tab>',
+      \ 'accept_key': '<Down>',
+      \ 'reject_key': '<Up>',
+      \ })
+
+call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
+      \ 'border': 'single',
+      \ 'highlighter': wilder#basic_highlighter(),
+      \ 'highlights': {
+      \   'border': 'Normal',
+      \   'accent': wilder#make_hl('WilderAccent', 'Pmenu', [{}, {}, {'foreground': '#F06929'}]),  
+      \ },
+      \ 'left': [
+      \   ' ', wilder#popupmenu_devicons(),
+      \ ],
+      \ 'right': [
+      \   ' ', wilder#popupmenu_scrollbar(),
+      \ ],
+      \ })))
+
+call wilder#set_option('pipeline', [
+      \   wilder#branch(
+      \     wilder#cmdline_pipeline({
+      \       'language': 'python',
+      \       'fuzzy': 1,
+      \     }),
+      \     wilder#python_search_pipeline({
+      \       'pattern': wilder#python_fuzzy_pattern(),
+      \       'sorter': wilder#python_difflib_sorter(),
+      \       'engine': 're',
+      \     }),
+      \   ),
+      \ ])
 
 " copilot enable for markdown files
 let g:copilot_filetypes = {
