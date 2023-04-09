@@ -184,7 +184,7 @@ else
 	)
   revolver update 'Installing fonts...'
   # declare a map of font urls to font file names (e.g. "FiraCode" to "Fira Code Regular")
-  nerd_font='https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0'
+  nerd_font='https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3'
   declare -A fonts=(
     "${nerd_font}/DejaVuSansMono.zip" "DejaVu Sans Mono Nerd Font Complete.ttf"
     "${nerd_font}/DroidSansMono.zip" "Droid Sans Mono Nerd Font Complete.otf"

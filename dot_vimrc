@@ -110,6 +110,7 @@ Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'chrisbra/unicode.vim'
 Plug 'mracos/mermaid.vim'
 Plug 'google/vim-jsonnet'
+Plug 'gelguy/wilder.nvim'
 
 " colors
 Plug 'sainnhe/gruvbox-material'
@@ -140,11 +141,19 @@ Plug 'SirVer/ultisnips', has('nvim') ? {} : { 'on': [] }
 Plug 'honza/vim-snippets', has('nvim') ? {} : { 'on': [] }
 Plug 'nvim-tree/nvim-web-devicons', has('nvim') ? {} : { 'on': [] }
 Plug 'akinsho/bufferline.nvim', has('nvim') ? { 'tag': 'v3.*' } : { 'on': [] }
-" Plug 'jackMort/ChatGPT.nvim', has('nvim') ? {} : { 'on': [] }
 
-Plug 'gelguy/wilder.nvim'
+" if exists('$OPENAI_API_KEY')
+"   Plug 'jackMort/ChatGPT.nvim', has('nvim') ? {} : { 'on': [] }
+" endif
 
-Plug 'ryanoasis/vim-devicons'
+if !has('nvim')
+  " Wilder
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+
+  Plug 'ryanoasis/vim-devicons'
+endif
+
 " Initialize plugin system
 call plug#end()
 
