@@ -20,6 +20,9 @@ endif
 " allow to scroll in the preview and other actions
 set mouse=a
 
+" enable mousemoveevent
+set mousemoveevent
+
 set number
 
 set tabstop=2       " The width of a TAB is set to 4.

@@ -85,6 +85,14 @@ require('bufferline').setup {
         close_icon = "",
         left_trunc_marker = "",
         right_trunc_marker = "",
+        offsets = {{filetype = "coc-explorer", text = "File Explorer", text_align = "center"}},
+        color_icons = true,
+        separator_style = "slant",
+        hover = {
+              enabled = true,
+              delay = 100,
+              reveal = {'close'}
+            },
     }
 }
 
