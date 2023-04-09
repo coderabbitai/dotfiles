@@ -782,7 +782,7 @@ function! VisualExec(cmd) range
   let l:sel_end = getpos("'>")
 
   " Check whether the range is empty
-  if a:firstline != a:lastline || l:sel_start[2] != l:sel_end[2]  
+  if a:firstline != a:lastline || l:sel_start[2] != l:sel_end[2] + 1
     execute a:cmd
   else
     if has('nvim')
