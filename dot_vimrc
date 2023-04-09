@@ -145,6 +145,10 @@ Plug 'honza/vim-snippets', has('nvim') ? {} : { 'on': [] }
 Plug 'nvim-tree/nvim-web-devicons', has('nvim') ? {} : { 'on': [] }
 Plug 'akinsho/bufferline.nvim', has('nvim') ? { 'tag': 'v3.*' } : { 'on': [] }
 
+if exists('$OPENAI_API_KEY')
+  Plug 'jackMort/ChatGPT.nvim', has('nvim') ? {} : { 'on': [] }
+endif
+
 if !has('nvim')
   " Wilder
   Plug 'roxma/nvim-yarp'
@@ -974,6 +978,22 @@ if has("nvim")
 else
   call fuzzymenu#Add(' Tag Stack', {'exec': 'tags'}, {'tags': ['tools']})
 endif
+  if exists('$OPENAI_API_KEY')
+    let ops = {}
+    " ChatGPT visual selection
+    call fuzzymenu#AddAll({
+      \ '🤖 ChatGPT Complete Code': {'visual': ':ChatGPTRun complete_code' },
+      \ '🤖 ChatGPT Explain Code': {'visual': ':ChatGPTRun explain_code' },
+      \ '🤖 ChatGPT Grammar Correction': {'visual': ':ChatGPTRun grammar_correction' },
+      \ '🤖 ChatGPT Docstring': {'visual': ':ChatGPTRun docstring' },
+      \ '🤖 ChatGPT Keywords': {'visual': ':ChatGPTRun keywords' },
+      \ '🤖 ChatGPT Optimize Code': {'visual': ':ChatGPTRun optimize_code' },
+      \ '🤖 ChatGPT Add Tests': {'visual': ':ChatGPTRun add_tests' },
+      \ '🤖 ChatGPT Summarize': {'visual': ':ChatGPTRun summarize' },
+      \ '🤖 ChatGPT Fix Bugs': {'visual': ':ChatGPTRun fix_bugs' },
+      \ },
+      \ {'tags': ['visual','chatgpt','openai']})
+  endif
 
 " normal mode operators (For text objects) 
 
