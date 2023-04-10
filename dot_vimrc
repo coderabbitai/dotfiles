@@ -143,6 +143,7 @@ Plug 'honza/vim-snippets', has('nvim') ? {} : { 'on': [] }
 Plug 'nvim-tree/nvim-web-devicons', has('nvim') ? {} : { 'on': [] }
 Plug 'akinsho/bufferline.nvim', has('nvim') ? { 'tag': 'v3.*' } : { 'on': [] }
 Plug 'stevearc/dressing.nvim', has('nvim') ? {} : { 'on': [] }
+Plug 'petertriho/nvim-scrollbar', has('nvim') ? {} : { 'on': [] }
 
 if exists('$OPENAI_API_KEY')
   Plug 'dpayne/CodeGPT.nvim', has('nvim') ? {} : { 'on': [] }
@@ -173,8 +174,8 @@ call wilder#setup({
       \ 'modes': [':', '/', '?'],
       \ 'next_key': '<Down>',
       \ 'previous_key': '<Up>',
-      \ 'accept_key': '<Right>',
-      \ 'reject_key': '<Left>',
+      \ 'accept_key': '<Tab>',
+      \ 'reject_key': '<S-Tab>',
       \ })
 
 call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
