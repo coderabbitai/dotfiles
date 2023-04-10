@@ -306,6 +306,22 @@ else
    notify("🤖 ChatGPT", "OPENAI_API_KEY is not set", "warn")
 end
 
+require('gitsigns').setup()
+require('hlslens').setup({
+  calm_down = true,
+})
+
+require("scrollbar").setup({
+    handlers = {
+        cursor = true,
+        diagnostic = true,
+        gitsigns = true,
+        handle = true,
+        search = true,
+    },
+})
+
+
 EOF
 
 autocmd FileType octo inoremap<buffer><silent> @ @<C-x><C-o>
