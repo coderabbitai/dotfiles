@@ -4,6 +4,8 @@ let &packpath=&runtimepath
 " Note: Plugins are listed in ~/.vimrc
 source ~/.vimrc
 
+set winbar=1
+
 lua << EOF
 
 -- update remote plugins to make wilder work
@@ -324,6 +326,17 @@ vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], 
 vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
 vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
 vim.api.nvim_set_keymap('n', '<Leader>l', '<Cmd>noh<CR>', kopts)
+
+function _G.symbol_line()
+  local curwin = vim.g.statusline_winid or 0
+  local curbuf = vim.api.nvim_win_get_buf(curwin)
+  local ok, line = pcall(vim.api.nvim_buf_get_var, curbuf, 'coc_symbol_line')
+  return ok and line or ''
+end
+
+-- vim.o.tabline = '%!v:lua.symbol_line()'
+-- vim.o.statusline = '%!v:lua.symbol_line()'
+vim.o.winbar = '%!v:lua.symbol_line()'
 
 EOF
 
