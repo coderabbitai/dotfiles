@@ -55,8 +55,6 @@ map <Leader> <Plug>(easymotion-prefix)
 if exists('$TMUX')
   let g:last_tmux_uuid=system('tmux show-environment -g TMUX_UUID  2> /dev/null')
   " autocmd to check of uuid changes and prompt user if they want
-  " to reload .vimrc when a change is detected
-  " autocmd FocusGained if g:last_tmux_uuid != $LAST_TMUX_UUID | call confirm("Reload .vimrc?") | if (v:confirm) | exe 'source ~/.vimrc' | endif | endif
   autocmd FocusGained * let tmux_uuid=system('tmux show-environment -g TMUX_UUID  2> /dev/null') | if g:last_tmux_uuid != tmux_uuid  | let g:last_tmux_uuid=tmux_uuid | let cfm=confirm("Autoupdate detected, reload .vimrc?", "&Yes\n&No", 1) | if cfm == 1 | source $MYVIMRC | endif | endif
 endif
 
@@ -345,11 +343,11 @@ set signcolumn=yes
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1):
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+" inoremap <silent><expr> <TAB>
+"       \ coc#pum#visible() ? coc#pum#next(1):
+"       \ CheckBackspace() ? "\<Tab>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
@@ -541,6 +539,9 @@ augroup coc_diag
   autocmd User CocDiagnosticChange call s:AutoToggleDiagnosticsWindow()
 
 augroup end
+
+" it uses the <tab> which copilot uses
+let g:UltiSnipsExpandTrigger="<C-l>"
 
 " FZF 
 " An action can be a reference to a function that processes selected lines
