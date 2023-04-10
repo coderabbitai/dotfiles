@@ -16,6 +16,10 @@
   "diagnostic.locationlistLevel": "warning",
   "diagnostic.locationlistUpdate": true,
   "diagnostic.autoRefresh": true,
+  "diagnostic.hintSign": "",
+  "diagnostic.infoSign": "",
+  "diagnostic.warningSign": "",
+  "diagnostic.errorSign": "",
   "suggest.removeDuplicateItems": true,
   "suggest.completionItemKindLabels": {
     "keyword": "\uf1de",
