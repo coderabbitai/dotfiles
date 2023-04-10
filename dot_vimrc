@@ -754,7 +754,7 @@ endfunction
 function! ExecInputValues(cmd, args, exec_func)
   let arg_values = []
   if has('nvim')
-    call luaeval('input_args_nvim(_A.args, _A.arg_values, _A.callback, _A.cmd)', {'args': a:args, 'arg_values': arg_values, 'callback': a:exec_func, 'cmd': a:cmd})
+    call luaeval('input_args(_A.args, _A.arg_values, _A.callback, _A.cmd)', {'args': a:args, 'arg_values': arg_values, 'callback': a:exec_func, 'cmd': a:cmd})
   else
     " Loop through each argument, prompting the user for input and adding the value to arg_values.
     for arg in a:args
@@ -787,20 +787,23 @@ function! NormalExecInputValues(cmd, arg_values)
 endfunction
 
 function! VisualExec(cmd) range
-  " Get the start and end positions of the visual selection
-  let l:sel_start = getpos("'<")
-  let l:sel_end = getpos("'>")
-
-  " Check whether the range is empty
-  if a:firstline != a:lastline || l:sel_start[2] != l:sel_end[2] + 1
-    execute a:cmd
-  else
+  if visualmode() != 'V' && visualmode() != ''
     if has('nvim')
-      call nvim_notify('Visual selection is empty.', 3, {})
+      " select_buffer_or_cancel_nvim now accepts callback, cmd and args. 
+      call luaeval('select_buffer_or_cancel(_A.callback, _A.cmd)', {'callback': 'VisualExec', 'cmd': a:cmd})
+      return
     else
-      echom 'Visual selection is empty.'
+      let choice = inputlist(['Select entire buffer', 'Cancel'])
+      if choice == 1
+        normal! ggVG
+        normal! \<Esc>
+      else
+        return
+      endif
     endif
   endif
+
+  execute a:cmd
 endfunction
 
 " FZF Menu

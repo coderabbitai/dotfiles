@@ -156,18 +156,44 @@ end
 
 require"octo".setup()
 
-function input_args_nvim(args, arg_values, callback, cmd)
+function input_args(args, arg_values, callback, cmd)
   if #args == 0 then
     vim.call(callback, cmd, arg_values)
     return
   end
   local arg_name, required = unpack(args[1])
   vim.ui.input({prompt = arg_name .. ': '}, function(input_value)
-    if not required or input_value ~= '' then
+    -- cancel on escape
+    if input_value == nil then
+      notify(" Input", "Command cancelled.", "warn")
+      return
+    elseif input_value ~= '' then
       table.insert(arg_values, input_value)
-      input_args_nvim({unpack(args, 2)}, arg_values, callback, cmd)
+      input_args({unpack(args, 2)}, arg_values, callback, cmd)
+    elseif required then
+      notify(" Input", "Required argument " .. arg_name .. " is missing.", "error")
+    else
+      input_args({unpack(args, 2)}, arg_values, callback, cmd)
     end
   end)
+end
+
+function select_buffer_or_cancel(callback, cmd)
+  local visual_mode = vim.fn.visualmode()
+  if visual_mode ~= 'V' and visual_mode ~= '' then 
+    vim.ui.select({"Yes", "No"}, {
+      prompt = "No visual selection, run on whole buffer?",
+      telescope = require("telescope.themes").get_cursor(),
+    }, function(choice, choice_idx)
+      if choice == "Yes" then
+        vim.cmd("normal! ggVG")
+        vim.cmd("normal! <esc>")
+        vim.call(callback, cmd)
+      end
+    end)
+  else
+    vim.call(callback, cmd)
+  end
 end
 
 if vim.env.OPENAI_API_KEY ~= nil then
@@ -184,9 +210,21 @@ if vim.env.OPENAI_API_KEY ~= nil then
     "completion",
     "code_edit",
     "debug",
-    "tests",
     "opt",
+    "tests",
     "chat",
+  }
+
+  local gpt_3_5_config = {
+    model = "gpt-3.5-turbo",
+    max_tokens = 4096,
+    temperature = 0,
+  }
+
+  local gpt_3_5_commands = {
+    "explain",
+    "question",
+    "doc",
   }
   
   local override_config = vim.g["codegpt_commands_defaults"]
@@ -194,6 +232,11 @@ if vim.env.OPENAI_API_KEY ~= nil then
   for _, command in ipairs(gpt_4_commands) do
     -- and merge it with gpt-4-config
     override_config[command] = vim.tbl_extend("force", vim.g.codegpt_commands_defaults[command], gpt_4_config)
+  end
+
+  for _, command in ipairs(gpt_3_5_commands) do
+    -- and merge it with gpt-3.5-config
+    override_config[command] = vim.tbl_extend("force", vim.g.codegpt_commands_defaults[command], gpt_3_5_config)
   end
 
   vim.g["codegpt_commands_defaults"] = override_config
@@ -207,9 +250,6 @@ if vim.env.OPENAI_API_KEY ~= nil then
       temperature = gpt_4_config.temperature,
     }
   }
-
-
-
 
   local chatgpt_diag_record = {}
   local timer = vim.loop.new_timer()
