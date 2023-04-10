@@ -164,6 +164,9 @@ if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   PlugInstall --sync
 endif
 
+" unset wildmenu
+set nowildmenu
+
 " Wilder
 " Default keys
 call wilder#setup({
