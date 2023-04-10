@@ -159,7 +159,9 @@
   "ltex.diagnosticSeverity": "warning",
   "cSpell.showStatus": false,
   "cSpell.allowCompoundWords": true,
-  "cSpell.userWords": [],
+  "cSpell.userWords": [
+    "startify"
+  ],
   "cSpell.dictionaries": [
     "wordsEn",
     "en_US",
@@ -170,6 +172,44 @@
     "bash",
     "node"
   ],
+  "cSpell.languageSettings": [
+    {
+      "languageId": "python",
+      "includeRegExpList": ["/#.*/", "/('''|\"\"\")[^\\1]+?\\1/g", "strings"]
+    },
+    {
+      "languageId": "javascript,typescript",
+      "includeRegExpList": ["CStyleComment", "strings"]
+    },
+    {
+      "languageId": "cpp,c",
+      // Turn off compound words, because it is only checking strings.
+      "allowCompoundWords": false,
+      // Only check comments and strings
+      "includeRegExpList": ["CStyleComment", "string"],
+      // Exclude includes, because they are also strings.
+      "ignoreRegExpList": ["/#include.*/"]
+    },
+    {
+      "languageId": "go",
+      // Turn off compound words, because it is only checking strings.
+      "allowCompoundWords": false,
+      // Only check comments and strings
+      "includeRegExpList": ["CStyleComment", "string"],
+      // Exclude imports, because they are also strings.
+      "ignoreRegExpList": [
+        // ignore multiline imports
+        "import\\s*\\((.|[\r\n])*?\\)",
+        // ignore single line imports
+        "import\\s*.*\".*?\""
+      ]
+    },
+    {
+      "languageId": "vim",
+      "includeRegExpList": ["^\\s*\".*", "strings"]
+    }
+  ],
+
   "coc.source.tag.priority": 89,
   "eslint.packageManager": "yarn",
   "eslint.nodePath": ".yarn/sdks",
