@@ -170,7 +170,7 @@ call wilder#setup({
       \ 'modes': [':', '/', '?'],
       \ 'next_key': '<Down>',
       \ 'previous_key': '<Up>',
-      \ 'accept_key': '<Enter>',
+      \ 'accept_key': '<Right>',
       \ 'reject_key': '<Left>',
       \ })
 
