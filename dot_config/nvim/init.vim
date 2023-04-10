@@ -248,6 +248,10 @@ if vim.env.OPENAI_API_KEY ~= nil then
       model = gpt_4_config.model,
       max_tokens = gpt_4_config.max_tokens,
       temperature = gpt_4_config.temperature,
+    },
+    ["grammar"] = {
+      user_message_template = "I have the following {{language}} code/text: ```{{filetype}}\n{{text_selection}}```\nFix typos and grammatical errors in the text. Only return the code/text snippet and comments. {{language_instructions}}",
+      callback_type = "replace_lines",
     }
   }
 
