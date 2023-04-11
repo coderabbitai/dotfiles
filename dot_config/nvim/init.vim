@@ -120,39 +120,47 @@ function notify(title, msg, level)
   vim.notify(msg, level, notify_opts)
 end
 
-function notify_output(command, opts)
+function notify_job(command, opts)
   local output = ""
   local notification
   local notify = function(msg, level, time)
     local notify_opts = vim.tbl_extend(
       "keep",
       opts or {},
-      { title = table.concat(command, " "), timeout = time, replace = notification }
+      { title = table.concat(command, " "), 
+        timeout = time, 
+        replace = notification
+      }
     )
     notification = vim.notify(msg, level, notify_opts)
   end
   local on_data = function(_, data)
     output = output .. table.concat(data, "\n")
-    -- remove all lines from output except the last 20 and save those to output
+    -- remove all lines from output except the last 30 and save those to output
     local lines = vim.split(output, "\n")
     local num_lines = vim.fn.len(lines)
-    if num_lines > 20 then
-      local start_idx = num_lines - 20 + 1
+    if num_lines > 30 then
+      local start_idx = num_lines - 30 + 1
       local end_idx = num_lines
       output = table.concat(lines, "\n", start_idx, end_idx)
     end
     notify(output, "info", false)
   end
-  vim.fn.jobstart(command, {
+
+    -- Prepare the command to run with Bash
+  local command_str = table.concat(command, " ")
+  local bash_command = {"bash", "--norc", "--noprofile", "-c", command_str}
+
+  vim.fn.jobstart(bash_command, {
     on_stdout = on_data,
     on_stderr = on_data,
     on_exit = function(_, code)
       if #output == 0 then
         notify("No output of command, exit code: " .. code, "warn", 1000)
       elseif code ~= 0 then
-        notify(output, "error", 1000)
+        notify(output, "error", 5000)
       else
-        notify(output, "info", 1000)
+        notify(output, "info", 2000)
       end
     end,
   })
@@ -178,6 +186,17 @@ function input_args(args, arg_values, callback, cmd)
       notify(" Input", "Required argument " .. arg_name .. " is missing.", "error")
     else
       input_args({unpack(args, 2)}, arg_values, callback, cmd)
+    end
+  end)
+end
+
+function select_choice(choices, callback)
+  vim.ui.select(choices, {}, function(selected_choice, choice_idx)
+    if selected_choice == nil then
+      notify(" Selection", "Command cancelled.", "warn")
+      return
+    else
+      vim.call(callback, selected_choice)
     end
   end)
 end
@@ -435,7 +454,7 @@ function! s:RunSh(cmdline)
      endif
      call add(cmd, part)
   endfor
-  call v:lua.notify_output(cmd)
+  call v:lua.notify_job(cmd)
 endfunction
 
 " Tree sitter based folding
