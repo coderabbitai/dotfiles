@@ -31,6 +31,7 @@ done
 pushd ~/Work/fluxninja/aperture >/dev/null || exit 1
 make install-go-tools
 make install-python-tools
+vale sync
 popd >/dev/null || exit 1
 
 pushd ~/Work/fluxninja/aperture-tech-docs >/dev/null || exit 1
