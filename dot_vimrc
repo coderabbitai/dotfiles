@@ -145,6 +145,7 @@ Plug 'akinsho/bufferline.nvim', has('nvim') ? { 'tag': 'v3.*' } : { 'on': [] }
 Plug 'stevearc/dressing.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'lewis6991/gitsigns.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'kevinhwang91/nvim-hlslens', has('nvim') ? {} : { 'on': [] }
+Plug 'petertriho/nvim-scrollbar', has('nvim') ? {} : { 'on': [] }
 
 if exists('$OPENAI_API_KEY')
   Plug 'dpayne/CodeGPT.nvim', has('nvim') ? {} : { 'on': [] }
@@ -228,6 +229,8 @@ let airline#extensions#coc#error_symbol = ''
 let airline#extensions#coc#warning_symbol = ''
 
 let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#hunks#enabled = 1
+let g:airline#extensions#hunks#non_zero_only = 1
 
 let g:gothx_command_prefix = 'Go'
 

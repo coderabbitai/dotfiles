@@ -332,9 +332,25 @@ function _G.symbol_line()
   return ok and line or ''
 end
 
--- vim.o.tabline = '%!v:lua.symbol_line()'
--- vim.o.statusline = '%!v:lua.symbol_line()'
 vim.o.winbar = '%!v:lua.symbol_line()'
+
+require("scrollbar").setup({
+    handle = {
+        text = " ",
+        blend = 0, -- Integer between 0 and 100. 0 for fully opaque and 100 to full transparent. Defaults to 30.
+        color = nil,
+        color_nr = nil, -- cterm
+        highlight = "Visual",
+        hide_if_all_visible = true, -- Hides handle if all lines are visible
+    },
+    handlers = {
+        cursor = true,
+        diagnostic = true,
+        gitsigns = true,
+        handle = true,
+        search = true,
+    },
+})
 
 EOF
 
