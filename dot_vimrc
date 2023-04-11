@@ -1063,6 +1063,7 @@ if has("nvim")
   call fuzzymenu#Add(' Symbols/Emojis', {'exec': 'Telescope symbols'}, {'tags': ['tools']})
   call fuzzymenu#Add(' Notification Center', {'exec': 'Telescope notify'}, {'tags': ['tools']})
   call fuzzymenu#Add(' AutoSave Toggle', {'exec': 'ASToggle'}, {'tags': ['tools']})
+  call fuzzymenu#Add(' Run Shell Command', {'exec': ':call NormalExecWithArgs("Sh", [["Command", 1]])'}, {'tags': ['tools']})
 else
   call fuzzymenu#Add(' Tag Stack', {'exec': 'tags'}, {'tags': ['tools']})
 endif
