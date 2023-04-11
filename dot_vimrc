@@ -216,17 +216,18 @@ let g:copilot_filetypes = {
 " disable coc status in airline as it is shown with nvim-notify
 if has("nvim")
   let g:airline#extensions#coc#show_coc_status = 0
-endif
-
-if has("nvim")
-  " see config in init.nvim
-else 
+else
   let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#tabline#show_buffers = 0
   let g:airline#extensions#tabline#show_tab_count = 1
   let g:airline#extensions#tabline#tab_nr_type = 1
   let g:airline_powerline_fonts = 1
 endif
+
+let airline#extensions#coc#error_symbol = ''
+let airline#extensions#coc#warning_symbol = ''
+
+let g:airline#extensions#whitespace#enabled = 0
 
 let g:gothx_command_prefix = 'Go'
 

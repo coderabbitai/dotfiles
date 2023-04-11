@@ -16,7 +16,7 @@
   "diagnostic.locationlistLevel": "warning",
   "diagnostic.locationlistUpdate": true,
   "diagnostic.autoRefresh": true,
-  "diagnostic.hintSign": "",
+  "diagnostic.hintSign": "",
   "diagnostic.infoSign": "",
   "diagnostic.warningSign": "",
   "diagnostic.errorSign": "",
@@ -159,9 +159,7 @@
   "ltex.diagnosticSeverity": "warning",
   "cSpell.showStatus": false,
   "cSpell.allowCompoundWords": true,
-  "cSpell.userWords": [
-    "startify"
-  ],
+  "cSpell.userWords": ["startify"],
   "cSpell.dictionaries": [
     "wordsEn",
     "en_US",
