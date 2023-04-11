@@ -84,6 +84,10 @@ vim.notify.setup(config)
 local coc_status_record = {}
 
 function coc_status_notify(msg, level)
+  -- if message contains cSpell then return
+  if string.find(msg, "cSpell") then
+    return
+  end
   local notify_opts = { title = "LSP Status", timeout = 500, hide_from_history = true, on_close = reset_coc_status_record }
   -- if coc_status_record is not {} then add it to notify_opts to key called "replace"
   if coc_status_record ~= {} then
