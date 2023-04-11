@@ -156,6 +156,7 @@ PACKAGES+=(
   socat
   gum
   aperturectl
+  vale
 )
 
 if [[ $OSTYPE == 'darwin'* ]]; then

@@ -4,8 +4,6 @@ let &packpath=&runtimepath
 " Note: Plugins are listed in ~/.vimrc
 source ~/.vimrc
 
-set winbar=1
-
 lua << EOF
 
 -- update remote plugins to make wilder work

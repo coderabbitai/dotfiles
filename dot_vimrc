@@ -231,6 +231,8 @@ endif
 let g:gothx_command_prefix = 'Go'
 
 let g:indentLine_fileTypeExclude = ['startify', 'floaterm', 'coc-explorer', 'coctree', 'json']
+" avoid for markdown as it sets the conceallevel to 2
+autocmd FileType markdown let g:indentLine_enabled=0
 
 " install coc extensions
 let g:coc_global_extensions = [
@@ -241,6 +243,7 @@ let g:coc_global_extensions = [
       \ 'coc-pairs', 
       \ 'coc-yank', 
       \ 'coc-spell-checker', 
+      \ 'coc-vale',
       \ 'coc-html',
       \ 'coc-yaml',
       \ 'coc-sql',
@@ -1213,12 +1216,14 @@ endfunction
 autocmd BufEnter * call s:MergeToolBufEnter()
 autocmd BufLeave * call s:MergeToolBufLeave()
 
-
 " colorschemes
 let colorscheme = 'gruvbox_dark'
 
 " some some defaults
 let g:gruvbox_material_better_performance = 1
+let g:gruvbox_material_diagnostic_text_highlight = 1
+let g:gruvbox_material_diagnostic_virtual_text = 'colored'
+
 let g:everforest_better_performance = 1
 let g:edge_better_performance = 1
 let g:sonokai_better_performance = 1
