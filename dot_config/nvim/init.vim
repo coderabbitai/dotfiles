@@ -304,7 +304,7 @@ if vim.env.OPENAI_API_KEY ~= nil then
             msg = msg .. " | " .. status
           end
           chatgpt_diag_record = vim.notify(msg, "info", notify_opts)
-          if timer_counter == 1200 then
+          if timer_counter == 2400 then
             reset_chatgpt_diag_record()
           end
           timer_counter = timer_counter + 1
@@ -365,6 +365,12 @@ require("scrollbar").setup({
         color_nr = nil, -- cterm
         highlight = "Visual",
         hide_if_all_visible = true, -- Hides handle if all lines are visible
+    },
+    excluded_filetypes = {
+        "prompt",
+        "TelescopePrompt",
+        "noice",
+        "coc-explorer",
     },
     handlers = {
         cursor = true,
