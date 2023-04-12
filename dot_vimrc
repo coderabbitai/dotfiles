@@ -1073,6 +1073,7 @@ if has("nvim")
   call fuzzymenu#Add(' Run Project tmux Terms', {'exec': ':lua tmux.run_project_terms()'}, {'tags': ['tmux']})
   call fuzzymenu#Add(' List All tmux Terms', {'exec': 'Telescope tmux-awesome-manager list_terms'}, {'tags': ['tmux']})
   call fuzzymenu#Add(' List Open tmux Terms', {'exec': 'Telescope tmux-awesome-manager list_open_terms'}, {'tags': ['tmux']})
+  call fuzzymenu#Add(' Git Ship', {'exec': ':lua tmux.execute_command( { cmd = "git_ship; echo; echo; echo Done", name = "Git Ship" })'}, {'tags': ['tools']})
 else
   call fuzzymenu#Add(' Tag Stack', {'exec': 'tags'}, {'tags': ['tools']})
 endif
