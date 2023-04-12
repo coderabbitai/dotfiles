@@ -146,6 +146,7 @@ Plug 'stevearc/dressing.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'lewis6991/gitsigns.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'kevinhwang91/nvim-hlslens', has('nvim') ? {} : { 'on': [] }
 Plug 'petertriho/nvim-scrollbar', has('nvim') ? {} : { 'on': [] }
+Plug 'otavioschwanck/tmux-awesome-manager.nvim', has('nvim') ? {} : { 'on': [] }
 
 if exists('$OPENAI_API_KEY')
   Plug 'dpayne/CodeGPT.nvim', has('nvim') ? {} : { 'on': [] }
@@ -1245,53 +1246,6 @@ function! s:SetHighlights()
 endfunction
 
 autocmd ColorScheme * call s:SetHighlights()
-
-" Vim function that detects local Makefile and its targets
-" and asks the user which target to execute using select_choice lua function in
-" nvim and inputlist() in vim. It then executes the selected target
-" using :Sh make <target>
-" Signature of select_choice lua function is:
-" select_choice(choices, callback, cmd)
-" it can be invoked from vim similar to how input_args is invoked
-" call luaeval('select_buffer_or_cancel(_A.callback, _A.cmd)', {'callback': 'VisualExec', 'cmd': a:cmd})
-
-function! SelectMakeTarget()
-  " Check if Makefile exists in the current directory
-  if !filereadable("Makefile")
-    echo "No Makefile found in the current directory"
-    return
-  endif
-
-  " Extract targets from the Makefile
-let l:makefile_lines = readfile("Makefile")
-let l:targets = []
-for l:line in l:makefile_lines
-  " Match lines that have a target name followed by a colon, but ignore those that start with a comment, include a variable assignment, contain a wildcard, .PHONY or a variable
-  if l:line =~ '^\s*\([^#:=*$@%]\+\s*:\)\@=' && l:line !~ '^\s*\w\+\s*[:?+]?=\|^\s*\w\+\s*:=\|^\s*#' && l:line !~ '^\s*\.PHONY'
-    " Extract the target name without leading/trailing spaces
-    let l:target = matchstr(l:line, '^\s*\zs[^#:=\s]\+\ze\s*:')
-    " Skip empty entries
-    if !empty(l:target)
-      call add(l:targets, l:target)
-    endif
-  endif
-endfor
-
-  " Select target using inputlist() in vim or select_choice() in nvim
-  if has('nvim')
-    call luaeval('select_choice(_A.targets, "ExecuteMakeTarget")', {'targets': l:targets})
-  else
-    let l:choice = inputlist(map(copy(l:targets), 'v:key + 1 . ". " . v:val'))
-    if l:choice >= 1 && l:choice <= len(l:targets)
-      call ExecuteMakeTarget(l:targets[l:choice - 1])
-    endif
-  endif
-endfunction
-
-function! ExecuteMakeTarget(target)
-  " Execute the selected target using :Sh make <target>
-  execute 'Sh make ' . a:target
-endfunction
 
 " set colorscheme based on colorscheme variable
 if colorscheme == 'gruvbox_dark'

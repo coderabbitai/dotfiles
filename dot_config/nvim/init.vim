@@ -228,7 +228,7 @@ if vim.env.OPENAI_API_KEY ~= nil then
   -- as a rule of thumb
   local gpt_4_config = {
     model = "gpt-4",
-    max_tokens = 32768,
+    max_tokens = 8192,
     temperature = 0,
   }
 
@@ -243,7 +243,7 @@ if vim.env.OPENAI_API_KEY ~= nil then
 
   local gpt_3_5_config = {
     model = "gpt-3.5-turbo",
-    max_tokens = 16384,
+    max_tokens = 4096,
     temperature = 0,
   }
 
@@ -384,6 +384,31 @@ require("scrollbar").setup({
     },
 })
 
+require('tmux-awesome-manager').setup({
+  per_project_commands = { -- Configure your per project servers with
+      aperture = { { cmd = 'make generate-config-markdown', name = 'Make' } },
+  },
+  session_name = 'Neovim Terminals',
+  use_icon = true, -- use prefix icon
+  icon = ' ', -- Prefix icon to use
+  project_open_as = 'pane', -- Open per_project_commands as.  Default: separated_session
+  -- default_size = '30%', -- on panes, the default size
+  open_new_as = 'pane' -- open new command as.  options: pane, window, separated_session.
+})
+
+tmux = require('tmux-awesome-manager')
+
+vim.keymap.set('v', 'l', tmux.send_text_to, {}) -- Send text to a open terminal?
+vim.keymap.set('n', 'lo', tmux.switch_orientation, {}) -- Open new panes as vertical / horizontal?
+vim.keymap.set('n', 'lp', tmux.switch_open_as, {}) -- Open new terminals as panes or windows?
+vim.keymap.set('n', 'lk', tmux.kill_all_terms, {}) -- Kill all open terms.
+vim.keymap.set('n', 'l!', tmux.run_project_terms, {}) -- Run the per project commands
+vim.keymap.set('n', 'lf', function() vim.cmd(":Telescope tmux-awesome-manager list_terms") end, {}) -- List all terminals
+vim.keymap.set('n', 'll', function() vim.cmd(":Telescope tmux-awesome-manager list_open_terms") end, {}) -- List open terminals
+
+tmux_term = require('tmux-awesome-manager.src.term')
+
+
 EOF
 
 autocmd FileType octo inoremap<buffer><silent> @ @<C-x><C-o>
@@ -465,6 +490,47 @@ function! s:RunSh(cmdline)
   endfor
   call v:lua.notify_job(cmd)
 endfunction
+
+" Vim function that detects local Makefile and its targets
+" and asks the user which target to execute
+function! SelectMakeTarget()
+  " Check if Makefile exists in the current directory
+  if !filereadable("Makefile")
+    echo "No Makefile found in the current directory"
+    return
+  endif
+
+  " Extract targets from the Makefile
+let l:makefile_lines = readfile("Makefile")
+let l:targets = []
+for l:line in l:makefile_lines
+  " Match lines that have a target name followed by a colon, but ignore those that start with a comment, include a variable assignment, contain a wildcard, .PHONY or a variable
+  if l:line =~ '^\s*\([^#:=*$@%]\+\s*:\)\@=' && l:line !~ '^\s*\w\+\s*[:?+]?=\|^\s*\w\+\s*:=\|^\s*#' && l:line !~ '^\s*\.PHONY'
+    " Extract the target name without leading/trailing spaces
+    let l:target = matchstr(l:line, '^\s*\zs[^#:=\s]\+\ze\s*:')
+    " Skip empty entries
+    if !empty(l:target)
+      call add(l:targets, l:target)
+    endif
+  endif
+endfor
+
+  " Select target using inputlist() in vim or select_choice() in nvim
+  if has('nvim')
+    call luaeval('select_choice(_A.targets, "ExecuteMakeTarget")', {'targets': l:targets})
+  else
+    let l:choice = inputlist(map(copy(l:targets), 'v:key + 1 . ". " . v:val'))
+    if l:choice >= 1 && l:choice <= len(l:targets)
+      call ExecuteMakeTarget(l:targets[l:choice - 1])
+    endif
+  endif
+endfunction
+
+function! ExecuteMakeTarget(target)
+  " Execute the selected target using :Sh make <target>
+  execute 'Sh make ' . a:target
+endfunction
+
 
 " Tree sitter based folding
 "set foldmethod=expr
