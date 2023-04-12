@@ -159,12 +159,7 @@
   "ltex.diagnosticSeverity": "warning",
   "cSpell.showStatus": false,
   "cSpell.allowCompoundWords": true,
-  "cSpell.userWords": [
-    "aperturectl",
-    "libsonnet",
-    "pflag",
-    "startify"
-  ],
+  "cSpell.userWords": [],
   "cSpell.dictionaries": [
     "wordsEn",
     "en_US",
