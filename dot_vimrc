@@ -1066,6 +1066,13 @@ if has("nvim")
   call fuzzymenu#Add(' AutoSave Toggle', {'exec': 'ASToggle'}, {'tags': ['tools']})
   call fuzzymenu#Add(' Run Shell Command', {'exec': ':call NormalExecWithArgs("Sh", [["Command", 1]])'}, {'tags': ['tools']})
   call fuzzymenu#Add(' Make Target', {'exec': ':call SelectMakeTarget()'}, {'tags': ['tools']})
+  call fuzzymenu#Add(' Send Text to Terminal', {'exec': ':lua tmux.send_text_to()'}, {'tags': ['tmux']})
+  call fuzzymenu#Add(' Switch tmux Orientation', {'exec': ':lua tmux.switch_orientation()'}, {'tags': ['tmux']})
+  call fuzzymenu#Add(' Switch tmux Open As', {'exec': ':lua tmux.switch_open_as()'}, {'tags': ['tmux']})
+  call fuzzymenu#Add(' Kill All tmux Terms', {'exec': ':lua tmux.kill_all_terms()'}, {'tags': ['tmux']})
+  call fuzzymenu#Add(' Run Project tmux Terms', {'exec': ':lua tmux.run_project_terms()'}, {'tags': ['tmux']})
+  call fuzzymenu#Add(' List All tmux Terms', {'exec': 'Telescope tmux-awesome-manager list_terms'}, {'tags': ['tmux']})
+  call fuzzymenu#Add(' List Open tmux Terms', {'exec': 'Telescope tmux-awesome-manager list_open_terms'}, {'tags': ['tmux']})
 else
   call fuzzymenu#Add(' Tag Stack', {'exec': 'tags'}, {'tags': ['tools']})
 endif

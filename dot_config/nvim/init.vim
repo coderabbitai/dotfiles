@@ -391,8 +391,8 @@ require('tmux-awesome-manager').setup({
   session_name = 'Neovim Terminals',
   use_icon = true, -- use prefix icon
   icon = ' ', -- Prefix icon to use
-  project_open_as = 'pane', -- Open per_project_commands as.  Default: separated_session
-  -- default_size = '30%', -- on panes, the default size
+  project_open_as = 'separated_session', -- Open per_project_commands as.  Default: separated_session
+  default_size = '30%', -- on panes, the default size
   open_new_as = 'pane' -- open new command as.  options: pane, window, separated_session.
 })
 
@@ -527,8 +527,8 @@ endfor
 endfunction
 
 function! ExecuteMakeTarget(target)
-  " Execute the selected target using :Sh make <target>
-  execute 'Sh make ' . a:target
+  " Execute the selected target using luaeval and tmux
+  call luaeval('tmux.execute_command({ cmd = "make ' . a:target . '", name = "Make", use_cwd = true })')
 endfunction
 
 
