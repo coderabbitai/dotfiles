@@ -957,8 +957,6 @@ if has('nvim')
     \ ' PR List': {'exec': 'Octo pr list'},
     \ ' PR Search': {'exec': 'Octo pr search'},
     \ ' Gist List': {'exec': 'Octo gist list'},
-    \ ' PR Commits': {'exec': 'Octo pr commits'},
-    \ ' PR Changes': {'exec': 'Octo pr changes'},
     \ 'ﯙ GitHub Octo Actions': {'exec': 'Octo actions'},
     \ 'ﯙ GitHub Search': {'exec': 'Octo search'},
     \ 'ﯙ Issues List': {'exec': 'Octo issue list'},
