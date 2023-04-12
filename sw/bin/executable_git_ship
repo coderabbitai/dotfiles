@@ -31,7 +31,7 @@ else
 	# Check if the last commit message file exists and ask the user if they want to repeat the last commit message
 	if [ -f "$last_commit_file" ]; then
 		last_commit_message=$(cat "$last_commit_file")
-		if gum confirm "Repeat the last commit message: $last_commit_message?"; then
+		if gum confirm "Repeat the last commit message: \"$last_commit_message\"?"; then
 			commit_message="$last_commit_message"
 		fi
 	fi

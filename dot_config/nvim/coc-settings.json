@@ -161,6 +161,8 @@
   "cSpell.allowCompoundWords": true,
   "cSpell.userWords": [
     "aperturectl",
+    "libsonnet",
+    "pflag",
     "startify"
   ],
   "cSpell.dictionaries": [
