@@ -159,7 +159,10 @@
   "ltex.diagnosticSeverity": "warning",
   "cSpell.showStatus": false,
   "cSpell.allowCompoundWords": true,
-  "cSpell.userWords": ["startify"],
+  "cSpell.userWords": [
+    "aperturectl",
+    "startify"
+  ],
   "cSpell.dictionaries": [
     "wordsEn",
     "en_US",
