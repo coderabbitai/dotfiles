@@ -528,7 +528,8 @@ endfunction
 
 function! ExecuteMakeTarget(target)
   " Execute the selected target using luaeval and tmux
-  call luaeval('tmux.execute_command({ cmd = "make ' . a:target . '", name = "Make", use_cwd = true })')
+  let l:done = '\n\nDone!'
+  call luaeval('tmux.execute_command({ cmd = "(make ' . a:target . ' && echo; echo; echo Done) || (echo; echo; echo Failed)", name = "Make", use_cwd = true })')
 endfunction
 
 
