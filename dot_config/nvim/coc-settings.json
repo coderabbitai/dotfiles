@@ -160,7 +160,14 @@
   "cSpell.showStatus": false,
   "cSpell.allowCompoundWords": true,
   "cSpell.userWords": [],
+  "cSpell.dictionaryDefinitions": [
+    {
+      "name": "ltexOverrides",
+      "path": ".vscode/ltex.dictionary.en-US.txt"
+    }
+  ],
   "cSpell.dictionaries": [
+    "ltexOverrides",
     "wordsEn",
     "en_US",
     "softwareTerms",
