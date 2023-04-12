@@ -24,21 +24,22 @@ fi
 # Save the last commit message in a temporary file based on repository
 last_commit_file="/tmp/last_commit_message_$(basename "$(git rev-parse --show-toplevel)")"
 
-# Check if the last commit message file exists and ask the user if they want to repeat the last commit message
-if [ -f "$last_commit_file" ]; then
-	last_commit_message=$(cat "$last_commit_file")
-	if gum confirm "Repeat the last commit message: $last_commit_message?"; then
-		commit_message="$last_commit_message"
+# Use the commit message provided in argument, if given
+if [ $# -eq 1 ]; then
+	commit_message=$1
+else
+	# Check if the last commit message file exists and ask the user if they want to repeat the last commit message
+	if [ -f "$last_commit_file" ]; then
+		last_commit_message=$(cat "$last_commit_file")
+		if gum confirm "Repeat the last commit message: $last_commit_message?"; then
+			commit_message="$last_commit_message"
+		fi
 	fi
-fi
 
-# If the user didn't choose to repeat the last commit message, ask for a new one
-if [ -z "$commit_message" ]; then
-	if [ $# -ne 1 ]; then
+	# If the user didn't choose to repeat the last commit message, ask for a new one
+	if [ -z "$commit_message" ]; then
 		type=$(gum choose "fix" "feat" "docs" "style" "refactor" "test" "chore" "revert")
 		commit_message=$(gum input --value "$type: " --placeholder "Commit message")
-	else
-		commit_message=$1
 	fi
 fi
 
