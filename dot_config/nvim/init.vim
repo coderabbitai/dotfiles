@@ -223,9 +223,12 @@ if vim.env.OPENAI_API_KEY ~= nil then
   local CodeGPTModule = require("codegpt")
   require("codegpt.config")
 
+  -- until the plugin integrates with tiktoken
+  -- assume 1 token = 4 characters of text
+  -- as a rule of thumb
   local gpt_4_config = {
     model = "gpt-4",
-    max_tokens = 8192,
+    max_tokens = 32768,
     temperature = 0,
   }
 
@@ -240,7 +243,7 @@ if vim.env.OPENAI_API_KEY ~= nil then
 
   local gpt_3_5_config = {
     model = "gpt-3.5-turbo",
-    max_tokens = 4096,
+    max_tokens = 16384,
     temperature = 0,
   }
 
