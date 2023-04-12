@@ -205,8 +205,7 @@ function select_buffer_or_cancel(callback, cmd)
   local visual_mode = vim.fn.visualmode()
   if visual_mode ~= 'V' and visual_mode ~= '' then 
     vim.ui.select({"Yes", "No"}, {
-      prompt = "No visual selection, run on whole buffer?",
-      telescope = require("telescope.themes").get_cursor(),
+      prompt = "No visual selection, run on whole buffer?"
     }, function(choice, choice_idx)
       if choice == "Yes" then
         vim.cmd("normal! ggVG")
