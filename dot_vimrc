@@ -247,7 +247,6 @@ let g:coc_global_extensions = [
       \ 'coc-explorer', 
       \ 'coc-pairs', 
       \ 'coc-yank', 
-      \ 'coc-spell-checker', 
       \ 'coc-vale',
       \ 'coc-html',
       \ 'coc-yaml',
@@ -553,6 +552,19 @@ augroup coc_diag
   autocmd User CocDiagnosticChange call s:AutoToggleDiagnosticsWindow()
 
 augroup end
+
+" Remove plugins not explicitly defined in g:coc_global_extensions
+function! CocExtClean() abort
+  let g:extensions_to_clean = CocAction("loadedExtensions")
+      \ ->filter({idx, extension -> extension !~ 'coc-vim-source-zsh'})
+      \ ->filter({idx, extension -> index(g:coc_global_extensions, extension) == -1})
+  if len(g:extensions_to_clean)
+    exe 'CocUninstall' join(map(g:extensions_to_clean, {_, line -> split(line)[0]}))
+  endif
+endfunction
+command! -nargs=0 CocExtClean :call CocExtClean()
+
+autocmd User CocNvimInit call timer_start(250, {-> CocExtClean()})
 
 " it uses the <tab> which copilot uses
 let g:UltiSnipsExpandTrigger="<C-l>"
