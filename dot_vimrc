@@ -1042,6 +1042,7 @@ endif
       \ '🤖 ChatGPT Optimize': {'visual': ':call VisualExec("Chat opt")' },
       \ '🤖 ChatGPT Add Tests': {'visual': ':call VisualExec("Chat tests")' },
       \ '🤖 ChatGPT Refactor': {'visual': ':call VisualExec("Chat refactor")' },
+      \ '🤖 ChatGPT Fix': {'visual': ':call VisualExec("Chat fix")' },
       \ '🤖 ChatGPT Summarize': {'visual': ':call VisualExec("Chat summarize")' },
       \ '🤖 ChatGPT Grammar': {'visual': ':call VisualExec("Chat grammer")' },
       \ '🤖 ChatGPT Question': {'visual': ':call VisualExecWithArgs("Chat question", [["Question", 1]])' },
