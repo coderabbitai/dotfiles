@@ -157,17 +157,22 @@
     "terraform": "tffmt"
   },
   "ltex.diagnosticSeverity": "warning",
+  "ltex.dictionary": {
+    "en-US": [
+      ":~/Work/fluxninja/aperture/.github/styles/Vocab/FluxNinja/accept.txt"
+    ]
+  },
   "cSpell.showStatus": false,
   "cSpell.allowCompoundWords": true,
   "cSpell.userWords": [],
   "cSpell.dictionaryDefinitions": [
     {
-      "name": "ltexOverrides",
-      "path": ".vscode/ltex.dictionary.en-US.txt"
+      "name": "FluxNinja",
+      "path": "${userHome}/Work/fluxninja/aperture/.github/styles/Vocab/FluxNinja/accept.txt"
     }
   ],
   "cSpell.dictionaries": [
-    "ltexOverrides",
+    "FluxNinja",
     "wordsEn",
     "en_US",
     "softwareTerms",
