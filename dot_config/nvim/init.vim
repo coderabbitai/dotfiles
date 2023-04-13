@@ -268,15 +268,22 @@ if vim.env.OPENAI_API_KEY ~= nil then
 
   vim.g["codegpt_commands"] = {
     ["refactor"] = {
-      user_message_template = "I have the following {{language}} code: ```{{filetype}}\n{{text_selection}}```\nRefactor the above code to reduce it's complexity and improve maintainability and code reuse. Add new methods if needed to improve modularity. Only return the code snippet and comments. {{language_instructions}}",
+      user_message_template = "I have the following {{language}} code: ```{{filetype}}\n{{text_selection}}```\nRefactor the above code to reduce it's complexity and improve maintainability and code reuse. Add new methods if needed to improve modularity. Only return the code snippet. {{language_instructions}}",
       callback_type = "replace_lines",
       model = gpt_4_config.model,
       max_tokens = gpt_4_config.max_tokens,
       temperature = gpt_4_config.temperature,
     },
     ["grammar"] = {
-      user_message_template = "I have the following {{language}} code/text: ```{{filetype}}\n{{text_selection}}```\nFix typos and grammatical errors in the text. Only return the code/text snippet and comments. {{language_instructions}}",
+      user_message_template = "I have the following {{language}} text: ```{{filetype}}\n{{text_selection}}```\nFix typos, grammatical errors and improve prose. Only return the text snippet. {{language_instructions}}",
       callback_type = "replace_lines",
+    },
+    ["fix"] = {
+      user_message_template = "I have the following {{language}} code: ```{{filetype}}\n{{text_selection}}```\nAutomatically check for potential issues in the code and fix them. Only return the code snippet. {{language_instructions}}",
+      callback_type = "replace_lines",
+      model = gpt_4_config.model,
+      max_tokens = gpt_4_config.max_tokens,
+      temperature = gpt_4_config.temperature,
     }
   }
 
