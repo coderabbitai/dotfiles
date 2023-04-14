@@ -168,6 +168,8 @@ end
 
 require"octo".setup()
 
+require("early-retirement").setup()
+
 function input_args(args, arg_values, callback, cmd)
   if #args == 0 then
     vim.call(callback, cmd, arg_values)

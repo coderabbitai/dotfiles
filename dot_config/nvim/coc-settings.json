@@ -156,15 +156,28 @@
     "bash": "shfmt",
     "terraform": "tffmt"
   },
+  "ltex.configurationTarget": {
+    "dictionary": "userExternalFile",
+    "disabledRules": "workspaceFolderExternalFile",
+    "hiddenFalsePositives": "workspaceFolderExternalFile"
+  },
   "ltex.diagnosticSeverity": "warning",
   "ltex.dictionary": {
     "en-US": [
       ":~/Work/fluxninja/aperture/.github/styles/Vocab/FluxNinja/accept.txt"
     ]
   },
+  "ltex.completionEnabled": true,
   "ltex.enabled": [
+    "bibtex",
+    "context",
+    "context.tex",
+    "html",
+    "latex",
     "markdown",
-    "plaintext",
+    "org",
+    "restructuredtext",
+    "rsweave",
     "go",
     "typescript",
     "python",
@@ -174,9 +187,11 @@
     "javascriptreact",
     "lua"
   ],
+  "ltex.languageToolHttpServerUri": "${env:LANGTOOL_HTTP_URI}",
+  "ltex.languageToolOrg.username": "${env:LANGTOOL_USERNAME}",
+  "ltex.languageToolOrg.apiKey": "${env:LANGTOOL_API_KEY}",
   "coc.source.tag.priority": 89,
   "eslint.packageManager": "yarn",
   "eslint.nodePath": ".yarn/sdks",
-  "workspace.workspaceFolderCheckCwd": false,
   "tsserver.tsdk": ".yarn/sdks/typescript/lib"
 }
