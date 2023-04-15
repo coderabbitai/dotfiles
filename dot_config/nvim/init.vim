@@ -48,7 +48,12 @@ require('bufferline').setup {
         close_icon = "",
         left_trunc_marker = "",
         right_trunc_marker = "",
-        offsets = {{filetype = "coc-explorer", text = "File Explorer", text_align = "center"}},
+        offsets = {
+          {filetype = "coc-explorer", text = "File Explorer", text_align = "center"},
+          {filetype = "coctree", text = "Tree", text_align = "center"},
+          {filetype = "Mundo", text = "Mundo", text_align = "center"},
+          {filetype = "MundoDiff", text = "Mundo", text_align = "center"}
+        },
         color_icons = true,
         separator_style = "slant",
         hover = {
