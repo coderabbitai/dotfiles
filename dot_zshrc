@@ -143,8 +143,8 @@ func preexec() {
       if [ "$LAST_TMUX_UUID" != "$uuid" ]; then
         export LAST_TMUX_UUID="$uuid"
         echo -e "${BLUE_BRIGHT} == Autoupdate detected | Zsh reloading == ${RESET}"
-        # tmux respawn
-        tmux respawn-pane -k -t 0
+        # tmux respawn pane and open pwd
+        tmux respawn-pane -k -t "$TMUX_PANE" "cd $PWD && zsh"
         echo
         echo -e "${BLUE_BRIGHT} == Zsh reloaded == ${RESET}"
         echo
