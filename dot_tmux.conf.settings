@@ -552,10 +552,11 @@ source -q ~/.tmux.conf_local
 #   else
 #     first_run=false
 #   fi
+#   cmd="tmux-mem-cpu-load -a 0 -v -m 2 --interval 5"
 #   if [ "$first_run" = true ]; then
-#     spinner -s -q tmux-mem-cpu-load -a 0 -g 5 --interval 5
+#     spinner -s -q $cmd
 #   else
-#     tmux-mem-cpu-load -a 0 -g 5 --interval 5
+#     $cmd
 #   fi
 # }
 #
