@@ -498,6 +498,11 @@ zinit light jeffreytse/zsh-vi-mode
 # GitHub Copilot CLI
 eval "$(github-copilot-cli alias -- "$0")"
 
+# Set LANGTOOL env to empty values
+export LANGTOOL_USERNAME=""
+export LANGTOOL_API_KEY=""
+export LANGTOOL_HTTP_URI=""
+
 # FluxNinja Aperture Tilt Env Vars
 export TILT_APERTURE_SSH_KEY_PUB=$HOME/.ssh/id_ed25519.pub
 export TILT_GRAFANA_REPO=$HOME/Work/fluxninja/grafana
