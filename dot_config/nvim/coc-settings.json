@@ -174,5 +174,6 @@
   "coc.source.tag.priority": 89,
   "eslint.packageManager": "yarn",
   "eslint.nodePath": ".yarn/sdks",
-  "tsserver.tsdk": ".yarn/sdks/typescript/lib"
+  "tsserver.tsdk": ".yarn/sdks/typescript/lib",
+  "python.formatting.provider": "black"
 }
