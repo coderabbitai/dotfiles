@@ -281,6 +281,13 @@ if vim.env.OPENAI_API_KEY ~= nil then
       max_tokens = gpt_4_config.max_tokens,
       temperature = gpt_4_config.temperature,
     },
+    ["simplify"] = {
+      user_message_template = "I have the following {{language}} code: ```{{filetype}}\n{{text_selection}}```\nSimplify the above code to reduce it's complexity by reducing repetition, excessive branching, logic etc. Only return the code snippet. {{language_instructions}}",
+      callback_type = "replace_lines",
+      model = gpt_4_config.model,
+      max_tokens = gpt_4_config.max_tokens,
+      temperature = gpt_4_config.temperature,
+    },
     ["grammar"] = {
       user_message_template = "I have the following {{language}} text: ```{{filetype}}\n{{text_selection}}```\nFix typos, grammatical errors and improve prose. Only return the text snippet. {{language_instructions}}",
       callback_type = "replace_lines",
