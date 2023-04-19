@@ -440,6 +440,7 @@ pip3 install --quiet --upgrade pre-commit
 # required for nvim mundo
 pip3 install --quiet pynvim
 pip3 install --quiet libtmux
+pip3 install --quiet tiktoken
 
 # gh extensions
 gh extension install dlvhdr/gh-dash
