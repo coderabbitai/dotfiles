@@ -667,8 +667,14 @@ let g:startify_lists = [
       \ { 'type': 'bookmarks', 'header': ['    Bookmarks']      },
       \ { 'type': function('s:gitModified'),  'header': ['    Git Modified']},
       \ ]
+
+let figlet_message = 'FluxNinja Neovim'
+if !has('nvim')
+  let figlet_message = 'FluxNinja Vim'
+endif
+
 let g:startify_custom_header =
-      \ startify#pad(split(system('figlet -w 100 FluxNinja Vim'), "\n") + startify#fortune#boxed())
+      \ startify#pad(split(system('figlet -w 100 '. figlet_message), "\n") + startify#fortune#boxed())
 
 let g:startify_commands = [
       \ {'f': [' Find Files', ':Files']},
