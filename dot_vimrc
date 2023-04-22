@@ -273,7 +273,8 @@ let g:coc_global_extensions = [
       \ 'coc-snippets',
       \ 'coc-ltex',
       \ 'coc-symbol-line',
-      \ 'coc-java'
+      \ 'coc-java',
+      \ 'coc-spell-checker'
       \ ]
 
 augroup buffer_keymaps
