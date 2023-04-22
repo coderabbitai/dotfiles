@@ -3,7 +3,7 @@
 # installer for dotfiles
 function brew_shellenv() {
 	if [ -d "$HOME/homebrew" ]; then
-		eval "$($HOME/homebrew/bin/brew shellenv)"
+		eval "$("$HOME"/homebrew/bin/brew shellenv)"
 	else
 		if [[ $OSTYPE == 'darwin'* ]]; then
 			test -d /opt/homebrew && eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -14,18 +14,20 @@ function brew_shellenv() {
 	fi
 }
 
-cd $HOME || exit
+cd "$HOME" || exit
 
 # ask the user whether they want to use system's homebrew or use a local install
-if gum confirm "Do you want to use the system's homebrew? (recommended)"; then
+echo "Do you want to use the system's homebrew? (recommended) [Y/n]"
+read -r answer
+if [ "$answer" = "n" ]; then
+	echo "Installing local homebrew..."
+	mkdir homebrew
+	curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
+else
 	# delete local homebrew if it exists
 	rm -rf ~/homebrew
 	echo "Installing system homebrew..."
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-else
-	echo "Installing local homebrew..."
-	mkdir homebrew
-	curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
 fi
 
 brew_shellenv
