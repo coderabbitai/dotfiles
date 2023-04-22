@@ -1,6 +1,6 @@
 # FluxNinja Dotfiles
 
-![FluxNinja Vim](./sw/assets/vim.png)
+![FluxNinja Neovim](./sw/assets/vim.png)
 
 ## Introduction
 
@@ -70,7 +70,7 @@ This step is performed automatically on auto-updates.
 ## Preparing your terminal
 
 - **Nerd fonts**: Please enable a nerd font such as `Hack Nerd Font` in your
-  terminal profile to see icons properly when using vim/nvim in terminal mode.
+  terminal profile to see icons properly when using `nvim` in terminal mode.
 - **Terminal colors**: See the section about [colors](#colors).
 
 ## Homebrew
@@ -133,7 +133,7 @@ otherwise a new session will be created and attached to.
 - Urlview: Press `C-a C-U` to select any url in scrollback buffer and open in
   browser.
 
-## Vim
+## Neovim
 
 This environment is highly tuned towards providing a modern neovim/vim setup for
 development using modern languages such as Golang, Typescript etc.
@@ -144,21 +144,23 @@ development using modern languages such as Golang, Typescript etc.
 
 ### vimrc
 
-You can provide additional vimrc settings by adding them to:
-`$HOME/.vimrc_local`. You can also use FuzzyMenu (`<space><space>`) to tweak and
+You can provide additional `vimrc` settings by adding them to:
+`$HOME/.vimrc_local`. You can also use **FuzzyMenu** (`<space><space>`) to tweak and
 persist local settings. In addition, you can provide additional vim plugins by
 adding them to `$HOME/.vimrc_plugins`.
 
-Several colorschemes are bundled and `gruvbox` is chosen by default. You can
-override colorscheme by providing `let colorscheme = <colorscheme>` in your
+Several `colorschemes` are bundled and `gruvbox` is chosen by default. You can
+override `colorscheme` by providing `let colorscheme = <colorscheme>` in your
 `.vimrc_local` file.
 
-See `.vimrc` file for available colorschemes.
+See `.vimrc` file for available `colorschemes`. Also see `~/.config/nvim/init.vim` for
+Neovim specific settings.
 
-### GUI
+### GUI (optional)
 
-Use the command `nv` to launch vim GUI. It maps to `vimr` on MacOS and
-`neovim-qt` on Linux
+While Neovim (`nvim`) works great in terminal with `tmux` combination, you can
+als use the standalone GUI version if you prefer. Use the command `nv` to launch
+vim GUI. It maps to `vimr` on macOS and`neovim-qt` on Linux.
 
 ### Discoverability of commands and plugins
 
@@ -169,11 +171,20 @@ Use the command `nv` to launch vim GUI. It maps to `vimr` on MacOS and
 
 ### AI-based autocompletion
 
-- GitHub Copilot - Type `:Copilot setup` in Vim to setup.
+- GitHub Copilot - Type `:Copilot setup` in Neovim to set up.
+- CodeGPT - Just highlight the code and press `<space><space>` to see CodeGPT options
+  in the FuzzyMenu. You must provide `OPENAI_API_KEY` environment variable in your
+  `.zshrc_local` to use this feature.
+
+### LanguageTool
+
+If you have LanguageTool Premium, you can provide `LANGTOOL_HTTP_URI`,
+`LANGTOOL_USERNAME` and `LANGTOOL_API_KEY` environment variables to use the
+language server in Neovim.
 
 ## Colors
 
-Unlike nvim which allows setting themes easily via `.vimrc_local`, color themes
+Unlike `nvim` which allows setting themes easily via `.vimrc_local`, color themes
 for terminal interface are spread across multiple settings.
 
 - **Terminal theme** -
