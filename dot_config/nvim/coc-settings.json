@@ -168,6 +168,25 @@
     ]
   },
   "ltex.completionEnabled": true,
+  /*  "ltex.enabled": [
+    "bibtex",
+    "context",
+    "context.tex",
+    "html",
+    "latex",
+    "markdown",
+    "org",
+    "restructuredtext",
+    "rsweave",
+    "go",
+    "typescript",
+    "python",
+    "shellscript",
+    "java",
+    "javascript",
+    "javascriptreact",
+    "lua"
+  ],*/
   "ltex.languageToolHttpServerUri": "${env:LANGTOOL_HTTP_URI}",
   "ltex.languageToolOrg.username": "${env:LANGTOOL_USERNAME}",
   "ltex.languageToolOrg.apiKey": "${env:LANGTOOL_API_KEY}",
@@ -207,8 +226,6 @@
     },
     {
       "languageId": "cpp,c",
-      // Turn off compound words, because it is only checking strings.
-      "allowCompoundWords": false,
       // Only check comments and strings
       "includeRegExpList": ["CStyleComment", "string"],
       // Exclude includes, because they are also strings.
@@ -216,8 +233,6 @@
     },
     {
       "languageId": "go",
-      // Turn off compound words, because it is only checking strings.
-      "allowCompoundWords": false,
       // Only check comments and strings
       "includeRegExpList": ["CStyleComment", "string"],
       // Exclude imports, because they are also strings.
@@ -234,7 +249,50 @@
     },
     {
       "languageId": "proto",
-      "includeRegExpList": ["CStyleComment", "strings"]
+      "includeRegExpList": ["CStyleComment", "string"],
+      "ignoreRegExpList": [
+        "/package.*/",
+        "/import.*/",
+        "/option.*/",
+        "/@gotags.*/"
+      ]
     }
+  ],
+  "cSpell.enabledLanguageIds": [
+    "asciidoc",
+    "c",
+    "cpp",
+    "csharp",
+    "css",
+    "git-commit",
+    "gitcommit",
+    "go",
+    "handlebars",
+    "haskell",
+    "html",
+    "jade",
+    "java",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "jsonc",
+    "latex",
+    "less",
+    "markdown",
+    "php",
+    "plaintext",
+    "proto",
+    "pug",
+    "python",
+    "restructuredtext",
+    "rust",
+    "scala",
+    "scss",
+    "text",
+    "typescript",
+    "typescriptreact",
+    "vim",
+    "yaml",
+    "yml"
   ]
 }
