@@ -53,9 +53,9 @@ echo "Authenticating with GitHub. Please make sure to choose ssh option for auth
 gh auth login -p ssh
 
 # check if $HOME/.git exists and back it up if it does
-if [ -d $HOME/.git ]; then
+if [ -d "$HOME"/.git ]; then
 	echo "Backing up $HOME/.git to $HOME/.git.bak"
-	mv $HOME/.git $HOME/.git.bak
+	mv "$HOME"/.git "$HOME"/.git.bak
 fi
 
 echo "Setting up .gitconfig_local"
@@ -70,9 +70,9 @@ name=$(gum input --placeholder "Please enter your name")
 # [user]
 #   name = $name
 #   email = $email
-echo "[user]" >$HOME/.gitconfig_local
-echo "  name = $name" >>$HOME/.gitconfig_local
-echo "  email = $email" >>$HOME/.gitconfig_local
+echo "[user]" >"$HOME"/.gitconfig_local
+echo "  name = $name" >>"$HOME"/.gitconfig_local
+echo "  email = $email" >>"$HOME"/.gitconfig_local
 
 chezmoi init git@github.com:FluxNinja/dotfiles.git
 chezmoi apply -v
