@@ -508,7 +508,7 @@ xmap <silent> <space>d :call ToggleDiagnostics()<CR>
 nmap <silent> <space>d :call ToggleDiagnostics()<CR>
 
 if has('nvim')
-  let g:auto_diagnostic_window = 0
+  let g:auto_diagnostic_window = 1
 endif
 
 function! ToggleDiagnostics() abort
