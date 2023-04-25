@@ -78,7 +78,7 @@ local config = {
           WARN = ""
         },
         level = "info",
-        minimum_width = 40,
+        minimum_width = 25,
         render = "minimal",
         stages = "fade_in_slide_out",
         timeout = 1000,
@@ -93,7 +93,7 @@ function coc_status_notify(msg, level)
   if string.find(msg, "cSpell") then
     return
   end
-  local notify_opts = { title = "LSP Status", timeout = 500, hide_from_history = true, on_close = reset_coc_status_record }
+  local notify_opts = { title = "LSP Status", timeout = 500, hide_from_history = true, on_close = reset_coc_status_record, icon = "" }
   -- if coc_status_record is not {} then add it to notify_opts to key called "replace"
   if coc_status_record ~= {} then
     notify_opts["replace"] = coc_status_record.id
@@ -108,7 +108,7 @@ end
 local coc_diag_record = {}
 
 function coc_diag_notify(msg, level)
-  local notify_opts = { title = "LSP Diagnostics", timeout = 500, on_close = reset_coc_diag_record }
+  local notify_opts = { title = "LSP Diagnostics", timeout = 500, on_close = reset_coc_diag_record, icon = "" }
   -- if coc_diag_record is not {} then add it to notify_opts to key called "replace"
   if coc_diag_record ~= {} then
     notify_opts["replace"] = coc_diag_record.id
@@ -121,7 +121,7 @@ function reset_coc_diag_record(window)
 end
 
 function notify(title, msg, level)
-  local notify_opts = { title = title, timeout = 500 }
+  local notify_opts = { title = title, timeout = 500, icon = "!" }
   vim.notify(msg, level, notify_opts)
 end
 
@@ -132,9 +132,11 @@ function notify_job(command, opts)
     local notify_opts = vim.tbl_extend(
       "keep",
       opts or {},
-      { title = table.concat(command, " "), 
+      { title = table.concat(command, " "),
+        icon = "",
         timeout = time, 
-        replace = notification
+        replace = notification,
+        hide_from_history = true,
       }
     )
     notification = vim.notify(msg, level, notify_opts)
@@ -307,7 +309,7 @@ if vim.env.OPENAI_API_KEY ~= nil then
 
   vim.g["codegpt_hooks"] = {
     request_started = function()
-      local notify_opts = { title = "🤖 ChatGPT", timeout = 2000, on_close = reset_chatgpt_diag_record }
+      local notify_opts = { title = "ChatGPT", timeout = 2000, on_close = reset_chatgpt_diag_record, icon = "ﮧ" }
       if chatgpt_diag_record ~= {} then
         notify_opts["replace"] = chatgpt_diag_record.id
       end
@@ -321,7 +323,7 @@ if vim.env.OPENAI_API_KEY ~= nil then
           end
           local msg = "Please wait"
           local time_elapsed = timer_counter * 0.1
-          msg = msg .. " | Time elapsed: " .. time_elapsed .. "s"
+          msg = msg .. " | " .. time_elapsed .. "s"
           local status = CodeGPTModule.get_status()
           if status ~= "" then
             msg = msg .. " | " .. status
@@ -335,7 +337,7 @@ if vim.env.OPENAI_API_KEY ~= nil then
       end
     end,
     request_finished = vim.schedule_wrap(function()
-      local notify_opts = { title = "🤖 ChatGPT", timeout = 1000 }
+      local notify_opts = { title = "ChatGPT", timeout = 1000, icon = "ﮧ" }
       vim.notify("Request finished", "info", notify_opts)
       reset_chatgpt_diag_record()
     end)

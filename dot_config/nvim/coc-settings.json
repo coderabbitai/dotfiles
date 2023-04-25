@@ -1,4 +1,5 @@
 {
+  "notification.statusLineProgress": false,
   "coc.preferences.extensionUpdateCheck": "daily",
   "coc.preferences.enableMessageDialog": true,
   "coc.preferences.enableLinkedEditing": true,
