@@ -428,6 +428,15 @@ vim.keymap.set('n', 'll', function() vim.cmd(":Telescope tmux-awesome-manager li
 
 tmux_term = require('tmux-awesome-manager.src.term')
 
+require("trouble").setup {
+  position = "bottom",
+  height = 5,
+  icons = true,
+  auto_open = true,
+  auto_close = true,
+  mode = "loclist"
+}
+
 
 EOF
 

@@ -148,6 +148,7 @@ Plug 'kevinhwang91/nvim-hlslens', has('nvim') ? {} : { 'on': [] }
 Plug 'petertriho/nvim-scrollbar', has('nvim') ? {} : { 'on': [] }
 Plug 'otavioschwanck/tmux-awesome-manager.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'chrisgrieser/nvim-early-retirement', has('nvim') ? {} : { 'on': [] }
+Plug 'folke/trouble.nvim', has('nvim') ? {} : { 'on': [] }
 
 if exists('$OPENAI_API_KEY')
   Plug 'dpayne/CodeGPT.nvim', has('nvim') ? {} : { 'on': [] }
@@ -500,27 +501,37 @@ nnoremap <silent> <space>o :call OutlineToggle()<CR>
 
 nmap <space>e <Cmd>CocCommand explorer<CR>
 
-let g:auto_diagnostic_window = 0
 let g:diagnostic_window_size = 3
 
 " open diagnostics
 xmap <silent> <space>d :call ToggleDiagnostics()<CR>
 nmap <silent> <space>d :call ToggleDiagnostics()<CR>
 
+if has('nvim')
+  let g:auto_diagnostic_window = 0
+endif
+
 function! ToggleDiagnostics() abort
-  if get(getloclist(0, {'winid':0}), 'winid', 0)
-    " the location window is open
-    windo lcl\|ccl
+  if !has('nvim')
+    if get(getloclist(0, {'winid':0}), 'winid', 0)
+      " the location window is open
+      windo lcl\|ccl
+    else
+      " the location window is closed
+      if empty(&l:buftype)
+          if (&filetype !=# 'floaterm') && (&buftype !=# 'terminal')
+            execute 'CocDiagnostics ' . g:diagnostic_window_size 
+            execute 'botright lwindow' 
+            execute 'wincmd p'
+          endif
+      endif
+    endif  
   else
-    " the location window is closed
-    if empty(&l:buftype)
-        if (&filetype !=# 'floaterm') && (&buftype !=# 'terminal')
-          execute 'CocDiagnostics ' . g:diagnostic_window_size 
-          execute 'botright lwindow' 
-          execute 'wincmd p'
-        endif
-    endif
-  endif  
+    let g:auto_diagnostic_window = 0
+    call coc#rpc#request('fillDiagnostics', [bufnr('%')])
+    execute 'TroubleToggle'
+    execute 'wincmd p'
+  endif
 endfunction
 
 augroup coc_diag
@@ -543,15 +554,21 @@ augroup coc_diag
     endif
   endfunction
 
-  function! s:AutoToggleDiagnosticsWindow() abort
-    if g:auto_diagnostic_window
-      if get(getloclist(0, {'winid':0}), 'winid', 0) == 0
-        call ToggleDiagnostics()
+  function! s:RefreshDiagnostics() abort
+    if has('nvim')
+      if g:auto_diagnostic_window
+        call coc#rpc#request('fillDiagnostics', [bufnr('%')])
+        if len(getloclist(0)) > 0
+          execute 'Trouble loclist'
+          execute 'wincmd p'
+        else
+          execute 'TroubleClose'
+        endif
       endif
     endif
   endfunction
 
-  autocmd User CocDiagnosticChange call s:AutoToggleDiagnosticsWindow()
+  autocmd User CocDiagnosticChange call timer_start(0, {-> s:RefreshDiagnostics()})
 
 augroup end
 
