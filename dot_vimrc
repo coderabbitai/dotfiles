@@ -527,7 +527,10 @@ function! ToggleDiagnostics() abort
       endif
     endif  
   else
-    let g:auto_diagnostic_window = 0
+    if g:auto_diagnostic_window
+      call v:lua.notify('LSP Diagnostics Window', 'Disabling auto-open', 'info')
+      let g:auto_diagnostic_window = 0
+    endif
     call coc#rpc#request('fillDiagnostics', [bufnr('%')])
     execute 'TroubleToggle'
     execute 'wincmd p'
