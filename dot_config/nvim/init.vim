@@ -68,7 +68,7 @@ require('bufferline').setup {
 vim.notify = require("notify")
 require("telescope").load_extension("notify")
 local config = {
-        background_colour = "Normal",
+        background_colour = "NotifyBackground",
         fps = 30,
         icons = {
           DEBUG = "",
@@ -78,8 +78,8 @@ local config = {
           WARN = ""
         },
         level = "info",
-        minimum_width = 50,
-        render = "default",
+        minimum_width = 40,
+        render = "minimal",
         stages = "fade_in_slide_out",
         timeout = 1000,
         top_down = false
