@@ -97,6 +97,7 @@ function coc_status_notify(msg, level)
   -- if coc_status_record is not {} then add it to notify_opts to key called "replace"
   if coc_status_record ~= {} then
     notify_opts["replace"] = coc_status_record.id
+    notify_opts["hide_from_history"] = true
   end
   coc_status_record = vim.notify(msg, level, notify_opts)
 end
@@ -112,6 +113,7 @@ function coc_diag_notify(msg, level)
   -- if coc_diag_record is not {} then add it to notify_opts to key called "replace"
   if coc_diag_record ~= {} then
     notify_opts["replace"] = coc_diag_record.id
+    notify_opts["hide_from_history"] = true
   end
   coc_diag_record = vim.notify(msg, level, notify_opts)
 end
@@ -312,6 +314,7 @@ if vim.env.OPENAI_API_KEY ~= nil then
       local notify_opts = { title = "ChatGPT", timeout = 2000, on_close = reset_chatgpt_diag_record, icon = "ﮧ" }
       if chatgpt_diag_record ~= {} then
         notify_opts["replace"] = chatgpt_diag_record.id
+        notify_opts["hide_from_history"] = true
       end
       local msg = "Requesting"
       chatgpt_diag_record = vim.notify(msg, "info", notify_opts)
@@ -320,6 +323,7 @@ if vim.env.OPENAI_API_KEY ~= nil then
         timer:start(100, 100, vim.schedule_wrap(function()
           if chatgpt_diag_record ~= {} then
             notify_opts["replace"] = chatgpt_diag_record.id
+            notify_opts["hide_from_history"] = true
           end
           local msg = "Please wait"
           local time_elapsed = timer_counter * 0.1
@@ -329,7 +333,7 @@ if vim.env.OPENAI_API_KEY ~= nil then
             msg = msg .. " | " .. status
           end
           chatgpt_diag_record = vim.notify(msg, "info", notify_opts)
-          if timer_counter == 2400 then
+          if timer_counter == 3600 then
             reset_chatgpt_diag_record()
           end
           timer_counter = timer_counter + 1
@@ -443,7 +447,8 @@ require("trouble").setup {
 require('cinnamon').setup {
   extra_keymaps = true,
   override_keymaps = true,
-  max_length = 500,
+  default_delay = 2,
+  max_length = 250,
   scroll_limit = -1,
 }
 
