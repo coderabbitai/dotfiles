@@ -430,6 +430,7 @@ tmux_term = require('tmux-awesome-manager.src.term')
 
 require("trouble").setup {
   position = "bottom",
+  padding = false,
   height = 5,
   icons = true,
   auto_open = true,
