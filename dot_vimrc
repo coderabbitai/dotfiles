@@ -567,6 +567,8 @@ augroup coc_diag
         else
           execute 'TroubleClose'
         endif
+      else
+        execute 'TroubleRefresh'
       endif
     endif
   endfunction
