@@ -560,15 +560,20 @@ augroup coc_diag
 
   function! s:RefreshDiagnostics() abort
     if has('nvim')
+      let l:trouble_open = bufwinnr('^Trouble$') != -1
       if g:auto_diagnostic_window
-        call coc#rpc#request('fillDiagnostics', [bufnr('%')])
+        call coc#rpc#request('fillDiagnostics', [bufnr('')])
         if len(getloclist(0)) > 0
-          execute 'Trouble loclist'
-          execute 'wincmd p'
+          if l:trouble_open
+            execute 'TroubleRefresh'
+          else
+            execute 'Trouble loclist'
+            execute 'wincmd p'
+          endif
         else
           execute 'TroubleClose'
         endif
-      else
+      elseif l:trouble_open
         execute 'TroubleRefresh'
       endif
     endif
