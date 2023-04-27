@@ -1089,19 +1089,19 @@ endif
     call fuzzymenu#Add('🤖 ChatGPT Chat', {'exec': ':call NormalExecWithArgs("Chat", [["Instructions", 1]])'}, {'tags': ['chatgpt']})
     " ChatGPT visual selection
     call fuzzymenu#AddAll({
-      \ '🤖 ChatGPT Completion': {'visual': ':call VisualExec("Chat completion")' },
-      \ '🤖 ChatGPT Explain': {'visual': ':call VisualExec("Chat explain")' },
-      \ '🤖 ChatGPT Debug': {'visual': ':call VisualExec("Chat debug")' },
-      \ '🤖 ChatGPT Document': {'visual': ':call VisualExec("Chat doc")' },
-      \ '🤖 ChatGPT Optimize': {'visual': ':call VisualExec("Chat opt")' },
-      \ '🤖 ChatGPT Add Tests': {'visual': ':call VisualExec("Chat tests")' },
-      \ '🤖 ChatGPT Refactor': {'visual': ':call VisualExec("Chat refactor")' },
-      \ '🤖 ChatGPT Simplify': {'visual': ':call VisualExec("Chat simplify")' },
-      \ '🤖 ChatGPT Fix': {'visual': ':call VisualExec("Chat fix")' },
-      \ '🤖 ChatGPT Summarize': {'visual': ':call VisualExec("Chat summarize")' },
-      \ '🤖 ChatGPT Grammar': {'visual': ':call VisualExec("Chat grammer")' },
-      \ '🤖 ChatGPT Question': {'visual': ':call VisualExecWithArgs("Chat question", [["Question", 1]])' },
-      \ '🤖 ChatGPT Edit With Instructions': {'visual': ':call VisualExecWithArgs("Chat code_edit", [["Instructions", 1]])' },
+      \ 'ﮧ ChatGPT Completion': {'visual': ':call VisualExec("Chat completion")' },
+      \ 'ﮧ ChatGPT Explain': {'visual': ':call VisualExec("Chat explain")' },
+      \ 'ﮧ ChatGPT Debug': {'visual': ':call VisualExec("Chat debug")' },
+      \ 'ﮧ ChatGPT Document': {'visual': ':call VisualExec("Chat doc")' },
+      \ 'ﮧ ChatGPT Optimize': {'visual': ':call VisualExec("Chat opt")' },
+      \ 'ﮧ ChatGPT Add Tests': {'visual': ':call VisualExec("Chat tests")' },
+      \ 'ﮧ ChatGPT Refactor': {'visual': ':call VisualExec("Chat refactor")' },
+      \ 'ﮧ ChatGPT Simplify': {'visual': ':call VisualExec("Chat simplify")' },
+      \ 'ﮧ ChatGPT Fix': {'visual': ':call VisualExec("Chat fix")' },
+      \ 'ﮧ ChatGPT Summarize': {'visual': ':call VisualExec("Chat summarize")' },
+      \ 'ﮧ ChatGPT Grammar': {'visual': ':call VisualExec("Chat grammer")' },
+      \ 'ﮧ ChatGPT Question': {'visual': ':call VisualExecWithArgs("Chat question", [["Question", 1]])' },
+      \ 'ﮧ ChatGPT Edit With Instructions': {'visual': ':call VisualExecWithArgs("Chat code_edit", [["Instructions", 1]])' },
       \ },
       \ {'tags': ['visual','chatgpt']})
   endif
