@@ -444,14 +444,6 @@ require("trouble").setup {
   mode = "loclist"
 }
 
-require('cinnamon').setup {
-  extra_keymaps = true,
-  override_keymaps = true,
-  default_delay = 2,
-  max_length = 250,
-  scroll_limit = -1,
-}
-
 EOF
 
 autocmd FileType octo inoremap<buffer><silent> @ @<C-x><C-o>
