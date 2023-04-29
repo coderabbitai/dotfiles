@@ -12,6 +12,12 @@ if [ "$1" == "--no-verify" ]; then
 	shift
 fi
 
+# Check if the branch is in merging state
+if git status | grep -q 'You have unmerged paths'; then
+	echo "Branch is in merging state. Please resolve conflicts and commit the changes manually."
+	exit 1
+fi
+
 # show the list of modified git files that will be committed
 echo " == Modified files == "
 git status --short --untracked-files=no
