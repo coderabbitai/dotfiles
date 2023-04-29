@@ -5,6 +5,13 @@ function revolver_stop() {
 	tput cnorm
 }
 
+# Check for --no-verify option
+no_verify=""
+if [ "$1" == "--no-verify" ]; then
+	no_verify="--no-verify"
+	shift
+fi
+
 # show the list of modified git files that will be committed
 echo " == Modified files == "
 git status --short --untracked-files=no
@@ -59,7 +66,7 @@ while true; do
 	revolver update "Committing... Try #$i"
 
 	START=$(date +%s)
-	git commit -a -m "$commit_message"
+	git commit -a -m "$commit_message" $no_verify
 	exit_code=$?
 	END=$(date +%s)
 	DIFF=$((END - START))
