@@ -177,7 +177,10 @@ end
 
 require"octo".setup()
 
-require("early-retirement").setup()
+require("early-retirement").setup({
+  retirementAgeMins = 120,
+  notificationOnAutoClose = true,
+})
 
 function input_args(args, arg_values, callback, cmd)
   if #args == 0 then
