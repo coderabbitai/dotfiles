@@ -11,9 +11,9 @@ if [ -f ~/.brew_local ]; then
 	source ~/.brew_local
 fi
 
-# remove local .lessfilter if it exists
-if [ -f ~/.lessfilter ]; then
-  rm ~/.lessfilter
+# unlink node if it's version v20.x.x
+if [[ $(node --version) == v20.* ]]; then
+  brew unlink node
 fi
 
 brew tap ejoffe/homebrew-tap
@@ -61,7 +61,7 @@ PACKAGES+=(
 	thefuck
   tmux
   tmux-mem-cpu-load
-  node
+  node@19
 	python
   autopep8
 	rust
