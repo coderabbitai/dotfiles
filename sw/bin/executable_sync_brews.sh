@@ -11,11 +11,6 @@ if [ -f ~/.brew_local ]; then
 	source ~/.brew_local
 fi
 
-# unlink node if it's version v20.x.x
-if [[ $(node --version) == v20.* ]]; then
-  brew unlink node
-fi
-
 brew tap ejoffe/homebrew-tap
 brew tap claui/whence
 brew tap bufbuild/buf
@@ -61,7 +56,7 @@ PACKAGES+=(
 	thefuck
   tmux
   tmux-mem-cpu-load
-  node@19
+  node
 	python
   autopep8
 	rust
