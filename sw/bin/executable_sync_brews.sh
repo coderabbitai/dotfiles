@@ -97,6 +97,7 @@ PACKAGES+=(
 	vint
 	shellcheck
 	markdownlint-cli
+	markdownlint-cli2
 	yamllint
 	languagetool
 	pylint
