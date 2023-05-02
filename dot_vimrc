@@ -258,6 +258,7 @@ let g:coc_global_extensions = [
       \ 'coc-clangd',
       \ 'coc-webview',
       \ 'coc-markdown-preview-enhanced',
+      \ 'coc-markdownlint',
       \ 'coc-reveal',
       \ 'coc-swagger',
       \ 'coc-toml',

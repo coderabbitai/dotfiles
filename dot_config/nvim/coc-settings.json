@@ -148,7 +148,6 @@
     }
   },
   "diagnostic-languageserver.filetypes": {
-    "markdown": "markdownlint",
     "go": "golangci-lint2",
     "zsh": "zsh"
   },
