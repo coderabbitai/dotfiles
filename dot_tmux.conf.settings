@@ -466,7 +466,7 @@ set -g @fzf-url-fzf-options '-w 80% -h 80% --multi -0 --no-preview --no-border'
 # -- tmux-menu -----------------------------------------------------------------
 
 TMUX_FZF_MENU=\
-"ﮫ Pomodoro Timer\n~/.tmux/plugins/tmux-pomodoro-plus/scripts/pomodoro.sh toggle\n"\
+" Pomodoro Timer\n~/.tmux/plugins/tmux-pomodoro-plus/scripts/pomodoro.sh toggle\n"\
 " Git Add\nwin_split 'forgit::add'\n"\
 " Git Reset Head\nwin_split 'forgit::reset::head'\n"\
 " Git Log\nwin_split 'forgit::log'\n"\
