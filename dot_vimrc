@@ -84,7 +84,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'github/copilot.vim'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
@@ -243,7 +242,6 @@ autocmd FileType markdown let g:indentLine_enabled=0
 
 " install coc extensions
 let g:coc_global_extensions = [
-      \ 'coc-tag', 
       \ 'coc-highlight', 
       \ 'coc-go', 
       \ 'coc-explorer', 
@@ -889,7 +887,6 @@ call fuzzymenu#AddAll({
       \ ' Save Session': {'exec': 'SSave'},
       \ ' Colors': {'exec': 'Colors'},
       \ ' Lines': {'exec': 'BLines'},
-      \ ' Tags': {'exec': 'BTags'},
       \ '󰌨 Buffers': {'exec': 'Buffers'},
       \ ' Tabs & Windows': {'exec': 'Windows'},
       \ ' Marks': {'exec': 'Marks'},
@@ -1050,8 +1047,6 @@ call fuzzymenu#Add(' Browse to link under cursor', {'normal': 'gx'}, {'tags':
 call fuzzymenu#Add(' Jumps', {'exec': 'jumps'}, {'tags': ['vim']})
 call fuzzymenu#Add(' Jump Next', {'normal': "\<c-i>"}, {'tags': ['vim']})
 call fuzzymenu#Add(' Jump Back', {'normal': "\<c-o>"}, {'tags': ['vim']})
-call fuzzymenu#Add(' Select Tag/Show Tags', {'exec': 'tselect'}, {'tags': ['vim']})
-call fuzzymenu#Add(' Pop Tag/Previous Tag', {'exec': 'pop'}, {'tags': ['vim']})
 
 " normal mode for incomplete functions
 call fuzzymenu#Add(' Find', {'normal': '/'}, {'tags': ['vim']})
