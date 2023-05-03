@@ -28,17 +28,18 @@ function set_terminal {
 		OS="$(uname)"
 		if [[ "$OS" = "Darwin" ]]; then
 			export TERMINAL=$TERM_PROGRAM
-			# test whether ~/.iterm2_profile_check doesn't exist
-			if [[ ! -e "${HOME}/.iterm2_profile_check" ]]; then
+			# test whether ~/.iterm2_profile_check_v2 doesn't exist
+			if [[ ! -e "${HOME}/.iterm2_profile_check_v2" ]]; then
+        rm -f "${HOME}/.iterm2_profile_check"
         if gum confirm "Do you want to use FluxNinja's bundled iTerm2 colors/font profile and matching wallpaper?"; then
 					# install iterm2 profile
 					cp ~/sw/assets/iterm2_gruvbox.json ~/Library/Application\ Support/iTerm2/DynamicProfiles/
 					# execute the script
-					pip3 install iterm2 && python3 ~/sw/assets/iterm2_default.py && touch "${HOME}/.iterm2_profile_check" || (echo; echo; echo "Failed to install iTerm2 profile. You might need to enable Python API within iTerm2 preferences (under Magic tab). Press Enter to continue." && read)
+					pip3 install iterm2 && python3 ~/sw/assets/iterm2_default.py && touch "${HOME}/.iterm2_profile_check_v2" || (echo; echo; echo "Failed to install iTerm2 profile. You might need to enable Python API within iTerm2 preferences (under Magic tab). Press Enter to continue." && read)
 					# set the wallpaper to ~/sw/assets/apple_gruvbox.heic
 					osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$HOME/sw/assets/apple_gruvbox.heic\""
         else
-					echo "no" > "${HOME}/.iterm2_profile_check"
+					echo "no" > "${HOME}/.iterm2_profile_check_v2"
 				fi
 			fi
       return
@@ -203,8 +204,8 @@ if [[ $OSTYPE == 'darwin'* ]]; then
     # iterm2 prompt mark doesn't work under tmux for some reason
     test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" && \
       ITERM2_INTEGRATION_DETECTED=true && PROMPT_LAYOUT="%{$(iterm2_prompt_mark)%} $PROMPT_LAYOUT%{$(iterm2_prompt_end)%}"
-    # read $HOME/.iterm2_profile_check file and check if it contains "no"
-    if [[ $(cat "${HOME}/.iterm2_profile_check") == "no" ]]; then
+    # read $HOME/.iterm2_profile_check_v2 file and check if it contains "no"
+    if [[ $(cat "${HOME}/.iterm2_profile_check_v2") == "no" ]]; then
       SET_TERMINAL_COLORS=true
     else
       SET_TERMINAL_COLORS=false

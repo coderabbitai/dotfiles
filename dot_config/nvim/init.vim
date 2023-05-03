@@ -43,9 +43,9 @@ require('bufferline').setup {
     options = {
         mode = "tabs",
         diagnostics = "coc",
-        buffer_close_icon = "",
+        buffer_close_icon = "󰅖",
         modified_icon = "",
-        close_icon = "",
+        close_icon = "󰅖",
         left_trunc_marker = "",
         right_trunc_marker = "",
         offsets = {
@@ -191,13 +191,13 @@ function input_args(args, arg_values, callback, cmd)
   vim.ui.input({prompt = arg_name .. ': '}, function(input_value)
     -- cancel on escape
     if input_value == nil then
-      notify(" Input", "Command cancelled.", "warn")
+      notify("󰌌 Input", "Command cancelled.", "warn")
       return
     elseif input_value ~= '' then
       table.insert(arg_values, input_value)
       input_args({unpack(args, 2)}, arg_values, callback, cmd)
     elseif required then
-      notify(" Input", "Required argument " .. arg_name .. " is missing.", "error")
+      notify("󰌌 Input", "Required argument " .. arg_name .. " is missing.", "error")
     else
       input_args({unpack(args, 2)}, arg_values, callback, cmd)
     end
@@ -207,7 +207,7 @@ end
 function select_choice(choices, callback)
   vim.ui.select(choices, {}, function(selected_choice, choice_idx)
     if selected_choice == nil then
-      notify(" Selection", "Command cancelled.", "warn")
+      notify("󰄴 Selection", "Command cancelled.", "warn")
       return
     else
       vim.call(callback, selected_choice)
@@ -471,10 +471,10 @@ function! s:DiagnosticNotify() abort
     call add(l:msgs, ' Warnings: ' . l:info['warning'])
   endif
   if get(l:info, 'information', 0)
-    call add(l:msgs, ' Infos: ' . l:info['information'])
+    call add(l:msgs, '󰋼 Infos: ' . l:info['information'])
   endif
   if get(l:info, 'hint', 0)
-    call add(l:msgs, ' Hints: ' . l:info['hint'])
+    call add(l:msgs, ' Hints: ' . l:info['hint'])
   endif
   let l:msg = join(l:msgs, "\n")
   if empty(l:msg) | let l:msg = ' All OK' | endif

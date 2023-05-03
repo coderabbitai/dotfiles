@@ -22,7 +22,7 @@
         "Blue Component": 0.15686274509803921,
         "Red Component": 0.15686274509803921
       },
-      "Normal Font": "HackNerdFontCompleteM-Regular 15",
+      "Normal Font": "HackNFM-Regular 15",
       "Ansi 1 Color": {
         "Green Component": 0.14117647058823529,
         "Blue Component": 0.11372549019607843,
@@ -442,7 +442,7 @@
         "Green Component": 0.78075778484344482
       },
       "Transparency": 0.050000000000000017,
-      "Guid": "FEEF9982-D999-41A3-BFE2-967FA999B347",
+      "Guid": "FEEF9982-D999-41A3-BFE2-967FA999B348",
       "Custom Directory": "No",
       "Ansi 2 Color": {
         "Green Component": 0.59215686274509804,

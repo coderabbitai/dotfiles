@@ -307,8 +307,8 @@ tmux_conf_battery_vbar_palette="gradient"
 # symbols used to indicate whether battery is charging or discharging
 #tmux_conf_battery_status_charging="↑"       # U+2191
 #tmux_conf_battery_status_discharging="↓"    # U+2193
-tmux_conf_battery_status_charging=""
-tmux_conf_battery_status_discharging=""
+tmux_conf_battery_status_charging="󰂄"
+tmux_conf_battery_status_discharging="󰁹"
 
 # clock style (when you hit <prefix> + t)
 # you may want to use %I:%M %p in place of %R in tmux_conf_theme_status_right
