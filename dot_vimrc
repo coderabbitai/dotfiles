@@ -711,16 +711,16 @@ let g:startify_custom_header =
 
 let g:startify_commands = [
       \ {'f': [' Find Files', ':Files']},
-      \ {'fe': ['פּ Explore Files', ':CocCommand explorer --position floating']},
-      \ {'s': ['ﮦ Sessions', 'call OpenSessions()']},
-      \ {'b': ['﬘ Buffers', ':Buffers']},
+      \ {'fe': ['󰉋 Explore Files', ':CocCommand explorer --position floating']},
+      \ {'s': ['󰋚 Sessions', 'call OpenSessions()']},
+      \ {'b': ['󰌨 Buffers', ':Buffers']},
       \ {'w': [' Tabs & Windows', ':Windows']},
       \ {'m': [' Marks', ':Marks']},
-      \ {'p': ['縷Pattern', ':RG']},
+      \ {'p': ['󰈞 Pattern', ':RG']},
       \ {'pr': [' PR List', ':Octo pr list']},
       \ {'gs': [' Git Status', ':GFiles?']},
       \ {'sa': [' Save Session', ':SSave']},
-      \ {'?': [' Cheat Sheet', ':OpenBrowser https://vim.rtorr.com']},
+      \ {'?': ['󰋖 Cheat Sheet', ':OpenBrowser https://vim.rtorr.com']},
       \ ]
 
 nmap <space>s <Cmd>Startify<CR>
@@ -937,7 +937,7 @@ call fuzzymenu#AddAll({
       \ '󰈈 Outline Navigator': {'exec': 'CocFzfList outline'},
       \ '󰑕 Rename': {'exec': 'CocRename'},
       \ ' Organize Imports': {'exec': 'CocCommand editor.action.organizeImport'},
-      \ ' Yank History (Clipboard)': {'exec': 'CocFzfList yank'},
+      \ '󰆒 Yank History (Clipboard)': {'exec': 'CocFzfList yank'},
       \ '󰈙 Render Swagger/OpenAPI spec': {'exec': 'CocCommand swagger.render'},
       \ '󰊤 GitHub Browser': {'exec': 'GBrowse'},
     \ },
@@ -1005,10 +1005,10 @@ if has('nvim')
     \ ' PR List': {'exec': 'Octo pr list'},
     \ ' PR Search': {'exec': 'Octo pr search'},
     \ ' Gist List': {'exec': 'Octo gist list'},
-    \ 'ﯙ GitHub Search': {'exec': 'Octo search'},
-    \ 'ﯙ Issues List': {'exec': 'Octo issue list'},
-    \ 'ﯙ Issues Search': {'exec': 'Octo issue search'},
-    \ 'ﯙ Octo': {'exec': 'Octo actions'},
+    \ '󰊤 GitHub Search': {'exec': 'Octo search'},
+    \ '󰊤 Issues List': {'exec': 'Octo issue list'},
+    \ '󰊤 Issues Search': {'exec': 'Octo issue search'},
+    \ '󰊤 Octo': {'exec': 'Octo actions'},
     \ },
     \ {'tags': ['octo', 'github']})
 endif
@@ -1071,7 +1071,7 @@ if has("nvim")
   call fuzzymenu#Add(' Vim Options', {'exec': 'Telescope vim_options'}, {'tags': ['tools']})
   call fuzzymenu#Add(' Man Pages', {'exec': 'Telescope man_pages'}, {'tags': ['tools']})
   call fuzzymenu#Add(' Symbols/Emojis', {'exec': 'Telescope symbols'}, {'tags': ['tools']})
-  call fuzzymenu#Add(' Notification Center', {'exec': 'Telescope notify'}, {'tags': ['tools']})
+  call fuzzymenu#Add('󰎟 Notification Center', {'exec': 'Telescope notify'}, {'tags': ['tools']})
   call fuzzymenu#Add(' AutoSave Toggle', {'exec': 'ASToggle'}, {'tags': ['tools']})
   call fuzzymenu#Add(' Run Shell Command', {'exec': ':call NormalExecWithArgs("Sh", [["Command", 1]])'}, {'tags': ['tools']})
   call fuzzymenu#Add(' Make Target', {'exec': ':call SelectMakeTarget()'}, {'tags': ['tools']})
