@@ -157,7 +157,7 @@ tmux_conf_theme_window_status_bg=$custom_black
 tmux_conf_theme_window_status_attr="none"
 #tmux_conf_theme_window_status_format="#I #W"
 #tmux_conf_theme_window_status_format="#{circled_window_index} #W"
-tmux_conf_theme_window_status_format="#I #W#{?window_bell_flag,  ,}#{?window_zoomed_flag,  ,}"
+tmux_conf_theme_window_status_format="#I #W#{?window_bell_flag, 󰂚 ,}#{?window_zoomed_flag, 󰍉 ,}"
 
 # window current status style
 #   - built-in variables are:
@@ -174,7 +174,7 @@ tmux_conf_theme_window_status_current_bg=$custom_blue
 tmux_conf_theme_window_status_current_attr="bold"
 #tmux_conf_theme_window_status_current_format="#I #W"
 #tmux_conf_theme_window_status_current_format="#{circled_window_index} #W"
-tmux_conf_theme_window_status_current_format="#I #W#{?window_zoomed_flag,  ,}"
+tmux_conf_theme_window_status_current_format="#I #W#{?window_zoomed_flag, 󰍉 ,}"
 
 # window activity status style
 tmux_conf_theme_window_status_activity_fg="default"
@@ -275,8 +275,6 @@ tmux_conf_theme_synchronized_attr="none"
 # battery bar symbols
 tmux_conf_battery_bar_symbol_full="◼"
 tmux_conf_battery_bar_symbol_empty="◻"
-#tmux_conf_battery_bar_symbol_full="♥"
-#tmux_conf_battery_bar_symbol_empty="·"
 
 # battery bar length (in number of symbols), possible values are:
 #   - auto
@@ -305,8 +303,6 @@ tmux_conf_battery_vbar_palette="gradient"
 #tmux_conf_battery_vbar_palette="#d70000,#ff5f00,#5fff00"  # red, orange, green
 
 # symbols used to indicate whether battery is charging or discharging
-#tmux_conf_battery_status_charging="↑"       # U+2191
-#tmux_conf_battery_status_discharging="↓"    # U+2193
 tmux_conf_battery_status_charging="󰂄"
 tmux_conf_battery_status_discharging="󰁹"
 
@@ -457,8 +453,8 @@ set -g @pomodoro_start 't'                          # Start a Pomodoro with tmux
 set -g @pomodoro_cancel 'T'                         # Cancel a Pomodoro with tmux-prefix key + T
 set -g @pomodoro_mins 25                            # The duration of the pomodoro
 set -g @pomodoro_break_mins 5                       # The duration of the break after the pomodoro
-set -g @pomodoro_on "#[fg=$custom_red,bg=$custom_black] 羽"           # The formatted output when the pomodoro is running
-set -g @pomodoro_complete "#[fg=$custom_cyan,bg=$custom_black,blink] ﲊ "   # The formatted output when the break is running
+set -g @pomodoro_on "#[fg=$custom_red,bg=$custom_black] "           # The formatted output when the pomodoro is running
+set -g @pomodoro_complete "#[fg=$custom_cyan,bg=$custom_black,blink] "   # The formatted output when the break is running
 set -g @pomodoro_notifications 'on'                 # Turn on/off desktop notifications
 set -g @pomodoro_sound 'Pop'                        # Sound for desktop notifications (Run `ls /System/Library/Sounds` for a list of sounds to use)
 
@@ -487,27 +483,27 @@ TMUX_FZF_MENU=\
 " Git Rebase\nwin_split 'forgit::rebase'\n"\
 " Git Fixup\nwin_split 'forgit::fixup'\n"\
 " Git Repo Statistics & Summary (onefetch)\n\"win_split -a -h 'spinner -c onefetch --no-bots --number-of-authors=10'\"\n"\
-"凌Git Ship: Add -> Commit(retry) -> Pull -> Push\n\"win_split -a -h 'git_ship'\"\n"\
+"󱓞 Git Ship: Add -> Commit(retry) -> Pull -> Push\n\"win_split -a -h 'git_ship'\"\n"\
 " Sync FluxNinja Repos\n\"win_split -a 'sync_fluxninja.sh'\"\n"\
-"ﯙ GitHub Status\n\"win_split -a 'gh status --org FluxNinja'\"\n"\
-"ﯙ GitHub Dashboard\n\"win_split -a 'gh dash'\"\n"\
+"󰊤 GitHub Status\n\"win_split -a 'gh status --org FluxNinja'\"\n"\
+"󰊤 GitHub Dashboard\n\"win_split -a 'gh dash'\"\n"\
 " Docker TUI (lazydocker)\nwin_split 'lazydocker'\n"\
 " Kubernetes TUI (k9s)\nwin_split 'k9s'\n"\
 " Directory Navigator (broot)\nwin_split -b -h 'br'\n"\
-" Cheatsheets Browser (navi)\nwin_split 'navi'\n"\
-" Man Pages Browser (batman)\nwin_split 'batman'\n"\
+"󰋖 Cheatsheets Browser (navi)\nwin_split 'navi'\n"\
+"󰋖 Man Pages Browser (batman)\nwin_split 'batman'\n"\
 "ﮮ Autoupdate Dotfiles Environment\nwin_split -a 'autoupdate.zsh --force'\n"\
-"﮺ Start Personal Dotfiles Editing Session (join in a new terminal)\nsmug start dotfiles-personal\n"\
-"﮺ Start FluxNinja Dotfiles Editing Session (join in a new terminal)\nsmug start dotfiles\n"\
-"杖Weather\nwin_split 'spinner -w 600 -c wttr.sh'\n"\
+"󱂬 Start Personal Dotfiles Editing Session (join in a new terminal)\nsmug start dotfiles-personal\n"\
+"󱂬 Start FluxNinja Dotfiles Editing Session (join in a new terminal)\nsmug start dotfiles\n"\
+"󰖙 Weather\nwin_split 'spinner -w 600 -c wttr.sh'\n"\
 " Warsaw Clock\n\"win_split -t 'Warsaw' 'TZ=Europe/Warsaw tty-clock -s -t'\"\n"\
 " San Francisco (SF) Clock\n\"win_split -t 'San Francisco' 'TZ=America/Los_Angeles tty-clock -s -t'\"\n"\
 " India Clock\n\"win_split -t 'India' 'TZ=Asia/Calcutta tty-clock -s -t'\"\n"\
 " What is my IP address? (ifconfig.es)\n\"win_split 'curlie -sL ifconfig.es/all | bat --paging=always --color=always --language=yaml'\"\n"\
-"龍Internet Speedtest\n\"win_split -a 'speedtest'\"\n"\
+"󰓅 Internet Speedtest\n\"win_split -a 'speedtest'\"\n"\
 " Activity Monitor\nwin_split 'btm'\n"\
-" Disk Free\nwin_split -a 'spinner -c dust'\n"\
-" Disk Usage\nwin_split -a 'spinner -c duf'\n"\
+"󰋊 Disk Free\nwin_split -a 'spinner -c dust'\n"\
+"󰋊 Disk Usage\nwin_split -a 'spinner -c duf'\n"\
 " Show Color Palette\nwin_split -h -a 'msgcat --color=test'\n"\
 " Zsh History Stats\nwin_split -h -a 'zsh_stats'\n"\
 " Explain Prompt\nwin_split -h -a 'explain_prompt'\n"\
