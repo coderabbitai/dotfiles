@@ -218,9 +218,9 @@ PERIOD=10
 
 function @yazpt_segment_nl() {
 # check whether $last_yazpt_vcs is not equal to $yazpt_state[vcs]
-if [[ "$last_yazpt_vcs" != "$yazpt_state[vcs]" ]]; then
-  spinner -q -s "timeout 2 $HOME/sw/bin/gh_checks_status.sh > /tmp/gh_$$"
-fi
+#if [[ "$last_yazpt_vcs" != "$yazpt_state[vcs]" ]]; then
+#  spinner -q -s "timeout 2 $HOME/sw/bin/gh_checks_status.sh > /tmp/gh_$$"
+#fi
 last_yazpt_vcs="$yazpt_state[vcs]"
 yazpt_state[nl]=""
 # read from /tmp/gh_"$$" if it exists
