@@ -43,9 +43,9 @@ require('bufferline').setup {
     options = {
         mode = "tabs",
         diagnostics = "coc",
-        buffer_close_icon = "󰅖",
+        buffer_close_icon = "󰅙",
         modified_icon = "",
-        close_icon = "󰅖",
+        close_icon = "󰅙",
         left_trunc_marker = "",
         right_trunc_marker = "",
         offsets = {
