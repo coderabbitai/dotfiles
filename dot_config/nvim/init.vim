@@ -442,8 +442,10 @@ require("trouble").setup {
   padding = false,
   height = 5,
   icons = true,
-  auto_open = true,
-  auto_close = true,
+  auto_open = false,
+  auto_close = false,
+  auto_preview = false,
+  auto_jump = {},
   mode = "loclist"
 }
 
