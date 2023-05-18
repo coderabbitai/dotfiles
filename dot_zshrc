@@ -186,8 +186,6 @@ setopt interactivecomments
 
 eval $(thefuck --alias)
 
-eval "$(zoxide init zsh --cmd cd)"
-
 source $(brew --prefix)/opt/asdf/libexec/asdf.sh 
 
 PS1="$(pwd) > "
@@ -380,9 +378,16 @@ zvm_config() {
 
 # See - https://github.com/jeffreytse/zsh-vi-mode#execute-extra-commands
 zvm_after_init() {
+  zicompinit
+
   [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-  zicompinit
+  # zoxide
+  zinit wait lucid atinit'eval "$(zoxide init zsh --cmd cd)"' nocd for /dev/null
+
+  # GitHub Copilot CLI
+  eval "$(github-copilot-cli alias -- "$0")"
+
   zicdreplay
 
   # fzf-tab needs to be loaded after compinit, but before fast-syntax-highlighting
@@ -497,9 +502,6 @@ zvm_after_init() {
 
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
-
-# GitHub Copilot CLI
-eval "$(github-copilot-cli alias -- "$0")"
 
 # Set LANGTOOL env to empty values
 export LANGTOOL_USERNAME=""
