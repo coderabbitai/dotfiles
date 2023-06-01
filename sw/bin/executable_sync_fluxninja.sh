@@ -41,3 +41,7 @@ popd >/dev/null || exit 1
 pushd ~/Work/fluxninja/fluxninja-website >/dev/null || exit 1
 yarn install
 popd >/dev/null || exit 1
+
+pushd ~/Work/fluxninja/cloud/ops/apps/opsninja >/dev/null || exit 1
+pip3 install .
+popd >/dev/null || exit 1
