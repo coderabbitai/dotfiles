@@ -11,7 +11,7 @@ else
 fi
 
 # add python symlinks
-export PATH=$HOME/sw/bin:$HOME/go/bin:$HOME/.cargo/bin:$(brew --prefix)/opt/python/libexec/bin:$HOME/.local/bin:$PATH:$HOME/.docker/bin
+export PATH=$HOME/sw/bin:$HOME/go/bin:$HOME/.cargo/bin:$(brew --prefix)/opt/python/libexec/bin:$HOME/.local/bin:$PATH:$HOME/.docker/bin:$HOME/.orbstack/bin
 export JDK_HOME=$HOMEBREW_PREFIX/opt/openjdk@17
 export JAVA_HOME=$HOMEBREW_PREFIX/opt/openjdk@17
 
