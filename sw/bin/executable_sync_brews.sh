@@ -22,6 +22,11 @@ if [[ $OSTYPE == 'darwin'* ]]; then
 	brew tap homebrew/cask-fonts
 fi
 
+# check whether jsonnet is installed via brew, uninstall it
+if [ -n "$(brew ls --versions jsonnet)" ]; then
+  brew uninstall --force jsonnet
+fi
+
 revolver update 'Updating existing brews...'
 
 # Update homebrew recipes
@@ -65,7 +70,7 @@ PACKAGES+=(
 	bottom
 	helm
 	helmfile
-  jsonnet
+  go-jsonnet
 	jsonnet-bundler
 	tanka
 	sops
