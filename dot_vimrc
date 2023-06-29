@@ -692,11 +692,11 @@ endfunction
 
 let g:startify_lists = [
       \ { 'type': 'commands',  'header': ['    Commands']       },
-      \ { 'type': 'sessions',  'header': ['   ﮦ Sessions']       },
-      \ { 'type': 'dir',       'header': ['   﨟MRU '. getcwd()] },
-      \ { 'type': 'files',     'header': ['   﨟MRU']            },
+      \ { 'type': 'sessions',  'header': ['   󰋊 Sessions']       },
+      \ { 'type': 'dir',       'header': ['   󰋚 MRU '. getcwd()] },
+      \ { 'type': 'files',     'header': ['   󰋚 MRU']            },
       \ { 'type': 'bookmarks', 'header': ['    Bookmarks']      },
-      \ { 'type': function('s:gitModified'),  'header': ['    Git Modified']},
+      \ { 'type': function('s:gitModified'),  'header': ['   󰊢 Git Modified']},
       \ ]
 
 let figlet_message = 'FluxNinja Neovim'
