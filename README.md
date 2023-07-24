@@ -156,12 +156,6 @@ override `colorscheme` by providing `let colorscheme = <colorscheme>` in your
 See `.vimrc` file for available `colorschemes`. Also see `~/.config/nvim/init.vim` for
 Neovim specific settings.
 
-### GUI (optional)
-
-While Neovim (`nvim`) works great in terminal with `tmux` combination, you can
-als use the standalone GUI version if you prefer. Use the command `nv` to launch
-vim GUI. It maps to `vimr` on macOS and`neovim-qt` on Linux.
-
 ### Discoverability of commands and plugins
 
 - Landing page for new tabs contains several useful links that help with

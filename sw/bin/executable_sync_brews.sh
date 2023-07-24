@@ -182,7 +182,6 @@ else
 		wmctrl
 		libnotify
     gcc
-    neovim-qt
 	)
   revolver update 'Installing fonts...'
   # declare a map of font urls to font file names (e.g. "FiraCode" to "Fira Code Regular")
@@ -283,7 +282,6 @@ if [[ $OSTYPE == 'darwin'* ]]; then
 		font-victor-mono-nerd-font
 		font-monoid-nerd-font
 		font-sauce-code-pro-nerd-font
-		vimr
 		iterm2
 		adobe-acrobat-reader
 		docker

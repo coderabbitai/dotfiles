@@ -32,11 +32,8 @@ help() {
 alias top='btm -b'
 
 if [[ $OSTYPE == 'darwin'* ]]; then
-  alias nv='vimr'
   #icloud drive
   alias icloud='cd ~/Library/Mobile\ Documents/com\~apple\~CloudDocs/'
-else
-  alias nv='nvim-qt'
 fi
 
 alias k='kubectl'
