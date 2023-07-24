@@ -325,63 +325,6 @@ if [[ $OSTYPE == 'darwin'* ]]; then
   fi
 
   revolver update 'Updating defaults...'
-	# on macos override default editor to vimr
-  # array of TYPES
-  TYPES=(
-    public.json
-    public.plain-text
-    public.python-script
-    public.shell-script
-    public.source-code
-    public.text
-    public.xml
-    public.yaml
-    public.unix-executable
-    .go
-    .mod
-    .work
-    .c
-    .cc
-    .cpp
-    .java
-    .js
-    .sass
-    .scss
-    .less
-    .vue
-    .cfg
-    .json
-    .jsx
-    .log
-    .lua
-    .md
-    .php
-    .pl
-    .py
-    .rb
-    .ts
-    .tsx
-    .txt
-    .conf
-    .yaml
-    .yml
-    .toml
-    .xml
-    .xsl
-    .xsd
-    .vim
-    .vimrc
-    .gitconfig
-    .gitignore
-    .gitmodules
-    .config
-    .sh
-    .zsh
-    .bash
-  )
-  for type in ${TYPES[@]}; do
-    duti -s com.qvacua.vimr $type all
-  done
   # set default terminal to iterm2
   duti -s com.googlecode.iterm2 com.apple.terminal.shell-script shell
   duti -s com.googlecode.iterm2 term
