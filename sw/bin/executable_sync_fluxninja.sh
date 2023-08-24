@@ -36,6 +36,7 @@ popd >/dev/null || exit 1
 
 pushd ~/Work/fluxninja/aperture-tech-docs >/dev/null || exit 1
 yarn install
+vale sync
 popd >/dev/null || exit 1
 
 pushd ~/Work/fluxninja/fluxninja-website >/dev/null || exit 1
