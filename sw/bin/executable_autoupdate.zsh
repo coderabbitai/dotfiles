@@ -123,6 +123,9 @@ if [ ${last_system} -gt ${system_seconds} ] || [ $force_update -eq 1 ]; then
   revolver update "Updating tldr cache..."
 	# update tldr
 	tldr --update
+  
+  revolver update "Syncing styles in $HOME/notes"
+  pushd $HOME/notes && vale sync && popd
 
   revolver update "Updating FluxNinja repos..."
   $HOME/sw/bin/sync_fluxninja.sh
