@@ -373,7 +373,6 @@ revolver update 'Installing npm packages...'
 # npm stuff
 npm i -q -g bash-language-server
 npm i -q -g dockerfile-language-server-nodejs
-npm i -q -g @githubnext/github-copilot-cli
 
 revolver update 'Installing python packages...'
 #python stuff

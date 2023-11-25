@@ -388,12 +388,6 @@ zvm_after_init() {
   # zoxide
   zinit wait lucid atinit'eval "$(zoxide init zsh --cmd cd)"' nocd for /dev/null
 
-  # GitHub Copilot CLI
-  # check github-copilot-cli is installed before calling eval
-  if command -v github-copilot-cli >/dev/null 2>&1; then
-    eval "$(github-copilot-cli alias -- "$0")"
-  fi
-
   zicdreplay
 
   # fzf-tab needs to be loaded after compinit, but before fast-syntax-highlighting

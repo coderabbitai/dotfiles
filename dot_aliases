@@ -39,3 +39,5 @@ fi
 alias k='kubectl'
 
 alias root='cd $(git rev-parse --show-toplevel || echo ".")'
+alias '?'='gh copilot explain'
+alias '??'='gh copilot suggest'
