@@ -725,6 +725,7 @@ nmap <space>s <Cmd>Startify<CR>
 
 nmap <space>f <Cmd>Files<CR>
 nmap <space>p <Cmd>RG<CR>
+nmap <space>b <Cmd>Buffers<CR>
 
 
 " auto session management
