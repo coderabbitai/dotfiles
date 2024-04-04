@@ -147,7 +147,6 @@ PACKAGES+=(
   tree-sitter
   cmake
   hasura-cli
-  yarn
   circleci
   graphviz
   jqp
@@ -159,7 +158,7 @@ PACKAGES+=(
   aperturectl
   vale
   poetry
-  pnpm
+  corepack
 )
 
 if [[ $OSTYPE == 'darwin'* ]]; then
