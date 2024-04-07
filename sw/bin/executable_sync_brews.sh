@@ -158,7 +158,8 @@ PACKAGES+=(
   aperturectl
   vale
   poetry
-  corepack
+  pnpm
+  yarn
 )
 
 if [[ $OSTYPE == 'darwin'* ]]; then
