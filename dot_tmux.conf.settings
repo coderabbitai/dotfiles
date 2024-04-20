@@ -355,8 +355,8 @@ set -g pane-border-format "#{pane_index} #{?pane_title, | #{pane_title},}"
 set-hook -g 'client-attached[0]' 'run "tmux setenv -u tmux_cpu_status_init"'
 set-hook -g 'client-detached[0]' 'run "tmux setenv -u tmux_cpu_status_init"'
 
-set-hook -g 'client-attached[1]' 'display-message "FluxNinja tmux: Welcome back ${USER}."'
-set-hook -g 'session-created[0]' 'display-message "FluxNinja tmux: Welcome ${USER}."'
+set-hook -g 'client-attached[1]' 'display-message "CodeRabbit tmux: Welcome back ${USER}."'
+set-hook -g 'session-created[0]' 'display-message "CodeRabbit tmux: Welcome ${USER}."'
 
 # Use run-shell to run uuidgen command and store result in uuid variable
 run-shell "tmux setenv -g TMUX_UUID $(uuidgen)"
@@ -484,8 +484,9 @@ TMUX_FZF_MENU=\
 " Git Fixup\nwin_split 'forgit::fixup'\n"\
 " Git Repo Statistics & Summary (onefetch)\n\"win_split -a -h 'spinner -c onefetch --no-bots --number-of-authors=10'\"\n"\
 "󱓞 Git Ship: Add -> Commit(retry) -> Pull -> Push\n\"win_split -a -h 'git_ship'\"\n"\
+" Sync CodeRabbit Repos\n\"win_split -a 'sync_coderabbitai.sh'\"\n"\
 " Sync FluxNinja Repos\n\"win_split -a 'sync_fluxninja.sh'\"\n"\
-"󰊤 GitHub Status\n\"win_split -a 'gh status --org FluxNinja'\"\n"\
+"󰊤 GitHub Status\n\"win_split -a 'gh status --org coderabbitai'\"\n"\
 "󰊤 GitHub Dashboard\n\"win_split -a 'gh dash'\"\n"\
 " Docker TUI (lazydocker)\nwin_split 'lazydocker'\n"\
 " Kubernetes TUI (k9s)\nwin_split 'k9s'\n"\
@@ -494,9 +495,8 @@ TMUX_FZF_MENU=\
 "󰋖 Man Pages Browser (batman)\nwin_split 'batman'\n"\
 "ﮮ Autoupdate Dotfiles Environment\nwin_split -a 'autoupdate.zsh --force'\n"\
 "󱂬 Start Personal Dotfiles Editing Session (join in a new terminal)\nsmug start dotfiles-personal\n"\
-"󱂬 Start FluxNinja Dotfiles Editing Session (join in a new terminal)\nsmug start dotfiles\n"\
+"󱂬 Start CodeRabbit Dotfiles Editing Session (join in a new terminal)\nsmug start dotfiles\n"\
 "󰖙 Weather\nwin_split 'spinner -w 600 -c wttr.sh'\n"\
-" Warsaw Clock\n\"win_split -t 'Warsaw' 'TZ=Europe/Warsaw tty-clock -s -t'\"\n"\
 " San Francisco (SF) Clock\n\"win_split -t 'San Francisco' 'TZ=America/Los_Angeles tty-clock -s -t'\"\n"\
 " India Clock\n\"win_split -t 'India' 'TZ=Asia/Calcutta tty-clock -s -t'\"\n"\
 " What is my IP address? (ifconfig.es)\n\"win_split 'curlie -sL ifconfig.es/all | bat --paging=always --color=always --language=yaml'\"\n"\

@@ -1,29 +1,28 @@
-# FluxNinja Dotfiles
+# CodeRabbit Dotfiles
 
-![FluxNinja Neovim](./sw/assets/vim.png)
+![CodeRabbit Neovim](./sw/assets/vim.png)
 
 ## Introduction
 
-Welcome to FluxNinja optimized development environment that is well integrated
-with our stack. Please join discussion channel on
-[Slack](https://fluxninja.slack.com/channels/C03C2GKT2JF).
+Welcome to CodeRabbit optimized development environment that is well integrated
+with our stack.
 
 ## Setup
 
-We use [chezmoi](https://www.chezmoi.io) to manage FluxNinja dotfiles in your
+We use [chezmoi](https://www.chezmoi.io) to manage CodeRabbit dotfiles in your
 home directory.
 
 ### Automatic Setup
 
 ```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/fluxninja/dotfiles/master/sw/assets/executable_install.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/coderabbitai/dotfiles/master/sw/assets/executable_install.sh)"
 ```
 
 ### Manual Setup
 
 ```
 cd $HOME
-chezmoi init git@github.com:fluxninja/dotfiles.git
+chezmoi init git@github.com:coderabbitai/dotfiles.git
 # show diff of changes that will be made
 chezmoi diff
 # If you are happy with the changes, apply away!
@@ -45,7 +44,7 @@ Provide username and email address by creating `.gitconfig_local` e.g.
 ```
 [user]
   name = Harjot Gill
-  email = harjot.gill@fluxninja.com
+  email = harjot@coderabbit.ai
 [github]
    user = <github user name>
    token = <personal access token>
@@ -53,18 +52,18 @@ Provide username and email address by creating `.gitconfig_local` e.g.
 
 You can generate
 [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-for GitHub in order to use HTTP API. Also, it's useful to add this token to your
+for GitHub to use HTTP API. Also, it's useful to add this token to your
 `$HOME/.netrc` file. Run -
 `echo 'machine api.github.com login <user> password <token>' >> $HOME/.netrc`
 
 ### GitHub org cloning script
 
-To clone FluxNinja, run: `gh_clone_all.sh fluxninja $HOME/work`. This step is
-performed automatically on installation.
+To clone CodeRabbit, run: `gh_clone_all.sh coderabbitai $HOME/work`. This step
+is performed automatically on installation.
 
 ### Git pull all repos script
 
-To update all repos in a directory, run: `pull_all.sh $HOME/work/fluxninja`.
+To update all repos in a directory, run: `pull_all.sh $HOME/work/coderabbitai`.
 This step is performed automatically on auto-updates.
 
 ## Preparing your terminal
@@ -98,8 +97,8 @@ You can provide additional zshrc settings by adding them to:
 - Vi mode: Press `ESC` to enter Vi `NORMAL` mode. Cool tip - while in normal
   mode, press `vv` to switch to visual mode (it will open `nvim` editor) and in
   that mode you can use GitHub Copilot to build sophisticated commands using AI!
-- Prompt flags: Type `yazpt_explain_git` to understand meaning of various flags
-  in the prompt.
+- Prompt flags: Type `yazpt_explain_git` to understand the meaning of various
+  flags in the prompt.
 - Forgit: You can use `forgit` as an interactive frontend for various git
   commands. E.g. try `git forgit log`.
 - iTerm2 integration: On macOS, please install iTerm2 shell
@@ -145,16 +144,16 @@ development using modern languages such as Golang, Typescript etc.
 ### vimrc
 
 You can provide additional `vimrc` settings by adding them to:
-`$HOME/.vimrc_local`. You can also use **FuzzyMenu** (`<space><space>`) to tweak and
-persist local settings. In addition, you can provide additional vim plugins by
-adding them to `$HOME/.vimrc_plugins`.
+`$HOME/.vimrc_local`. You can also use **FuzzyMenu** (`<space><space>`) to tweak
+and persist local settings. In addition, you can provide additional vim plugins
+by adding them to `$HOME/.vimrc_plugins`.
 
 Several `colorschemes` are bundled and `gruvbox` is chosen by default. You can
 override `colorscheme` by providing `let colorscheme = <colorscheme>` in your
 `.vimrc_local` file.
 
-See `.vimrc` file for available `colorschemes`. Also see `~/.config/nvim/init.vim` for
-Neovim specific settings.
+See `.vimrc` file for available `colorschemes`. Also see
+`~/.config/nvim/init.vim` for Neovim specific settings.
 
 ### Discoverability of commands and plugins
 
@@ -166,9 +165,9 @@ Neovim specific settings.
 ### AI-based autocompletion
 
 - GitHub Copilot - Type `:Copilot setup` in Neovim to set up.
-- CodeGPT - Just highlight the code and press `<space><space>` to see CodeGPT options
-  in the FuzzyMenu. You must provide `OPENAI_API_KEY` environment variable in your
-  `.zshrc_local` to use this feature.
+- CodeGPT - Just highlight the code and press `<space><space>` to see CodeGPT
+  options in the FuzzyMenu. You must provide `OPENAI_API_KEY` environment
+  variable in your `.zshrc_local` to use this feature.
 
 ### LanguageTool
 
@@ -178,8 +177,8 @@ language server in Neovim.
 
 ## Colors
 
-Unlike `nvim` which allows setting themes easily via `.vimrc_local`, color themes
-for terminal interface are spread across multiple settings.
+Unlike `nvim` which allows setting themes easily via `.vimrc_local`, color
+themes for terminal interface are spread across multiple settings.
 
 - **Terminal theme** -
   - macOS: For iTerm2, the option will be provided to install bundled profile

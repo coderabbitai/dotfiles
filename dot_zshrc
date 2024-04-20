@@ -31,7 +31,7 @@ function set_terminal {
 			# test whether ~/.iterm2_profile_check_v2 doesn't exist
 			if [[ ! -e "${HOME}/.iterm2_profile_check_v2" ]]; then
         rm -f "${HOME}/.iterm2_profile_check"
-        if gum confirm "Do you want to use FluxNinja's bundled iTerm2 colors/font profile?"; then
+        if gum confirm "Do you want to use CodeRabbit's bundled iTerm2 colors/font profile?"; then
 					# install iterm2 profile
 					cp ~/sw/assets/iterm2_gruvbox.json ~/Library/Application\ Support/iTerm2/DynamicProfiles/
 					# execute the script
@@ -116,7 +116,7 @@ if ! command -v brew &> /dev/null; then
   ~/sw/bin/autoupdate.zsh --force
 fi
 
-figlet -w 80 FluxNinja Zsh && echo "" 2&>/dev/null
+figlet -w 80 CodeRabbit Zsh && echo "" 2&>/dev/null
 
 source ~/sw/assets/utils.zsh
 
@@ -178,7 +178,7 @@ func zshexit() {
 rm /tmp/gh_$$ &>/dev/null
 # remove watch on home directory
 watchman watch-del $HOME >/dev/null 
-figlet -w 80 FluxNinja zsh
+figlet -w 80 CodeRabbit zsh
 cowsay -d "zsh exiting... see you later..."
 sleep 0.5
 }
@@ -612,7 +612,7 @@ if $ASCII_WELCOME_ENABLED; then
   fortune | cowsay -f $(find $(brew --prefix)/share/cows/ -name "*.cow" | shuf -n 1)
   (timeout 2 WTTR_PARAMS="1" ~/sw/bin/wttr.sh ;\
     echo; echo -e "${CYAN_BRIGHT}  ==================================  GitHub Status ================================== ${RESET}"; echo;
-    timeout 2 gh status --org FluxNinja) 2&>/dev/null
+    timeout 2 gh status --org coderabbitai) 2&>/dev/null
 fi
 
 unset ASCII_WELCOME_ENABLED

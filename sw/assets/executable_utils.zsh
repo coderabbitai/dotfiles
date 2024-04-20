@@ -133,6 +133,7 @@ fi
 APP_ATTN_PATTERNS=(
   'autoupdate.zsh'
   'sync_brews.sh'
+  'sync_coderabbitai.sh'
   'sync_fluxninja.sh'
   'brew'
   'git commit'
@@ -142,6 +143,7 @@ APP_ATTN_PATTERNS=(
   'gotestsum'
   'git_ship'
   'speedtest'
+  'pnpm'
 )
 
 function term-notify() {

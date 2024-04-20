@@ -127,6 +127,9 @@ if [ ${last_system} -gt ${system_seconds} ] || [ $force_update -eq 1 ]; then
   revolver update "Syncing styles in $HOME/notes"
   pushd $HOME/notes && vale sync && popd
 
+  resolver update "Updating CodeRabbit repos..."
+  $HOME/sw/bin/sync_coderabbitai.sh
+
   revolver update "Updating FluxNinja repos..."
   $HOME/sw/bin/sync_fluxninja.sh
   
