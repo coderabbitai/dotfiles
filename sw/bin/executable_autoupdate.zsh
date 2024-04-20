@@ -127,23 +127,19 @@ if [ ${last_system} -gt ${system_seconds} ] || [ $force_update -eq 1 ]; then
   revolver update "Syncing styles in $HOME/notes"
   pushd $HOME/notes && vale sync && popd
 
-  resolver update "Updating CodeRabbit repos..."
-  $HOME/sw/bin/sync_coderabbitai.sh
+  revolver_stop
 
-  revolver update "Updating FluxNinja repos..."
+  $HOME/sw/bin/sync_coderabbitai.sh
   $HOME/sw/bin/sync_fluxninja.sh
-  
+
   if [[ $TERM == *"tmux"* || $TERM == *"screen"* || -n $TMUX ]]; then
-    revolver update "Reloading tmux config..."
     tmux source-file $HOME/.tmux.conf
   fi
-  revolver update "Stopping..."
 
 	stop_time=$(date +%s)
 	interval=$(expr ${stop_time} - ${start_time})
 	echo "It took $interval seconds to update the system."
 	show_errors
-  revolver_stop
 fi
 
 unset SYSTEM_RECEIPT_F
