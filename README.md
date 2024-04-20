@@ -107,7 +107,6 @@ You can provide additional zshrc settings by adding them to:
 
 ## tmux
 
-![tmux Session Picker](./sw/assets/tmux-session-picker.png)
 ![tmux Menu](./sw/assets/tmux-menu.png)
 ![tmux Fuzzy Menu](./sw/assets/tmux-fzf.png)
 
