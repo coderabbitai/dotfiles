@@ -4,7 +4,7 @@ brew tap molovo/revolver
 brew install --quiet revolver
 
 tput civis
-revolver --style 'dots2' start 'Syncing brews...'
+revolver --style 'dots2' start 'Syncing local brews...'
 
 # source ~/.brew_local
 if [ -f ~/.brew_local ]; then
@@ -22,17 +22,12 @@ if [[ $OSTYPE == 'darwin'* ]]; then
 	brew tap homebrew/cask-fonts
 fi
 
-# check whether jsonnet is installed via brew, uninstall it
-if [ -n "$(brew ls --versions jsonnet)" ]; then
-  brew uninstall --force jsonnet
-fi
-
-revolver update 'Updating existing brews...'
+revolver stop
 
 # Update homebrew recipes
 brew update && brew upgrade && brew cleanup && brew doctor
 
-revolver update 'Installing parallel tool...'
+revolver --style 'dots2' start 'Installing parallel tool...'
 brew install --quiet parallel
 
 # check whether ~/.local/share/zinit/zinit.git exists, if not then invoke installation script
@@ -244,7 +239,7 @@ for installed_package in $installed_packages; do
   PACKAGES=("${(@)PACKAGES:#$installed_package}")
 done
 
-revolver --style 'dots2' start 'Installing...'
+revolver --style 'dots2' start 'Installing brew packages...'
 
 # get number of elements in the array $PACKAGES
 num_packages=${#PACKAGES[@]}
@@ -291,6 +286,7 @@ if [[ $OSTYPE == 'darwin'* ]]; then
 		github
 		google-cloud-sdk
 		google-drive
+    google-chrome
 		notion
 		slack
 		stats
@@ -307,7 +303,7 @@ if [[ $OSTYPE == 'darwin'* ]]; then
     CASKS=("${(@)CASKS:#$installed_cask}")
   done
 
-  revolver --style 'dots2' start 'Installing...'
+  revolver --style 'dots2' start 'Installing cask packages...'
 
   # check if there are any casks to install
   if [[ ${#CASKS[@]} -gt 0 ]]; then
@@ -330,14 +326,15 @@ if [[ $OSTYPE == 'darwin'* ]]; then
   duti -s com.googlecode.iterm2 term
 fi
 
-revolver update 'Installing...'
-
+revolver update 'Setting up fzf...'
 # setup fzf
 yes | $(brew --prefix)/opt/fzf/install
 
+revolver update 'Updating tldr...'
 # update tldr
 tldr --update
 
+revolver update 'Updating navi cheats...'
 old_pwd=$(pwd)
 # check whether $(navi info cheats-path)/denisidoro__cheats directory exists
 if [ ! -d "$(navi info cheats-path)/denisidoro__cheats" ]; then
@@ -385,6 +382,7 @@ pip3 install --quiet pynvim
 pip3 install --quiet libtmux
 pip3 install --quiet tiktoken
 
+revolver update 'Installing gh extensions...'
 # gh extensions
 gh extension install dlvhdr/gh-dash
 gh extension install github/gh-copilot
