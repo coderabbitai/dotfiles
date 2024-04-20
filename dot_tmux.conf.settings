@@ -440,7 +440,7 @@ set -g @mode_indicator_empty_mode_style "bg=$custom_cyan,fg=$custom_black"
 set -g @plugin 'sainnhe/tmux-fzf'
 TMUX_FZF_LAUNCH_KEY="C-Space"
 TMUX_FZF_OPTIONS="-p 66%,66%"
-TMUX_FZF_ORDER="session|window|pane|clipboard|process"
+TMUX_FZF_ORDER="menu|session|window|pane|command|keybinding|clipboard|process"
 
 set -g @plugin 'roosta/tmux-fuzzback'
 set -g @fuzzback-bind C-_
