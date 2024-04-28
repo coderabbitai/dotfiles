@@ -40,8 +40,6 @@ set ignorecase
 
 set smartcase
 
-set concealcursor-=n
-
 " use system clipboard
 if has('nvim')
   set clipboard+=unnamedplus
@@ -239,6 +237,7 @@ let g:airline#extensions#hunks#non_zero_only = 1
 let g:gothx_command_prefix = 'Go'
 
 let g:indentLine_fileTypeExclude = ['startify', 'floaterm', 'coc-explorer', 'coctree', 'json']
+
 " avoid for markdown as it sets the conceallevel to 2
 autocmd FileType markdown let g:indentLine_enabled=0
 
