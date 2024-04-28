@@ -40,6 +40,8 @@ set ignorecase
 
 set smartcase
 
+set concealcursor-=n
+
 " use system clipboard
 if has('nvim')
   set clipboard+=unnamedplus
