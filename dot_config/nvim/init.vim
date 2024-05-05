@@ -240,9 +240,9 @@ if vim.env.OPENAI_API_KEY ~= nil then
   -- assume 1 token = 4 characters of text
   -- as a rule of thumb
   local gpt_4_config = {
-    model = "gpt-4",
+    model = "gpt-4-turbo",
     max_tokens = 8192,
-    temperature = 0,
+    temperature = 0.1,
   }
 
   local gpt_4_commands = {
