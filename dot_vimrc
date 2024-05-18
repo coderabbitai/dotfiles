@@ -140,7 +140,7 @@ Plug 'nvim-treesitter/nvim-treesitter', has('nvim') ? {'do': ':TSUpdate'} : { 'o
 Plug 'SirVer/ultisnips', has('nvim') ? {} : { 'on': [] }
 Plug 'honza/vim-snippets', has('nvim') ? {} : { 'on': [] }
 Plug 'nvim-tree/nvim-web-devicons', has('nvim') ? {} : { 'on': [] }
-Plug 'akinsho/bufferline.nvim', has('nvim') ? { 'tag': 'v3.*' } : { 'on': [] }
+Plug 'akinsho/bufferline.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'stevearc/dressing.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'lewis6991/gitsigns.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'kevinhwang91/nvim-hlslens', has('nvim') ? {} : { 'on': [] }

@@ -6,7 +6,7 @@ pull_all.sh ~/Work/coderabbitai
 # go through all the directories in ~/Work/coderabbitai
 # look for package.json files in the subdirectories
 # and run pnpm install in those directories
-find ~/Work/coderabbitai -name package.json -exec dirname {} \; | while read dir; do
+find ~/Work/coderabbitai -depth 2 -name package.json -exec dirname {} \; | while read dir; do
 	# if the directory contains a pnpm-lock.yaml file use pnpm
 	# otherwise look for a yarn.lock file and use yarn
 	# otherwise look for a package-lock.json file and use npm
