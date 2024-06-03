@@ -437,18 +437,6 @@ vim.keymap.set('n', 'll', function() vim.cmd(":Telescope tmux-awesome-manager li
 
 tmux_term = require('tmux-awesome-manager.src.term')
 
-require("trouble").setup {
-  position = "bottom",
-  padding = false,
-  height = 5,
-  icons = true,
-  auto_open = false,
-  auto_close = false,
-  auto_preview = false,
-  auto_jump = {},
-  mode = "loclist"
-}
-
 EOF
 
 autocmd FileType octo inoremap<buffer><silent> @ @<C-x><C-o>

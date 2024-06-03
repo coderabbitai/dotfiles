@@ -147,7 +147,6 @@ Plug 'kevinhwang91/nvim-hlslens', has('nvim') ? {} : { 'on': [] }
 Plug 'petertriho/nvim-scrollbar', has('nvim') ? {} : { 'on': [] }
 Plug 'otavioschwanck/tmux-awesome-manager.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'chrisgrieser/nvim-early-retirement', has('nvim') ? {} : { 'on': [] }
-Plug 'folke/trouble.nvim', has('nvim') ? { 'tag': 'v2.10.0' } : { 'on': [] }
 
 if exists('$OPENAI_API_KEY')
   Plug 'dpayne/CodeGPT.nvim', has('nvim') ? {} : { 'on': [] }
@@ -382,10 +381,10 @@ else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-" Use `[g` and `]g` to navigate diagnostics
+" Use `g[` and `g]` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> g[ <Plug>(coc-diagnostic-prev)
+nmap <silent> g] <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -507,39 +506,11 @@ let g:diagnostic_window_size = 3
 xmap <silent> <space>d :call ToggleDiagnostics()<CR>
 nmap <silent> <space>d :call ToggleDiagnostics()<CR>
 
-if has('nvim')
-  let g:auto_diagnostic_window = 0
-endif
-
 function! ToggleDiagnostics() abort
-  if !has('nvim')
-    if get(getloclist(0, {'winid':0}), 'winid', 0)
-      " the location window is open
-      windo lcl\|ccl
-    else
-      " the location window is closed
-      if empty(&l:buftype)
-          if (&filetype !=# 'floaterm') && (&buftype !=# 'terminal')
-            execute 'CocDiagnostics ' . g:diagnostic_window_size 
-            execute 'botright lwindow' 
-            execute 'wincmd p'
-          endif
-      endif
-    endif  
-  else
-    if g:auto_diagnostic_window
-      call v:lua.notify('LSP Diagnostics Window', 'Disabling auto-open', 'info')
-      let g:auto_diagnostic_window = 0
-    endif
-    if empty(&l:buftype)
-      call coc#rpc#request('fillDiagnostics', [bufnr('%')])
-      execute 'TroubleToggle'
-      execute 'wincmd p'
-    endif
-  endif
+  execute 'CocList --height=5 diagnostics --buffer'
 endfunction
 
-augroup coc_diag
+augroup coc_nvim
   " shutdown coc on exit
   autocmd VimLeavePre * :call coc#rpc#kill() 
   " auto close outline if it's the last window
@@ -558,32 +529,6 @@ augroup coc_diag
       endif
     endif
   endfunction
-
-  function! s:RefreshDiagnostics() abort
-    if empty(&l:buftype)
-      if has('nvim')
-        let l:trouble_open = bufwinnr('^Trouble$') != -1
-        if g:auto_diagnostic_window
-          call coc#rpc#request('fillDiagnostics', [bufnr('')])
-          if len(getloclist(0)) > 0
-            if l:trouble_open
-              execute 'TroubleRefresh'
-            else
-              execute 'Trouble loclist'
-              execute 'wincmd p'
-            endif
-          else
-            execute 'TroubleClose'
-          endif
-        elseif l:trouble_open
-          execute 'TroubleRefresh'
-        endif
-      endif
-    endif
-  endfunction
-
-  autocmd User CocDiagnosticChange call timer_start(0, {-> s:RefreshDiagnostics()})
-
 augroup end
 
 " Remove plugins not explicitly defined in g:coc_global_extensions
