@@ -241,7 +241,7 @@ if vim.env.OPENAI_API_KEY ~= nil then
   -- as a rule of thumb
   local gpt_4_config = {
     model = "gpt-4-turbo",
-    max_tokens = 8192,
+    max_tokens = 4096,
     temperature = 0.1,
   }
 
@@ -257,7 +257,7 @@ if vim.env.OPENAI_API_KEY ~= nil then
   local gpt_3_5_config = {
     model = "gpt-3.5-turbo",
     max_tokens = 4096,
-    temperature = 0,
+    temperature = 0.1,
   }
 
   local gpt_3_5_commands = {
