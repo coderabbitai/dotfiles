@@ -18,10 +18,6 @@ brew tap tilt-dev/tap
 brew tap noahgorstein/tap
 brew tap fluxninja/aperture
 
-if [[ $OSTYPE == 'darwin'* ]]; then
-	brew tap homebrew/cask-fonts
-fi
-
 revolver stop
 
 # Update homebrew recipes
