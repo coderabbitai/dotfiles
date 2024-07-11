@@ -151,6 +151,7 @@ PACKAGES+=(
   poetry
   pnpm
   yarn
+  pipx
 )
 
 if [[ $OSTYPE == 'darwin'* ]]; then
