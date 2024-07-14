@@ -111,6 +111,7 @@ Plug 'chrisbra/unicode.vim'
 Plug 'mracos/mermaid.vim'
 Plug 'google/vim-jsonnet'
 Plug 'gelguy/wilder.nvim'
+Plug 'prisma/vim-prisma'
 
 " colors
 Plug 'sainnhe/gruvbox-material'
@@ -274,7 +275,8 @@ let g:coc_global_extensions = [
       \ 'coc-ltex',
       \ 'coc-symbol-line',
       \ 'coc-java',
-      \ 'coc-spell-checker'
+      \ 'coc-spell-checker',
+      \ 'coc-prisma'
       \ ]
 
 augroup buffer_keymaps
