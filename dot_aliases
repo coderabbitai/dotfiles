@@ -1,7 +1,7 @@
-exa_options='--links --git --group --changed --time-style long-iso --icons'
-# replace ls with exa
-alias ls='exa $(printf $exa_options)'
-alias tree='exa --tree $(printf $exa_options)'
+eza_options='--links --git --group --changed --time-style long-iso --icons'
+# replace ls with eza
+alias ls='eza $(printf $eza_options)'
+alias tree='eza --tree $(printf $eza_options)'
 
 # Homebrew stuffs
 alias update="brew update"

@@ -35,7 +35,7 @@ fi
 PACKAGES+=(
   chezmoi
   zsh
-	exa
+	eza
 	dust
 	ncdu
 	duf
@@ -117,7 +117,6 @@ PACKAGES+=(
   pdftohtml
 	lesspipe
   mosh
-  darksky-weather
   bats-core
   fpp
   pstree

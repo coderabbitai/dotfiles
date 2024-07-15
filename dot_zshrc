@@ -462,10 +462,10 @@ zvm_after_init() {
   zstyle ':fzf-tab:complete:(-parameter-|-brace-parameter-|export|unset|expand):*' popup-pad 0 1
   zstyle ':fzf-tab:complete:(-parameter-|-brace-parameter-|export|unset|expand):*' fzf-flags --preview-window=down:1:wrap
 
-  # use exa for previewing commands that work at directory/path level
-  zstyle ':fzf-tab:complete:(cd|exa|ls|fd|find|cp|mv|rm):argument-rest' fzf-preview 'exa --git -a -1 --color=always --icons $realpath'
-  zstyle ':fzf-tab:complete:(cd|exa|ls|fd|find|cp|mv|rm):argument-rest' fzf-flags --preview-window=right:70%:wrap
-  zstyle ':fzf-tab:complete:(cd|exa|ls|fd|find|cp|mv|rm):argument-rest' popup-pad 50 50
+  # use eza for previewing commands that work at directory/path level
+  zstyle ':fzf-tab:complete:(cd|eza|ls|fd|find|cp|mv|rm):argument-rest' fzf-preview 'eza --git -a -1 --color=always --icons $realpath'
+  zstyle ':fzf-tab:complete:(cd|eza|ls|fd|find|cp|mv|rm):argument-rest' fzf-flags --preview-window=right:70%:wrap
+  zstyle ':fzf-tab:complete:(cd|eza|ls|fd|find|cp|mv|rm):argument-rest' popup-pad 50 50
 
   # use lessfilter to preview content files, directories etc.
   zstyle ':fzf-tab:complete:(cat|bat|vim|nvim|vimr|nvim-qt):argument-rest' fzf-preview 'LESSOPEN="|~/sw/assets/lessfilter %s" less ${(Q)realpath}'
