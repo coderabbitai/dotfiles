@@ -877,6 +877,7 @@ call fuzzymenu#AddAll({
       \ '󰐱 Coc Extensions': {'exec': 'CocFzfList extensions'},
       \ '󰣖 Coc Services': {'exec': 'CocFzfList services'},
       \ ' Coc Config': {'exec': 'CocConfig'},
+      \ '󰜉 Coc Restart': {'exec': 'CocRestart'},
       \ '󰣖 Coc Completion Sources': {'exec': 'CocFzfList sources'},
       \ ' Coc LSP Logs': {'exec': 'CocCommand workspace.showOutput'},
       \ ' Coc Logs': {'exec': 'CocInfo'},
