@@ -239,13 +239,14 @@ if vim.env.OPENAI_API_KEY ~= nil then
   -- until the plugin integrates with tiktoken
   -- assume 1 token = 4 characters of text
   -- as a rule of thumb
-  local gpt_4_config = {
-    model = "gpt-4-turbo",
-    max_tokens = 4096,
+  local heavy_llm_config = {
+    model = "gpt-4o",
+    max_tokens = 111616,
+    max_output_tokens = 16384,
     temperature = 0.1,
   }
 
-  local gpt_4_commands = {
+  local heavy_llm_commands = {
     "completion",
     "code_edit",
     "debug",
@@ -254,13 +255,14 @@ if vim.env.OPENAI_API_KEY ~= nil then
     "chat",
   }
 
-  local gpt_3_5_config = {
-    model = "gpt-3.5-turbo",
-    max_tokens = 4096,
+  local light_llm_config = {
+    model = "gpt-4o-mini",
+    max_tokens = 111614,
+    max_output_tokens = 16384,
     temperature = 0.1,
   }
 
-  local gpt_3_5_commands = {
+  local light_llm_commands = {
     "explain",
     "question",
     "doc",
@@ -268,14 +270,14 @@ if vim.env.OPENAI_API_KEY ~= nil then
   
   local override_config = vim.g["codegpt_commands_defaults"]
 
-  for _, command in ipairs(gpt_4_commands) do
+  for _, command in ipairs(heavy_llm_commands) do
     -- and merge it with gpt-4-config
-    override_config[command] = vim.tbl_extend("force", vim.g.codegpt_commands_defaults[command], gpt_4_config)
+    override_config[command] = vim.tbl_extend("force", vim.g.codegpt_commands_defaults[command], heavy_llm_config)
   end
 
-  for _, command in ipairs(gpt_3_5_commands) do
+  for _, command in ipairs(light_llm_commands) do
     -- and merge it with gpt-3.5-config
-    override_config[command] = vim.tbl_extend("force", vim.g.codegpt_commands_defaults[command], gpt_3_5_config)
+    override_config[command] = vim.tbl_extend("force", vim.g.codegpt_commands_defaults[command], light_llm_config)
   end
 
   vim.g["codegpt_commands_defaults"] = override_config
@@ -284,16 +286,18 @@ if vim.env.OPENAI_API_KEY ~= nil then
     ["refactor"] = {
       user_message_template = "I have the following {{language}} code: ```{{filetype}}\n{{text_selection}}```\nRefactor the above code to reduce it's complexity and improve maintainability and code reuse. Add new methods if needed to improve modularity. Only return the code snippet. {{language_instructions}}",
       callback_type = "replace_lines",
-      model = gpt_4_config.model,
-      max_tokens = gpt_4_config.max_tokens,
-      temperature = gpt_4_config.temperature,
+      model = heavy_llm_config.model,
+      max_tokens = heavy_llm_config.max_tokens,
+      max_output_tokens = heavy_llm_config.max_output_tokens,
+      temperature = heavy_llm_config.temperature,
     },
     ["simplify"] = {
       user_message_template = "I have the following {{language}} code: ```{{filetype}}\n{{text_selection}}```\nSimplify the above code to reduce it's complexity by reducing repetition, excessive branching, logic etc. Only return the code snippet. {{language_instructions}}",
       callback_type = "replace_lines",
-      model = gpt_4_config.model,
-      max_tokens = gpt_4_config.max_tokens,
-      temperature = gpt_4_config.temperature,
+      model = heavy_llm_config.model,
+      max_tokens = heavy_llm_config.max_tokens,
+      max_output_tokens = heavy_llm_config.max_output_tokens,
+      temperature = heavy_llm_config.temperature,
     },
     ["grammar"] = {
       user_message_template = "I have the following {{language}} text: ```{{filetype}}\n{{text_selection}}```\nFix typos, grammatical errors and improve prose. Only return the text snippet. {{language_instructions}}",
@@ -302,9 +306,10 @@ if vim.env.OPENAI_API_KEY ~= nil then
     ["fix"] = {
       user_message_template = "I have the following {{language}} code: ```{{filetype}}\n{{text_selection}}```\nAutomatically check for potential issues in the code and fix them. Only return the code snippet. {{language_instructions}}",
       callback_type = "replace_lines",
-      model = gpt_4_config.model,
-      max_tokens = gpt_4_config.max_tokens,
-      temperature = gpt_4_config.temperature,
+      model = heavy_llm_config.model,
+      max_tokens = heavy_llm_config.max_tokens,
+      max_output_tokens = heavy_llm_config.max_output_tokens,
+      temperature = heavy_llm_config.temperature,
     }
   }
 
