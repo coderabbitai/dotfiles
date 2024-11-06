@@ -535,7 +535,7 @@ source -q ~/.tmux.conf_local
 # }
 #
 # online() {
-#   ping -c 1 1.1.1.1 >/dev/null 2>&1 && printf '' || printf ''
+#   ping -c 1 1.1.1.1 >/dev/null 2>&1 && printf '' || printf ''
 # }
 # 
 # tmux_cpu_mem() {
