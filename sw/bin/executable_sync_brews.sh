@@ -279,6 +279,7 @@ if [[ $OSTYPE == 'darwin'* ]]; then
 		iterm2
 		adobe-acrobat-reader
 		docker
+    orbstack
 		figma
 		github
 		google-cloud-sdk
