@@ -290,7 +290,6 @@ if [[ $OSTYPE == 'darwin'* ]]; then
 		zoom
     twingate
     chatgpt
-		rectangle-pro
 		swiftdefaultappsprefpane # for setting several macOS properties such as default app for opening plaintext files
     # copyq removed as it likely has memory leak on Apple Silicon
 	)
