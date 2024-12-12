@@ -151,7 +151,7 @@ Plug 'otavioschwanck/tmux-awesome-manager.nvim', has('nvim') ? {} : { 'on': [] }
 Plug 'chrisgrieser/nvim-early-retirement', has('nvim') ? {} : { 'on': [] }
 
 if exists('$OPENAI_API_KEY')
-  Plug 'dpayne/CodeGPT.nvim', has('nvim') ? {} : { 'on': [] }
+  Plug 'harjotgill/CodeGPT.nvim', has('nvim') ? {} : { 'on': [] }
 endif
 
 if !has('nvim')
