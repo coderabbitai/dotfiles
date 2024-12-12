@@ -368,6 +368,7 @@ revolver update 'Installing npm packages...'
 npm i -q -g turbo
 npm i -q -g bash-language-server
 npm i -q -g dockerfile-language-server-nodejs
+npm i -q -g graphql-language-service-cli
 
 revolver update 'Installing python packages...'
 #python stuff
