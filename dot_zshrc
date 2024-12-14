@@ -614,7 +614,7 @@ fi
 # check whether ascii art is enabled
 if $ASCII_WELCOME_ENABLED; then
   # print a random cowsay using fortune using only *.cow files located at $(brew --prefix)/share/cows
-  fortune | cowsay -f $(find $(brew --prefix)/share/cows/ -name "*.cow" | shuf -n 1)
+  fortune | cowsay -f $(find $(brew --prefix)/share/cowsay/cows/ -name "*.cow" | shuf -n 1)
   (timeout 2 WTTR_PARAMS="1" ~/sw/bin/wttr.sh ;\
     echo; echo -e "${CYAN_BRIGHT}  ==================================  GitHub Status ================================== ${RESET}"; echo;
     timeout 2 gh status --org coderabbitai) 2&>/dev/null
