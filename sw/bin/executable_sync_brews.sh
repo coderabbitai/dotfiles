@@ -287,6 +287,7 @@ if [[ $OSTYPE == 'darwin'* ]]; then
     google-chrome
 		notion
 		slack
+		discord
 		stats
 		zoom
     twingate
