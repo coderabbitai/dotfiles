@@ -1202,6 +1202,7 @@ let g:gruvbox_material_diagnostic_virtual_text = 'colored'
 let g:everforest_better_performance = 1
 let g:edge_better_performance = 1
 let g:sonokai_better_performance = 1
+let g:gruvbox_material_background = 'hard'
 
 " source ~/.vimrc_local for local overrides
 if filereadable(expand('~/.vimrc_local'))

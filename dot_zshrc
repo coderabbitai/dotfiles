@@ -216,6 +216,9 @@ if [[ $OSTYPE == 'darwin'* ]]; then
     else
       SET_TERMINAL_COLORS=false
     fi
+  ## if the terminal is ghostty don't set terminal colors
+  elif [[ $TERMINAL == "ghostty" ]]; then
+    SET_TERMINAL_COLORS=false
   fi
 fi
 
