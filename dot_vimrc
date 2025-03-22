@@ -568,7 +568,7 @@ let g:fzf_action = {
       \ 'ctrl-v': 'vsplit' }
 
 " - Popup window (center of the current window)
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9, 'relative': v:true } }
+let g:fzf_layout = exists('$TMUX') ? {'tmux': '-p90%,80%'} : {'window': { 'width': 0.9, 'height': 0.9, 'relative': v:true }}
 
 " Customize fzf colors to match your color scheme
 " - fzf#wrap translates this to a set of `--color` options
