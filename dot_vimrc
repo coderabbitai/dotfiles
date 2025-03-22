@@ -937,6 +937,8 @@ call fuzzymenu#AddAll({
   \ },
   \ {'for': {'exists': 'g:loaded_fugitive'}, 'tags': ['git']})
 
+call fuzzymenu#Add('󰳐 Commits for range (git log)', {'visual': ':call VisualExec("BCommits")' }, {'for': {'exists': 'g:loaded_fugitive'}, 'tags': ['visual', 'git']})
+
 call fuzzymenu#Add(' Mergetool', {'exec': 'MergetoolToggle'}, {'tags': ['mergetool']})
 call fuzzymenu#AddAll({
   \ ' Mergetool Layout Merge, Remote': {'exec': 'MergetoolToggleLayout mr'},
@@ -1049,7 +1051,7 @@ endif
       \ '󰚩 ChatGPT Simplify': {'visual': ':call VisualExec("Chat simplify")' },
       \ '󰚩 ChatGPT Fix': {'visual': ':call VisualExec("Chat fix")' },
       \ '󰚩 ChatGPT Summarize': {'visual': ':call VisualExec("Chat summarize")' },
-      \ '󰚩 ChatGPT Grammar': {'visual': ':call VisualExec("Chat grammer")' },
+      \ '󰚩 ChatGPT Grammar': {'visual': ':call VisualExec("Chat grammar")' },
       \ '󰚩 ChatGPT Question': {'visual': ':call VisualExecWithArgs("Chat question", [["Question", 1]])' },
       \ '󰚩 ChatGPT Edit With Instructions': {'visual': ':call VisualExecWithArgs("Chat code_edit", [["Instructions", 1]])' },
       \ },
