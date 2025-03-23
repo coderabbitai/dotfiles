@@ -937,7 +937,7 @@ call fuzzymenu#AddAll({
   \ },
   \ {'for': {'exists': 'g:loaded_fugitive'}, 'tags': ['git']})
 
-call fuzzymenu#Add('󰳐 Commits for range (git log)', {'visual': ':call VisualExec("BCommits")' }, {'for': {'exists': 'g:loaded_fugitive'}, 'tags': ['visual', 'git']})
+call fuzzymenu#Add('󰳐 Commits for range (git log)', {'visual': ':BCommits' }, {'for': {'exists': 'g:loaded_fugitive'}, 'tags': ['visual', 'git']})
 
 call fuzzymenu#Add(' Mergetool', {'exec': 'MergetoolToggle'}, {'tags': ['mergetool']})
 call fuzzymenu#AddAll({
