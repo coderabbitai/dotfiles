@@ -374,6 +374,7 @@ npm i -q -g turbo
 npm i -q -g bash-language-server
 npm i -q -g dockerfile-language-server-nodejs
 npm i -q -g graphql-language-service-cli
+npm i -q -g husky
 
 revolver update 'Installing python packages...'
 #python stuff

@@ -318,7 +318,7 @@ function insult() {
 		"Puffed up punchinello!"
 		"Thundering herd of zapotecs!"
 		"Borgia!"
-		"Miserable blundering barbecued blister . . . (Haddock does not complete the curse)"
+		"Miserable blundering barbecued blister!"
 		"Subtropical sea louse!"
 		"Confounded rattletrap!"
 		"Tin-can contraption!"

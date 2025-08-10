@@ -195,7 +195,9 @@
   "python.formatting.provider": "black",
   "cSpell.showStatus": false,
   "cSpell.allowCompoundWords": true,
-  "cSpell.userWords": [],
+  "cSpell.userWords": [
+    "Agentic"
+  ],
   "cSpell.dictionaryDefinitions": [
     {
       "name": "FluxNinja",
