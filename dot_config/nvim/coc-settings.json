@@ -1,9 +1,9 @@
 {
   "notification.statusLineProgress": false,
-  "coc.preferences.extensionUpdateCheck": "daily",
-  "coc.preferences.enableMessageDialog": true,
+  "coc.preferences.messageDialogKind": "notification",
   "coc.preferences.enableLinkedEditing": true,
-  "coc.preferences.silentAutoupdate": true,
+  "extensions.updateCheck": "daily",
+  "extensions.silentAutoupdate": true,
   "coc.preferences.formatOnSave": true,
   "semanticTokens.enable": true,
   "colors.enable": true,
@@ -59,7 +59,6 @@
     "staticcheck": true,
     "semanticTokens": true,
     "analyses": {
-      "fieldalignment": true,
       "nilness": true,
       "unusedparams": true,
       "unusedwrite": true,
@@ -78,39 +77,75 @@
   "languageserver": {
     "graphql": {
       "command": "graphql-lsp",
-      "args": ["server", "-m", "stream"],
-      "filetypes": ["typescript", "typescriptreact", "graphql"]
+      "args": [
+        "server",
+        "-m",
+        "stream"
+      ],
+      "filetypes": [
+        "typescript",
+        "typescriptreact",
+        "graphql"
+      ]
     },
     "terraform": {
       "command": "terraform-ls",
-      "args": ["serve"],
-      "filetypes": ["terraform", "tf"],
+      "args": [
+        "serve"
+      ],
+      "filetypes": [
+        "terraform",
+        "tf"
+      ],
       "initializationOptions": {}
     },
     "lua": {
       "command": "lua-lsp",
-      "filetypes": ["lua"]
+      "filetypes": [
+        "lua"
+      ]
     },
     "bash": {
       "command": "bash-language-server",
-      "args": ["start"],
-      "filetypes": ["sh", "bash"]
+      "args": [
+        "start"
+      ],
+      "filetypes": [
+        "sh",
+        "bash"
+      ]
     },
     "dockerfile": {
       "command": "docker-langserver",
-      "filetypes": ["dockerfile"],
-      "args": ["--stdio"]
+      "filetypes": [
+        "dockerfile"
+      ],
+      "args": [
+        "--stdio"
+      ]
     },
     "buf": {
       "command": "bufls",
-      "args": ["serve"],
-      "filetypes": ["proto"]
+      "args": [
+        "serve"
+      ],
+      "filetypes": [
+        "proto"
+      ]
     },
     "jsonnet": {
       "command": "jsonnet-language-server",
-      "args": ["-t"],
-      "rootPatterns": [".git/", "jsonnetfile.json"],
-      "filetypes": ["jsonnet", "libsonnet"]
+      "args": [
+        "-t"
+      ],
+      "rootPatterns": [
+        ".git/",
+        "jsonnetfile.json"
+      ],
+      "filetypes": [
+        "jsonnet",
+        "libsonnet"
+      ]
     }
   },
   "diagnostic-languageserver.mergeConfig": true,
@@ -118,9 +153,18 @@
   "diagnostic-languageserver.linters": {
     "golangci-lint2": {
       "command": "golangci-lint",
-      "rootPatterns": ["go.mod"],
+      "rootPatterns": [
+        "go.mod"
+      ],
       "debounce": 100,
-      "args": ["--out-format", "json", "--deadline", "5s", "run", "%dirname"],
+      "args": [
+        "--out-format",
+        "json",
+        "--deadline",
+        "5s",
+        "run",
+        "%dirname"
+      ],
       "sourceName": "golangci-lint",
       "parseJson": {
         "sourceName": "Pos.Filename",
@@ -133,7 +177,10 @@
     },
     "zsh": {
       "command": "zsh",
-      "args": ["-n", "%file"],
+      "args": [
+        "-n",
+        "%file"
+      ],
       "isStdout": false,
       "isStderr": true,
       "sourceName": "zsh",
@@ -218,23 +265,38 @@
   "cSpell.languageSettings": [
     {
       "languageId": "python",
-      "includeRegExpList": ["/#.*/", "/('''|\"\"\")[^\\1]+?\\1/g", "strings"]
+      "includeRegExpList": [
+        "/#.*/",
+        "/('''|\"\"\")[^\\1]+?\\1/g",
+        "strings"
+      ]
     },
     {
       "languageId": "javascript,typescript",
-      "includeRegExpList": ["CStyleComment", "strings"]
+      "includeRegExpList": [
+        "CStyleComment",
+        "strings"
+      ]
     },
     {
       "languageId": "cpp,c",
       // Only check comments and strings
-      "includeRegExpList": ["CStyleComment", "string"],
+      "includeRegExpList": [
+        "CStyleComment",
+        "string"
+      ],
       // Exclude includes, because they are also strings.
-      "ignoreRegExpList": ["/#include.*/"]
+      "ignoreRegExpList": [
+        "/#include.*/"
+      ]
     },
     {
       "languageId": "go",
       // Only check comments and strings
-      "includeRegExpList": ["CStyleComment", "string"],
+      "includeRegExpList": [
+        "CStyleComment",
+        "string"
+      ],
       // Exclude imports, because they are also strings.
       "ignoreRegExpList": [
         // ignore multiline imports
@@ -245,11 +307,17 @@
     },
     {
       "languageId": "vim",
-      "includeRegExpList": ["^\\s*\".*", "strings"]
+      "includeRegExpList": [
+        "^\\s*\".*",
+        "strings"
+      ]
     },
     {
       "languageId": "proto",
-      "includeRegExpList": ["CStyleComment", "string"],
+      "includeRegExpList": [
+        "CStyleComment",
+        "string"
+      ],
       "ignoreRegExpList": [
         "/package.*/",
         "/import.*/",
