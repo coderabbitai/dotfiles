@@ -52,6 +52,7 @@
   },
   "snippets.priority": 89,
   "coc.source.zsh.priority": 99,
+  "tsserver.maxTsServerMemory": 8192,
   "go.checkForUpdates": "install",
   "go.goplsOptions": {
     "local": "fluxninja.com",
