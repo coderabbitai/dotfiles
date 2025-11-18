@@ -240,7 +240,7 @@ if vim.env.OPENAI_API_KEY ~= nil then
   -- assume 1 token = 4 characters of text
   -- as a rule of thumb
   local heavy_llm_config = {
-    model = "gpt-5",
+    model = "gpt-5.1",
     max_tokens = 272000,
     max_output_tokens = 128000,
   }
