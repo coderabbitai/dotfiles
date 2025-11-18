@@ -240,10 +240,9 @@ if vim.env.OPENAI_API_KEY ~= nil then
   -- assume 1 token = 4 characters of text
   -- as a rule of thumb
   local heavy_llm_config = {
-    model = "gpt-4o",
-    max_tokens = 111616,
-    max_output_tokens = 16384,
-    temperature = 0.1,
+    model = "gpt-5",
+    max_tokens = 272000,
+    max_output_tokens = 128000,
   }
 
   local heavy_llm_commands = {
@@ -256,10 +255,9 @@ if vim.env.OPENAI_API_KEY ~= nil then
   }
 
   local light_llm_config = {
-    model = "gpt-4o-mini",
-    max_tokens = 111614,
-    max_output_tokens = 16384,
-    temperature = 0.1,
+    model = "gpt-5-mini",
+    max_tokens = 272000,
+    max_output_tokens = 128000,
   }
 
   local light_llm_commands = {
@@ -289,7 +287,6 @@ if vim.env.OPENAI_API_KEY ~= nil then
       model = heavy_llm_config.model,
       max_tokens = heavy_llm_config.max_tokens,
       max_output_tokens = heavy_llm_config.max_output_tokens,
-      temperature = heavy_llm_config.temperature,
     },
     ["simplify"] = {
       user_message_template = "I have the following {{language}} code: ```{{filetype}}\n{{text_selection}}```\nSimplify the above code to reduce it's complexity by reducing repetition, excessive branching, logic etc. Only return the code snippet. {{language_instructions}}",
@@ -297,7 +294,6 @@ if vim.env.OPENAI_API_KEY ~= nil then
       model = heavy_llm_config.model,
       max_tokens = heavy_llm_config.max_tokens,
       max_output_tokens = heavy_llm_config.max_output_tokens,
-      temperature = heavy_llm_config.temperature,
     },
     ["grammar"] = {
       user_message_template = "I have the following {{language}} text: ```{{filetype}}\n{{text_selection}}```\nFix typos, grammatical errors and improve prose. Only return the text snippet. {{language_instructions}}",
@@ -309,7 +305,6 @@ if vim.env.OPENAI_API_KEY ~= nil then
       model = heavy_llm_config.model,
       max_tokens = heavy_llm_config.max_tokens,
       max_output_tokens = heavy_llm_config.max_output_tokens,
-      temperature = heavy_llm_config.temperature,
     }
   }
 
