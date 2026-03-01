@@ -153,6 +153,7 @@ PACKAGES+=(
   pipx
   anomalyco/tap/opencode
   poppler
+  vercel-cli
 )
 
 if [[ $OSTYPE == 'darwin'* ]]; then
