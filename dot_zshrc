@@ -3,6 +3,36 @@ if [[ -z "$ZPROFILE_SOURCED" ]]; then
   source ~/.zprofile
 fi
 
+function should_use_minimal_shell() {
+  if [[ -n "$CODEX_HOME" || "$TERM_PROGRAM" == "Codex" ]]; then
+    return 0
+  fi
+
+  local pid="$PPID"
+  local comm=''
+  local args=''
+
+  while [[ -n "$pid" && "$pid" != "1" ]]; do
+    comm="$(ps -o comm= -p "$pid" 2>/dev/null)"
+    args="$(ps -o args= -p "$pid" 2>/dev/null)"
+
+    if [[ "$comm" == *"Codex.app"* ]] || [[ "$args" == *"/Applications/Codex.app/"* ]] || \
+       [[ "$args" == *"Resources/codex"* ]] || [[ "$args" == *"Codex Helper"* ]]; then
+      return 0
+    fi
+
+    pid="$(ps -o ppid= -p "$pid" 2>/dev/null | tr -d ' ')"
+  done
+
+  return 1
+}
+
+if should_use_minimal_shell; then
+  export START_TMUX=false
+  PS1='%~ %# '
+  return 0
+fi
+
 export LS_COLORS="$(vivid generate gruvbox-dark)"
 
 export BAT_THEME="gruvbox-dark"
