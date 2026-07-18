@@ -488,8 +488,6 @@ TMUX_FZF_MENU=\
 " Sync FluxNinja Repos\n\"win_split -a 'sync_fluxninja.sh'\"\n"\
 "󰊤 GitHub Status\n\"win_split -a 'gh status --org coderabbitai'\"\n"\
 "󰊤 GitHub Dashboard\n\"win_split -a 'gh dash'\"\n"\
-" Docker TUI (lazydocker)\nwin_split 'lazydocker'\n"\
-" Kubernetes TUI (k9s)\nwin_split 'k9s'\n"\
 " Directory Navigator (broot)\nwin_split -b -h 'br'\n"\
 "󰋖 Cheatsheets Browser (navi)\nwin_split 'navi'\n"\
 "󰋖 Man Pages Browser (batman)\nwin_split 'batman'\n"\

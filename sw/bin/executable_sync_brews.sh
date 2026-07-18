@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+# Run all Homebrew installs in non-interactive mode.
+export HOMEBREW_NO_ASK=1
+
 brew tap molovo/revolver
 brew install --quiet revolver
 
@@ -11,12 +14,8 @@ if [ -f ~/.brew_local ]; then
 	source ~/.brew_local
 fi
 
-brew tap ejoffe/homebrew-tap
 brew tap claui/whence
-brew tap bufbuild/buf
-brew tap tilt-dev/tap
 brew tap noahgorstein/tap
-brew tap fluxninja/aperture
 brew tap anomalyco/tap
 
 revolver stop
@@ -42,11 +41,8 @@ PACKAGES+=(
 	duf
 	fd
 	git
-	spr
 	go
 	gopls
-	gotests
-  gops
   typescript
 	universal-ctags
 	thefuck
@@ -54,36 +50,25 @@ PACKAGES+=(
   tmux-mem-cpu-load
   node
 	python
-  autopep8
 	rust
-	tilt
-  ctlptl
 	bottom
 	helm
 	helmfile
-  go-jsonnet
-	jsonnet-bundler
-	tanka
-	eops
 	terraform
   terragrunt
   tflint
-	kubernetes-cli
 	jq
 	yq
 	gh
   copilot-cli
-	kind
 	neovim
 	asdf
 	bat
   bat-extras
 	git-delta
 	ctop
-	kubectx
 	fzf
 	subversion
-	tealdeer
   navi
   watch
 	zoxide
@@ -127,13 +112,6 @@ PACKAGES+=(
   speedtest-cli
 	gping
   tty-clock
-  lazydocker
-  k9s
-  kustomize
-  kubebuilder
-  buf
-  grpcurl
-  mockery
   urlview
   tree-sitter
   tree-sitter-cli
@@ -141,11 +119,7 @@ PACKAGES+=(
   circleci
   graphviz
   jqp
-  openjdk
-  gradle
-  socat
   gum
-  aperturectl
   vale
   poetry
   pnpm
