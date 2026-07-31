@@ -2,6 +2,7 @@
 
 # Run all Homebrew installs in non-interactive mode.
 export HOMEBREW_NO_ASK=1
+export HOMEBREW_NO_REQUIRE_TAP_TRUST=1
 
 brew tap molovo/revolver
 brew install --quiet revolver
