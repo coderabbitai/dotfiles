@@ -75,6 +75,7 @@ PACKAGES+=(
 	zoxide
 	figlet
 	ripgrep
+  ast-grep
 	curlie
 	vcsh
 	vint
