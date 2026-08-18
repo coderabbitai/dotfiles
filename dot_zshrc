@@ -105,7 +105,10 @@ fi
 
 # check whether tmux command exists
 if [[ -x "$(command -v tmux)" ]]; then
-  if $START_TMUX; then
+  # Shell environment probes (Claude Code, VS Code, etc.) may invoke an
+  # "interactive" zsh with -c but without a terminal. Never launch tmux/fzf
+  # for those processes; reserve the session picker for a real terminal.
+  if $START_TMUX && [[ -o interactive && -t 0 && -t 1 && -z ${ZSH_EXECUTION_STRING:-} && -z ${TMUX:-} ]]; then
     export START_TMUX=false
     set_terminal
     DETACHED_SESSIONS=$(tmux ls 2&>/dev/null | grep -v attached)

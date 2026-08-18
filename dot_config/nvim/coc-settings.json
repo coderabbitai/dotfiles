@@ -363,5 +363,8 @@
     "vim",
     "yaml",
     "yml"
-  ]
+  ],
+  "json.schemaDownload.trustedDomains": {
+    "https://www.schemastore.org": true
+  }
 }
