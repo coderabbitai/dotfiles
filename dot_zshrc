@@ -4,6 +4,12 @@ if [[ -z "$ZPROFILE_SOURCED" ]]; then
 fi
 
 function should_use_minimal_shell() {
+  # Environment probes may request an "interactive" shell with -c despite
+  # having no terminal. Load only the login environment for those shells.
+  if [[ ! -o interactive || ! -t 0 || ! -t 1 || -n ${ZSH_EXECUTION_STRING:-} ]]; then
+    return 0
+  fi
+
   if [[ -n "$CODEX_HOME" || "$TERM_PROGRAM" == "Codex" ]]; then
     return 0
   fi
