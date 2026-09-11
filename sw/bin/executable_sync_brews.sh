@@ -18,6 +18,7 @@ fi
 brew tap claui/whence
 brew tap noahgorstein/tap
 brew tap anomalyco/tap
+brew tap hashicorp/tap
 
 revolver stop
 
@@ -131,6 +132,7 @@ PACKAGES+=(
   poppler
   vercel-cli
   bun
+  hashicorp/tap/terraform
 )
 
 if [[ $OSTYPE == 'darwin'* ]]; then

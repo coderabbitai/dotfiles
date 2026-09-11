@@ -510,6 +510,8 @@ TMUX_FZF_MENU=\
 " System Information (fastfetch)\nwin_split -h -a 'fastfetch'\n"
 
 # user defined overrides
+# Poll at 20s; tmux-sensible resets the default value of 15 back to 5.
+set -g status-interval 20
 source -q ~/.tmux.conf_local
 
 # -- custom variables ----------------------------------------------------------
@@ -537,21 +539,8 @@ source -q ~/.tmux.conf_local
 # }
 # 
 # tmux_cpu_mem() {
-#   # check the output of the command "tmux showenv -s tmux_cpu_status_init"
-#   # if it is empty then set first_run to false otherwise set it to true and run "tmux setenv tmux_cpu_status_init 1"
-#   out=$(tmux showenv -s tmux_cpu_status_init 2>/dev/null)
-#   if [ -z "$out" ]; then
-#     tmux setenv tmux_cpu_status_init 1
-#     first_run=true
-#   else
-#     first_run=false
-#   fi
-#   cmd="tmux-mem-cpu-load -a 0 -v -m 2 --interval 5"
-#   if [ "$first_run" = true ]; then
-#     spinner -s -q $cmd
-#   else
-#     $cmd
-#   fi
+#   # Emit one sample; tmux schedules refreshes and retains the previous result.
+#   tmux-mem-cpu-load -a 0 -v -m 2 --interval 5
 # }
 #
 # "$@"
