@@ -260,7 +260,7 @@ if [[ $OSTYPE == 'darwin'* ]]; then
 fi
 
 periodic() { silent_background timeout 2 $HOME/sw/bin/gh_checks_status.sh > /tmp/gh_$$ }
-PERIOD=10
+PERIOD=60
 
 function @yazpt_segment_nl() {
 # check whether $last_yazpt_vcs is not equal to $yazpt_state[vcs]
